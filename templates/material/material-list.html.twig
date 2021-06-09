@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Materiaal lijst{% endblock %}
+
+{% block main %}
+    {% include '/partials/header.html.twig' %}
+
+    <main>
+        <h1>Materiaal lijst</h1>
+
+        <div>Search</div>
+        <div>Filter</div>
+
+        {% for material in materials %}
+            {% include '/material/partials/item.html.twig' %}
+        {% endfor %}
+    </main>
+
+    {% include '/partials/footer.html.twig' %}
+{% endblock %}
