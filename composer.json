@@ -1,15 +1,16 @@
 {
+    "name": "robinbastiaan/franciscus-material-management",
     "type": "project",
+    "description": "Material management & loan system for Franciscusgroup.",
     "license": "proprietary",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "easycorp/easyadmin-bundle": "^3.2",
+        "gedmo/doctrine-extensions": "^3.0",
         "symfony/console": "5.2.*",
         "symfony/dotenv": "5.2.*",
         "symfony/flex": "^1.3.1",
@@ -17,12 +18,35 @@
         "symfony/webpack-encore-bundle": "^1.11",
         "symfony/yaml": "5.2.*"
     },
+    "replace": {
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*"
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.14",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "^5.2",
+        "symfony/css-selector": "^5.2",
+        "symfony/maker-bundle": "^1.30",
+        "symfony/phpunit-bridge": "^5.3",
+        "symfony/web-profiler-bundle": "5.2.*"
+    },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"
         },
         "sort-packages": true
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": "true",
+            "require": "5.2.*"
+        }
     },
     "autoload": {
         "psr-4": {
@@ -34,33 +58,18 @@
             "App\\Tests\\": "tests/"
         }
     },
-    "replace": {
-        "symfony/polyfill-ctype": "*",
-        "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php72": "*"
-    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "scripts": {
-        "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
-        },
         "post-install-cmd": [
             "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
-    },
-    "conflict": {
-        "symfony/symfony": "*"
-    },
-    "extra": {
-        "symfony": {
-            "allow-contrib": false,
-            "require": "5.2.*"
+        ],
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         }
-    },
-    "require-dev": {
-        "symfony/maker-bundle": "^1.30"
     }
 }
