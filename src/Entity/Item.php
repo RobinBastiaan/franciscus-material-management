@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -74,9 +74,21 @@ class Item
      */
     private $loan;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="item")
+     */
+    private $notes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="items")
+     */
+    private $tags;
+
     public function __construct()
     {
         $this->loan = new ArrayCollection();
+        $this->notes = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -230,6 +242,60 @@ class Item
                 $loan->setLoanedItem(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getItem() === $this) {
+                $note->setItem(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        $this->tags->removeElement($tag);
 
         return $this;
     }
