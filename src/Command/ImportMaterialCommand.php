@@ -1,8 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
 
 namespace App\Command;
 
 use App\Entity\Item;
+use App\Entity\Tag;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -78,7 +79,7 @@ class ImportMaterialCommand extends Command
     {
         $item = $this->em->getRepository(Item::class)
             ->findOneBy([
-                'name' => ($row['Naam']),
+                'name' => $row['Naam'],
             ]);
 
         if ($item !== null) { // ensure not added twice
@@ -86,7 +87,7 @@ class ImportMaterialCommand extends Command
         }
 
         try {
-            $dateTime = date('d/m/Y H:i', strtotime($row['Datum gekocht'])); // use European data format
+            $dateTime = date('Y/m/d', strtotime($row['Datum gekocht'])); // use European data format
             $dateTime = (new DateTime($dateTime));
         } catch (Exception $e) {
             throw new UnexpectedValueException('Failed to parse time string! (' . $row['Datum gekocht'] . ')');
@@ -105,6 +106,22 @@ class ImportMaterialCommand extends Command
             ->setStatus($row['Status'])
             ->setLocation($row['Locatie']);
         $this->em->persist($item);
+
+        $tags = array_map('trim', explode(',', $row['Tags']));
+
+        foreach ($tags as $tag) {
+            $persistedTag = $this->em->getRepository(Tag::class)->findOneByName($tag);
+
+            if (!isset($persistedTag)) {
+                $persistedTag = new Tag();
+                $persistedTag->setName($tag);
+                $this->em->persist($persistedTag);
+            }
+
+            $persistedTag->addItem($item);
+            $item->addTag($persistedTag);
+        }
+
         $this->em->flush();
         $this->em->clear();
     }

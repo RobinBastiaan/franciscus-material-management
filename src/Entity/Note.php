@@ -15,17 +15,17 @@ class Note
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $text;
+    private string $text;
 
     /**
      * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="notes")
      */
-    private $item;
+    private Item $item;
 
     public function getId(): ?int
     {
@@ -49,7 +49,7 @@ class Note
         return $this->item;
     }
 
-    public function setItem(?Item $item): self
+    public function setItem(Item $item): self
     {
         $this->item = $item;
 

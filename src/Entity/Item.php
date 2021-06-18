@@ -6,9 +6,11 @@ use App\Repository\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ItemRepository::class)
+ * @UniqueEntity("Name")
  */
 class Item
 {
@@ -17,32 +19,32 @@ class Item
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $description;
+    private string $description;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $type;
+    private string $type;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $amount;
+    private int $amount;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status;
+    private string $status;
 
     /**
      * @ORM\Column(type="datetime")
@@ -57,27 +59,27 @@ class Item
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $depreciation;
+    private ?float $depreciation;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $manufacturer;
+    private ?string $manufacturer;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $location;
+    private ?string $location;
 
     /**
      * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="loanedItem")
      */
-    private $loan;
+    private Collection $loan;
 
     /**
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="item")
      */
-    private $notes;
+    private Collection $notes;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="items")
