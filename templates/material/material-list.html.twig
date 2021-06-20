@@ -5,13 +5,13 @@
 {% block main %}
     {% include '/partials/header.html.twig' %}
 
-    <main>
-        <h1>Materiaal lijst</h1>
+    <main class="container">
+        <h1>Materiaallijst</h1>
 
         <div>Search</div>
         <div>Filter</div>
 
-        {% for material in materials %}
+        {% for item in items %}
             {% include '/material/partials/item.html.twig' %}
         {% endfor %}
     </main>

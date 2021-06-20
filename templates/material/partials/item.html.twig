@@ -1,5 +1,19 @@
-<section class="card">
-    <h2>Naam</h2>
-    <p>Locatie</p>
-    <button>Voeg toe</button>
+<section class="card my-2">
+    <div class="card-header">
+        <h2>{{ item.name }}</h2>
+    </div>
+    <div class="card-body">
+        <p><b>Locatie: </b>{{ item.location }}</p>
+        <p><b>Aantal: </b>{{ item.amount }}</p>
+        <p><b>Gekocht: </b>{{ item.dateBought|date('F Y') }}  ({{ item.dateBought|ago }})</p>
+
+        <div><b>Tags: </b>
+            {%- for tag in item.tags -%}
+                {{ tag.name -}}
+                {% if not loop.last %}, {% endif %}
+            {%- endfor -%}
+        </div>
+
+        <button class="button">Voeg toe</button>
+    </div>
 </section>
