@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="nl">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Franciscus Material Management!{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ asset('build/logo.png') }}">
 
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block header %}{% endblock %}
-        {% block main %}{% endblock %}
-        {% block footer %}{% endblock %}
-    </body>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+{% block header %}{% endblock %}
+{% block main %}{% endblock %}
+{% block footer %}
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
+</body>
 </html>
