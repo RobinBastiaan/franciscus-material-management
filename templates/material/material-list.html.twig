@@ -8,8 +8,12 @@
     <main class="container">
         <h1>Materiaallijst</h1>
 
-        <div>Search</div>
-        <div>Filter</div>
+        <button class="btn btn-primary form-inline">Search</button>
+        <button class="btn btn-primary form-inline">Filter</button>
+
+        {% if app.request.attributes.get('_route') != 'material_list_pdf' %}
+            <a class="btn btn-primary form-inline" href="{{ path('material_list_pdf') }}">Download als PDF</a>
+        {% endif %}
 
         {% for item in items %}
             {% include '/material/partials/item.html.twig' %}
