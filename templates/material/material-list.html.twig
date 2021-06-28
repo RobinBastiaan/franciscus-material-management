@@ -8,10 +8,9 @@
     <main class="container">
         <h1>Materiaallijst</h1>
 
-        <button class="btn btn-primary form-inline">Search</button>
-        <button class="btn btn-primary form-inline">Filter</button>
-
         {% if app.request.attributes.get('_route') != 'material_list_pdf' %}
+            <button class="btn btn-primary form-inline">Search</button>
+            <button class="btn btn-primary form-inline">Filter</button>
             <a class="btn btn-primary form-inline" href="{{ path('material_list_pdf') }}">Download als PDF</a>
         {% endif %}
 

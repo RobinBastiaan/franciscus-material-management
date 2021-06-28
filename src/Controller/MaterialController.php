@@ -32,7 +32,7 @@ class MaterialController extends AbstractController
 
         $html = $this->render('material/material-list.html.twig', [
             'items' => $items,
-        ]);
+        ])->getContent();
 
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html),

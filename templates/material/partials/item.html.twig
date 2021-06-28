@@ -14,6 +14,8 @@
             {%- endfor -%}
         </div>
 
-        <button class="btn btn-primary">Voeg toe</button>
+        {% if app.request.attributes.get('_route') != 'material_list_pdf' %}
+            <button class="btn btn-primary">Voeg toe</button>
+        {% endif %}
     </div>
 </section>

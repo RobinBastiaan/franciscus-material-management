@@ -5,9 +5,13 @@
     <title>{% block title %}Franciscus Material Management!{% endblock %}</title>
     <link rel="icon" type="image/png" href="{{ asset('build/logo.png') }}">
 
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
+{#    {% block stylesheets %}#}
+{#        {{ encore_entry_link_tags('app') }}#}
+{#    {% endblock %}#}
+
+    {% for path in encore_entry_css_files('app') %}
+        <link rel="stylesheet" href="{{ absolute_url(path) }}">
+    {% endfor %}
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
