@@ -11,11 +11,16 @@ framework:
                 - App\Entity\Item
             initial_marking: available
             places:
-                - available
-                - lent
-                - to_repair
-                - irreparable
-                - lost
+                available: {}
+                lent: {}
+                to_repair: {}
+                irreparable:
+                    metadata:
+                        bg_color: pink
+                lost:
+                    metadata:
+                        bg_color: pink
+
             transitions:
                 add_to_agenda:
                     guard: "is_granted('ROLE_USER')"
@@ -35,39 +40,43 @@ framework:
                     to:   available
                     metadata:
                         color: purple
+                        arrow_color: purple
                 write_off:
                     guard: "is_granted('ROLE_MATERIAL_MASTER')"
                     from: to_repair
                     to:   irreparable
                     metadata:
                         color: purple
+                        arrow_color: purple
                 write_off_after_check:
                     guard: "is_granted('ROLE_MATERIAL_MASTER')"
                     from: available
                     to:   irreparable
                     metadata:
                         color: purple
+                        arrow_color: purple
                 mark_as_to_be_repaired_after_check:
-                    guard: "is_granted('ROLE_MATERIAL_MASTER')"
+                    guard: "is_granted('ROLE_USER')"
                     from: available
                     to:   to_repair
-                    metadata:
-                        color: purple
                 lose_from_available:
                     guard: "is_granted('ROLE_MATERIAL_MASTER')"
                     from: available
                     to:   lost
                     metadata:
                         color: purple
+                        arrow_color: purple
                 lose_from_lent:
                     guard: "is_granted('ROLE_MATERIAL_MASTER')"
                     from: lent
                     to:   lost
                     metadata:
                         color: purple
+                        arrow_color: purple
                 lose_from_to_repair:
                     guard: "is_granted('ROLE_MATERIAL_MASTER')"
                     from: to_repair
                     to:   lost
                     metadata:
                         color: purple
+                        arrow_color: purple
