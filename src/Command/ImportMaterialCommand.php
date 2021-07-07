@@ -10,12 +10,14 @@ use Exception;
 use http\Exception\UnexpectedValueException;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ImportMaterialCommand extends Command
 {
+    const DEFAULT_FILE_NAME = 'materiaallijst';
     protected static $defaultName = 'import-material';
     protected static $defaultDescription = 'Import a CSV file containing the material inventory.';
     private EntityManagerInterface $em;
@@ -29,7 +31,9 @@ class ImportMaterialCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription(self::$defaultDescription);
+        $this
+            ->setDescription(self::$defaultDescription)
+            ->addArgument('file_name', InputArgument::OPTIONAL, 'The name of the data file.', self::DEFAULT_FILE_NAME);
     }
 
     /**
@@ -37,10 +41,12 @@ class ImportMaterialCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $fileName = $input->getArgument('file_name');
+
         $io = new SymfonyStyle($input, $output);
         $io->title('Attempting data import...');
 
-        $reader = Reader::createFromPath('%kernel.root_dir%/../data/materiaallijst.csv');
+        $reader = Reader::createFromPath('%kernel.root_dir%/../data/' . $fileName . '.csv');
         $reader->setHeaderOffset(0);
         $results = $reader->getrecords();
         $io->progressStart(iterator_count($results));
@@ -72,8 +78,6 @@ class ImportMaterialCommand extends Command
 
     /**
      * Adds an item to the database, but only if not already in the database.
-     *
-     * @param $row
      */
     private function addItem($row): void
     {
