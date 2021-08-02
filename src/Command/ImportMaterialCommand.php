@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\Item;
 use App\Entity\Tag;
+use App\Repository\TagRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -113,8 +114,11 @@ class ImportMaterialCommand extends Command
 
         $tags = array_map('trim', explode(',', $row['Tags']));
 
+        /** @var TagRepository $tagRepository */
+        $tagRepository = $this->em->getRepository(Tag::class);
+
         foreach ($tags as $tag) {
-            $persistedTag = $this->em->getRepository(Tag::class)->findOneByName($tag);
+            $persistedTag = $tagRepository->findOneByName($tag);
 
             if (!isset($persistedTag)) {
                 $persistedTag = new Tag();

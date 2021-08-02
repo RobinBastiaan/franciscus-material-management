@@ -268,12 +268,7 @@ class Item
 
     public function removeNote(Note $note): self
     {
-        if ($this->notes->removeElement($note)) {
-            // set the owning side to null (unless already changed)
-            if ($note->getItem() === $this) {
-                $note->setItem(null);
-            }
-        }
+        $this->notes->removeElement($note);
 
         return $this;
     }

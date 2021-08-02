@@ -26,7 +26,7 @@ class DashboardController extends AbstractDashboardController
 
         // you can also render some template to display a proper Dashboard
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        return $this->render('some/path/my-dashboard.html.twig');
+//        return $this->render('some/path/my-dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
