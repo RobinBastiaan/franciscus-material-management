@@ -14,3 +14,7 @@ The Franciscus Material Management is an application build with the <strong>Symf
 # Screenshots
 
 Further down the development of this tool, we will provide some screenshots to give you a sense of what it looks like.
+
+# Visualization of the codebase
+
+![Visualization of the codebase](./diagram.svg)
