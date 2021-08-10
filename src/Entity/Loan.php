@@ -3,13 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\LoanRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=LoanRepository::class)
  */
 class Loan
 {
+    use TimestampableEntity;
+
+    const RETURN_STATUSES = ['available', 'lent', 'to_repair', 'irreparable', 'lost'];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -20,35 +26,35 @@ class Loan
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $dateReturned;
+    private DateTimeInterface $dateReturned;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $returnedStatus;
+    private string $returnedStatus;
 
     /**
      * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="loan")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $loanedItem;
+    private Item $loanedItem;
 
     /**
      * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="loans")
      */
-    private $OrderId;
+    private Order $order;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDateReturned(): ?\DateTimeInterface
+    public function getDateReturned(): ?DateTimeInterface
     {
         return $this->dateReturned;
     }
 
-    public function setDateReturned(?\DateTimeInterface $dateReturned): self
+    public function setDateReturned(?DateTimeInterface $dateReturned): self
     {
         $this->dateReturned = $dateReturned;
 
@@ -79,15 +85,20 @@ class Loan
         return $this;
     }
 
-    public function getOrderId(): ?Order
+    public function getOrder(): ?Order
     {
-        return $this->OrderId;
+        return $this->order;
     }
 
-    public function setOrderId(?Order $OrderId): self
+    public function setOrder(?Order $order): self
     {
-        $this->OrderId = $OrderId;
+        $this->order = $order;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getId();
     }
 }

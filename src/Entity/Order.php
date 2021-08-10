@@ -3,9 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use http\Exception\InvalidArgumentException;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
@@ -13,6 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,27 +29,39 @@ class Order
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $gameBranch;
+    private string $ageGroup;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateStart;
+    private DateTimeInterface $dateStart;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateEnd;
+    private DateTimeInterface $dateEnd;
 
     /**
-     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="OrderId")
+     * @Gedmo\Blameable(on="create")
+     * @ORM\ManyToOne(targetEntity=User::class)
      */
-    private $loans;
+    private User $createdBy;
+
+    /**
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private User $updatedBy;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="order")
+     */
+    private Collection $loans;
 
     public function __construct()
     {
@@ -67,36 +85,40 @@ class Order
         return $this;
     }
 
-    public function getGameBranch(): ?string
+    public function getAgeGroup(): ?string
     {
-        return $this->gameBranch;
+        return $this->ageGroup;
     }
 
-    public function setGameBranch(string $gameBranch): self
+    public function setAgeGroup(string $ageGroup): self
     {
-        $this->gameBranch = $gameBranch;
+        if (in_array($ageGroup, User::AGE_GROUPS)) {
+            throw new InvalidArgumentException('Not a valid age group.');
+        }
+
+        $this->ageGroup = $ageGroup;
 
         return $this;
     }
 
-    public function getDateStart(): ?\DateTimeInterface
+    public function getDateStart(): ?DateTimeInterface
     {
         return $this->dateStart;
     }
 
-    public function setDateStart(\DateTimeInterface $dateStart): self
+    public function setDateStart(DateTimeInterface $dateStart): self
     {
         $this->dateStart = $dateStart;
 
         return $this;
     }
 
-    public function getDateEnd(): ?\DateTimeInterface
+    public function getDateEnd(): ?DateTimeInterface
     {
         return $this->dateEnd;
     }
 
-    public function setDateEnd(\DateTimeInterface $dateEnd): self
+    public function setDateEnd(DateTimeInterface $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
 
@@ -115,7 +137,7 @@ class Order
     {
         if (!$this->loans->contains($loan)) {
             $this->loans[] = $loan;
-            $loan->setOrderId($this);
+            $loan->setOrder($this);
         }
 
         return $this;
@@ -125,10 +147,39 @@ class Order
     {
         if ($this->loans->removeElement($loan)) {
             // set the owning side to null (unless already changed)
-            if ($loan->getOrderId() === $this) {
-                $loan->setOrderId(null);
+            if ($loan->getOrder() === $this) {
+                $loan->setOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $updatedBy): self
+    {
+        $this->updatedBy = $updatedBy;
 
         return $this;
     }
