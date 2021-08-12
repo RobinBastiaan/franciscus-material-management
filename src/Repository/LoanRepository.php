@@ -21,6 +21,6 @@ class LoanRepository extends ServiceEntityRepository
 
     public function getAllLoansInCirculation()
     {
-        
+
     }
 }

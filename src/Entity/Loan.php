@@ -40,9 +40,9 @@ class Loan
     private Item $loanedItem;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="loans")
+     * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="loans")
      */
-    private Order $order;
+    private Reservation $reservation;
 
     public function getId(): ?int
     {
@@ -85,14 +85,14 @@ class Loan
         return $this;
     }
 
-    public function getOrder(): ?Order
+    public function getReservation(): ?Reservation
     {
-        return $this->order;
+        return $this->reservation;
     }
 
-    public function setOrder(?Order $order): self
+    public function setReservation(?Reservation $reservation): self
     {
-        $this->order = $order;
+        $this->reservation = $reservation;
 
         return $this;
     }

@@ -5,20 +5,25 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use http\Exception\InvalidArgumentException;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity("email")
  * @UniqueEntity("name")
  */
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
 
-    const AGE_GROUPS = ['Bevers', 'Welpen', 'Scouts', 'Explorers', 'Roverscouts', 'Stam'];
+    const ROLE_ROOT = 'ROLE_ROOT';
+    const ROLE_MATERIAAL_MEESTER = 'ROLE_MATERIAAL_MEESTER';
+    const ROLE_USER = 'ROLE_USER';
+
+    const AGE_GROUPS = ['Bevers', 'Parcival', 'Leonardus', 'Scouts', 'Explorers', 'Roverscouts', 'Stam', 'Bestuur', 'Overig'];
 
     /**
      * @ORM\Id

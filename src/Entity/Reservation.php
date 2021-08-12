@@ -2,20 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderRepository;
+use App\Repository\ReservationRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use http\Exception\InvalidArgumentException;
 
 /**
- * @ORM\Entity(repositoryClass=OrderRepository::class)
- * @ORM\Table(name="`order`")
+ * @ORM\Entity(repositoryClass=ReservationRepository::class)
  */
-class Order
+class Reservation
 {
     use TimestampableEntity;
 
