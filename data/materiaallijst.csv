@@ -1,6 +1,6 @@
 Hoeveel,Naam,Omschrijving,Type,Datum gekocht,Originele koopwaarde,Status,Locatie,Tags
-1,Groepstent,Dit is een hele grote tent. De tent is X meter lang en kan in delen opgezet worden.,Tent,2000-01-01,"€5,000.00",Matig,Tentenberging,Tent
-1,Bungalowtent Thuurk,Slaaptent voor 2 personen. Heeft een binnentent en een luifel.,Tent,2014-08-15,€200.00,Goed,Tentenberging,"Tent, Slaaptent"
+,Groepstent,Dit is een hele grote tent. De tent is X meter lang en kan in delen opgezet worden.,Tent,2000-01-01,"€5,000.00",Matig,Tentenberging,Tent
+,Bungalowtent Thuurk,Slaaptent voor 2 personen. Heeft een binnentent en een luifel.,Tent,2014-08-15,€200.00,Goed,Tentenberging,"Tent, Slaaptent"
 2,Olielampenkrat,Inclusief glaasjes. Hier moet lampenolie in.,Krat,2015-04-05,€550.00,Goed,Algemene berging,"Olielamp, Lamp, Brandveiligheid, Krat"
-12,Gasfles,Deze propaan gasflessen zijn ideaal om op te koken. Om de 10 jaar moet de gasfles vervangen worden. Let op: weeg ze van te voren zodat je zeker weet dat ze niet leeg zijn en je er niets aan help.,Gasfles,2010-07-07,€460.00,Goed,Buitenplaats,Brandveiligheid
+12,Gasfles,Deze propaan gasflessen zijn ideaal om op te koken. Om de 10 jaar moet de gasfles vervangen worden. Let op: weeg ze van te voren zodat je zeker weet dat ze niet leeg zijn en je er niets aan hebt.,Gasfles,2010-07-07,€460.00,Goed,Buitenplaats,Brandveiligheid
 10,Afwasteiltje,In verschillende kleuren.,Koken en Stoken,2010-07-07,€5.00,Goed,Algemene berging,Koken en Stoken

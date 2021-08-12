@@ -166,6 +166,8 @@ class Item
 
     public function setAmount(int $amount): self
     {
+        $amount = empty($amount) ? 1 : $amount;
+
         $this->amount = $amount;
 
         return $this;

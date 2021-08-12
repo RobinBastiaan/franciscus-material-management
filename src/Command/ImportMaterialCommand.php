@@ -8,13 +8,13 @@ use App\Repository\TagRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use http\Exception\UnexpectedValueException;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class ImportMaterialCommand extends Command
 {
@@ -95,14 +95,14 @@ class ImportMaterialCommand extends Command
             $dateTime = date('Y/m/d', strtotime($row['Datum gekocht'])); // use European data format
             $dateTime = (new DateTime($dateTime));
         } catch (Exception $e) {
-            throw new UnexpectedValueException('Failed to parse time string! (' . $row['Datum gekocht'] . ')');
+            throw new UnexpectedValueException('Failed to parse time string! (' . $row['Datum gekocht'] . ')', 'DateTime');
         }
 
         $value = (float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€'));
 
         $item = new Item;
         $item
-            ->setAmount($row['Hoeveel'])
+            ->setAmount((int)$row['Hoeveel'])
             ->setName($row['Naam'])
             ->setDescription($row['Omschrijving'])
             ->setType($row['Type'])
