@@ -48,7 +48,7 @@ class UserFixtures extends Fixture
             $user->setEmail($aUser['email']);
             $user->setPassword($this->passwordHasher->hashPassword($user, $aUser['plain_password']));
             $user->setRoles($aUser['roles']);
-            $user->setAgeGroup($aUser['roles']);
+            $user->setAgeGroup($aUser['age_group']);
 
             $manager->persist($user);
 

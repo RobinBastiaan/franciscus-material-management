@@ -50,14 +50,14 @@ class Item
     private string $type;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default": "1"})
      */
     private int $amount = 1;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "Goed"})
      */
-    private string $status;
+    private string $status = 'Goed';
 
     /**
      * @ORM\Column(type="datetime")
@@ -65,9 +65,9 @@ class Item
     private $dateBought;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
-    private $value;
+    private ?float $value;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -131,6 +131,18 @@ class Item
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
@@ -202,7 +214,7 @@ class Item
         return $this->value;
     }
 
-    public function setValue(float $value): self
+    public function setValue(?float $value): self
     {
         $this->value = $value;
 
@@ -327,18 +339,6 @@ class Item
     public function __toString()
     {
         return $this->getName();
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     public function getCreatedBy(): ?User
