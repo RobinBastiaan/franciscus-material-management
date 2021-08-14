@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Item;
 use App\Entity\Loan;
 use App\Entity\Order;
+use App\Entity\Reservation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -40,6 +41,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Item', 'fas fa-list', Item::class);
         yield MenuItem::linkToCrud('Loan', 'fas fa-list', Loan::class);
-        yield MenuItem::linkToCrud('Order', 'fas fa-list', Order::class);
+        yield MenuItem::linkToCrud('Reservation', 'fas fa-list', Reservation::class);
     }
 }

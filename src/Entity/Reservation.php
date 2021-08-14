@@ -156,7 +156,7 @@ class Reservation
     {
         if (!$this->loans->contains($loan)) {
             $this->loans[] = $loan;
-            $loan->setOrder($this);
+            $loan->setReservation($this);
         }
 
         return $this;
@@ -166,8 +166,8 @@ class Reservation
     {
         if ($this->loans->removeElement($loan)) {
             // set the owning side to null (unless already changed)
-            if ($loan->getOrder() === $this) {
-                $loan->setOrder(null);
+            if ($loan->getReservation() === $this) {
+                $loan->setReservation(null);
             }
         }
 

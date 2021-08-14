@@ -94,7 +94,7 @@ class Item
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity=User::class)
      */
-    private User $updatedBy;
+    private ?User $updatedBy;
 
     /**
      * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="loanedItem")

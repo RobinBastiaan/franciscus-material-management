@@ -82,14 +82,7 @@ class ImportMaterialCommand extends Command
      */
     private function addItem($row): void
     {
-        $item = $this->em->getRepository(Item::class)
-            ->findOneBy([
-                'name' => $row['Naam'],
-            ]);
-
-        if ($item !== null) { // ensure not added twice
-            return;
-        }
+        $value = (float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€'));
 
         try {
             $dateTime = date('Y/m/d', strtotime($row['Datum gekocht'])); // use European data format
@@ -98,9 +91,18 @@ class ImportMaterialCommand extends Command
             throw new UnexpectedValueException('Failed to parse time string! (' . $row['Datum gekocht'] . ')', 'DateTime');
         }
 
-        $value = (float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€'));
+        /** @var Item $itemFromDatabase */
+        $itemFromDatabase = $this->em->getRepository(Item::class)
+            ->findOneBy([
+                'name' => $row['Naam'],
+            ]);
+        $item = clone $itemFromDatabase;
+        $this->em->detach($item);
 
-        $item = new Item;
+        if ($item == null) {
+            $item = new Item; // add new Item instead of updating existing
+        }
+
         $item
             ->setAmount((int)$row['Hoeveel'])
             ->setName($row['Naam'])
@@ -110,9 +112,24 @@ class ImportMaterialCommand extends Command
             ->setValue($value)
             ->setStatus($row['Status'])
             ->setLocation($row['Locatie']);
-        $this->em->persist($item);
 
-        $tags = array_map('trim', explode(',', $row['Tags']));
+        if ($item == $itemFromDatabase) {
+            return; // nothing has changed; no update required
+        }
+
+        /** @var Item $item */
+        $item = $this->em->merge($item);
+
+        $this->updateTags($item, $row['Tags']);
+
+        $this->em->persist($item);
+        $this->em->flush();
+        $this->em->clear();
+    }
+
+    private function updateTags(Item $item, $tags): void
+    {
+        $tags = array_map('trim', explode(',', $tags));
 
         /** @var TagRepository $tagRepository */
         $tagRepository = $this->em->getRepository(Tag::class);
@@ -129,8 +146,5 @@ class ImportMaterialCommand extends Command
             $persistedTag->addItem($item);
             $item->addTag($persistedTag);
         }
-
-        $this->em->flush();
-        $this->em->clear();
     }
 }
