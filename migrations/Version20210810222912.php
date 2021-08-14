@@ -11,7 +11,7 @@ final class Version20210810222912 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Add User entity and implement *-able doctrine extensions.';
+        return 'Add User entity and implement *-able doctrine extensions';
     }
 
     public function up(Schema $schema): void

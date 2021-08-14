@@ -115,7 +115,7 @@ class ImportMaterialCommand extends Command
             ->setValue((float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€')))
             ->setManufacturer(trim($row['Fabrikant']))
             ->setDepreciationYears((int)$row['Afschrijvingsjaren'])
-            ->setStatus(trim($row['Status']))
+            ->setState(trim($row['Staat']))
             ->setLocation(trim($row['Locatie']));
 
         if ($material == $materialFromDatabase) {

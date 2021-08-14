@@ -21,6 +21,8 @@ class Material
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
+    const STATES = ['Goed', 'Matig', 'Slecht', 'Afgeschreven'];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -57,7 +59,7 @@ class Material
     /**
      * @ORM\Column(type="string", length=255, options={"default": "Goed"})
      */
-    private string $status = 'Goed';
+    private string $state = 'Goed';
 
     /**
      * @ORM\Column(type="datetime")
@@ -85,18 +87,6 @@ class Material
     private ?string $location;
 
     /**
-     * @Gedmo\Blameable(on="create")
-     * @ORM\ManyToOne(targetEntity=User::class)
-     */
-    private User $createdBy;
-
-    /**
-     * @Gedmo\Blameable(on="update")
-     * @ORM\ManyToOne(targetEntity=User::class)
-     */
-    private ?User $updatedBy;
-
-    /**
      * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="loanedMaterial")
      */
     private Collection $loan;
@@ -109,7 +99,19 @@ class Material
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="materials")
      */
-    private $tags;
+    private Collection $tags;
+
+    /**
+     * @Gedmo\Blameable(on="create")
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private User $createdBy;
+
+    /**
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private ?User $updatedBy;
 
     public function __construct()
     {
@@ -185,14 +187,14 @@ class Material
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getState(): ?string
     {
-        return $this->status;
+        return $this->state;
     }
 
-    public function setStatus(string $status): self
+    public function setState(string $state): self
     {
-        $this->status = $status;
+        $this->state = $state;
 
         return $this;
     }
@@ -336,11 +338,6 @@ class Material
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->getName();
-    }
-
     public function getCreatedBy(): ?User
     {
         return $this->createdBy;
@@ -363,5 +360,10 @@ class Material
         $this->updatedBy = $updatedBy;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

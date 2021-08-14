@@ -14,7 +14,7 @@ final class Version20210812222000 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Set default values on user properties.';
+        return 'Set default values on user properties';
     }
 
     public function up(Schema $schema): void

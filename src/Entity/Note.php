@@ -30,6 +30,16 @@ class Note
     private string $text;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="notes")
+     */
+    private Material $material;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Loan::class, inversedBy="notes")
+     */
+    private ?Loan $loan;
+
+    /**
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity=User::class)
      */
@@ -40,11 +50,6 @@ class Note
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private User $updatedBy;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="notes")
-     */
-    private Material $material;
 
     public function getId(): ?int
     {
@@ -75,9 +80,16 @@ class Note
         return $this;
     }
 
-    public function __toString()
+    public function getLoan(): ?Loan
     {
-        return (string) $this->getId();
+        return $this->loan;
+    }
+
+    public function setLoan(?Loan $loan): self
+    {
+        $this->loan = $loan;
+
+        return $this;
     }
 
     public function getCreatedBy(): ?User
@@ -102,5 +114,10 @@ class Note
         $this->updatedBy = $updatedBy;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getId();
     }
 }

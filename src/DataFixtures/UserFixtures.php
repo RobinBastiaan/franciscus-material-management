@@ -51,10 +51,9 @@ class UserFixtures extends Fixture
             $user->setAgeGroup($aUser['age_group']);
 
             $manager->persist($user);
+            $manager->flush();
 
             $this->addReference('user_' . $user->getName(), $user);
-
-            $manager->flush();
         }
 
         $manager->flush();

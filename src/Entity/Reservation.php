@@ -54,6 +54,11 @@ class Reservation
     private DateTimeInterface $dateEnd;
 
     /**
+     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="order")
+     */
+    private Collection $loans;
+
+    /**
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity=User::class)
      */
@@ -64,11 +69,6 @@ class Reservation
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private User $updatedBy;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="order")
-     */
-    private Collection $loans;
 
     public function __construct()
     {
@@ -111,8 +111,8 @@ class Reservation
 
     public function setAgeGroup(string $ageGroup): self
     {
-        if (in_array($ageGroup, User::AGE_GROUPS)) {
-            throw new InvalidArgumentException('Not a valid age group.');
+        if (!in_array($ageGroup, User::AGE_GROUPS)) {
+            throw new InvalidArgumentException($ageGroup . ' is not a valid age group.');
         }
 
         $this->ageGroup = $ageGroup;
@@ -174,11 +174,6 @@ class Reservation
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->getName();
-    }
-
     public function getCreatedBy(): ?User
     {
         return $this->createdBy;
@@ -201,5 +196,10 @@ class Reservation
         $this->updatedBy = $updatedBy;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

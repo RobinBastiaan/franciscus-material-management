@@ -11,7 +11,7 @@ final class Version20210812205515 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Rename Order to Reservation.';
+        return 'Rename Order to Reservation';
     }
 
     public function up(Schema $schema): void

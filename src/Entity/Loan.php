@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\LoanRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -14,7 +16,7 @@ class Loan
 {
     use TimestampableEntity;
 
-    const RETURN_STATUSES = ['available', 'lent', 'to_repair', 'irreparable', 'lost'];
+    const STATES = ['Goed', 'Matig', 'Slecht', 'Afgeschreven'];
 
     /**
      * @ORM\Id
@@ -31,7 +33,7 @@ class Loan
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $returnedStatus;
+    private string $returnedState;
 
     /**
      * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="loan")
@@ -43,6 +45,16 @@ class Loan
      * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="loans")
      */
     private Reservation $reservation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="loan")
+     */
+    private ?Collection $notes;
+
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,14 +73,14 @@ class Loan
         return $this;
     }
 
-    public function getReturnedStatus(): ?string
+    public function getReturnedState(): ?string
     {
-        return $this->returnedStatus;
+        return $this->returnedState;
     }
 
-    public function setReturnedStatus(?string $returnedStatus): self
+    public function setReturnedState(?string $returnedState): self
     {
-        $this->returnedStatus = $returnedStatus;
+        $this->returnedState = $returnedState;
 
         return $this;
     }
@@ -97,8 +109,38 @@ class Loan
         return $this;
     }
 
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setLoan($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getLoan() === $this) {
+                $note->setLoan(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function __toString()
     {
-        return (string) $this->getId();
+        return (string)$this->getId();
     }
 }

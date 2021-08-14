@@ -9,7 +9,7 @@ final class Version20210618224850 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Add unique constraints.';
+        return 'Add unique constraints';
     }
 
     public function up(Schema $schema): void

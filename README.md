@@ -9,9 +9,12 @@ The Franciscus Material Management is an application build with the <strong>Symf
 1. Then you can start a local server to run the project with `symfony server:start`.
 1. The next step is to create the database with its tables, which can be done with `php bin/console doctrine:database:create` and then `php bin/console doctrine:migrations:migrate -n`.
 1. For local development, you can then fill the database with dummy data with `php bin/console doctrine:fixtures:load`.
-1. Then you can load the CSV data into the database with the own implemented command `php bin/console import-material [filename]`. The filename is optional and will load a .csv file in the /data directory.
 1. To activate the front-end, run `npm install `and next `npm run dev`. During development it might be your preference to run `npm run watch` in the background to automatically recompile your front-end related changes.
 1. Finally, to easily open the website you can use `symfony open:local`. 
+
+# Data import
+
+You can update the data for the materials via a CSV file with the own implemented command `php bin/console import-material [filename]`. The filename is optional and will load a .csv file in the /data directory.
 
 # Screenshots
 
