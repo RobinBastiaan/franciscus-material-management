@@ -8,7 +8,7 @@ framework:
                 type: 'method'
                 property: state
             supports:
-                - App\Entity\Item
+                - App\Entity\Material
             initial_marking: available
             places:
                 available: {}

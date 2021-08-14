@@ -14,8 +14,8 @@
             <a class="btn btn-primary form-inline" href="{{ path('material_list_pdf') }}">Download als PDF</a>
         {% endif %}
 
-        {% for item in items %}
-            {% include '/material/partials/item.html.twig' %}
+        {% for material in materials %}
+            {% include '/material/partials/material.html.twig' %}
         {% endfor %}
     </main>
 {% endblock %}

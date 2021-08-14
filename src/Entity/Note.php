@@ -42,9 +42,9 @@ class Note
     private User $updatedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="notes")
+     * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="notes")
      */
-    private Item $item;
+    private Material $material;
 
     public function getId(): ?int
     {
@@ -63,14 +63,14 @@ class Note
         return $this;
     }
 
-    public function getItem(): ?Item
+    public function getMaterial(): ?Material
     {
-        return $this->item;
+        return $this->material;
     }
 
-    public function setItem(Item $item): self
+    public function setMaterial(Material $material): self
     {
-        $this->item = $item;
+        $this->material = $material;
 
         return $this;
     }

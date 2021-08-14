@@ -21,7 +21,7 @@ class UserFixtures extends Fixture
             'name'           => 'Materiaalmeester',
             'email'          => 'materiaal@meester.com',
             'plain_password' => 'materiaal',
-            'roles'          => [User::ROLE_MATERIAAL_MEESTER],
+            'roles'          => [User::ROLE_MATERIAL_MASTER],
             'age_group'      => ['Overig'],
         ],
         [

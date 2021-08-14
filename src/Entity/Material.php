@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\ItemRepository;
+use App\Repository\MaterialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,11 +12,11 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=ItemRepository::class)
+ * @ORM\Entity(repositoryClass=MaterialRepository::class)
  * @UniqueEntity("name")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Item
+class Material
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
@@ -70,9 +70,9 @@ class Item
     private ?float $value;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private ?float $depreciation;
+    private ?int $depreciationYears;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -97,17 +97,17 @@ class Item
     private ?User $updatedBy;
 
     /**
-     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="loanedItem")
+     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="loanedMaterial")
      */
     private Collection $loan;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="item")
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="material")
      */
     private Collection $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="items")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="materials")
      */
     private $tags;
 
@@ -221,14 +221,14 @@ class Item
         return $this;
     }
 
-    public function getDepreciation(): ?float
+    public function getDepreciationYears(): ?int
     {
-        return $this->depreciation;
+        return $this->depreciationYears;
     }
 
-    public function setDepreciation(?float $depreciation): self
+    public function setDepreciationYears(?int $depreciationYears): self
     {
-        $this->depreciation = $depreciation;
+        $this->depreciationYears = $depreciationYears;
 
         return $this;
     }
@@ -269,7 +269,7 @@ class Item
     {
         if (!$this->loan->contains($loan)) {
             $this->loan[] = $loan;
-            $loan->setLoanedItem($this);
+            $loan->setLoanedMaterial($this);
         }
 
         return $this;
@@ -279,8 +279,8 @@ class Item
     {
         if ($this->loan->removeElement($loan)) {
             // set the owning side to null (unless already changed)
-            if ($loan->getLoanedItem() === $this) {
-                $loan->setLoanedItem(null);
+            if ($loan->getLoanedMaterial() === $this) {
+                $loan->setLoanedMaterial(null);
             }
         }
 
@@ -299,7 +299,7 @@ class Item
     {
         if (!$this->notes->contains($note)) {
             $this->notes[] = $note;
-            $note->setItem($this);
+            $note->setMaterial($this);
         }
 
         return $this;

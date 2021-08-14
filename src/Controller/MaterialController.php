@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\ItemRepository;
+use App\Repository\MaterialRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,24 +14,24 @@ class MaterialController extends AbstractController
     /**
      * @Route("/material", name="material_list", methods={"GET"})
      */
-    public function material_list(ItemRepository $itemRepository): Response
+    public function material_list(MaterialRepository $materialRepository): Response
     {
-        $items = $itemRepository->findAll();
+        $materials = $materialRepository->findAll();
 
         return $this->render('material/material-list.html.twig', [
-            'items' => $items,
+            'materials' => $materials,
         ]);
     }
 
     /**
      * @Route("/material/pdf", name="material_list_pdf", methods={"GET"})
      */
-    public function material_list_pdf(ItemRepository $itemRepository, Pdf $knpSnappyPdf): Response
+    public function material_list_pdf(MaterialRepository $materialRepository, Pdf $knpSnappyPdf): Response
     {
-        $items = $itemRepository->findAll();
+        $materials = $materialRepository->findAll();
 
         $html = $this->render('material/material-list.html.twig', [
-            'items' => $items,
+            'materials' => $materials,
         ])->getContent();
 
         return new PdfResponse(

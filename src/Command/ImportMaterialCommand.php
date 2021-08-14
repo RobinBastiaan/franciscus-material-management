@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\Item;
+use App\Entity\Material;
 use App\Entity\Tag;
 use App\Repository\TagRepository;
 use DateTime;
@@ -57,7 +57,7 @@ class ImportMaterialCommand extends Command
 
         foreach ($results as $row) {
             try {
-                $this->addItem($row);
+                $this->addMaterial($row);
             } catch (Exception $e) {
                 $io->error([
                     $e->getMessage(),
@@ -78,12 +78,10 @@ class ImportMaterialCommand extends Command
     }
 
     /**
-     * Adds an item to the database, but only if not already in the database.
+     * Adds a material to the database, but only if not already in the database.
      */
-    private function addItem($row): void
+    private function addMaterial($row): void
     {
-        $value = (float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€'));
-
         try {
             $dateTime = date('Y/m/d', strtotime($row['Datum gekocht'])); // use European data format
             $dateTime = (new DateTime($dateTime));
@@ -91,43 +89,50 @@ class ImportMaterialCommand extends Command
             throw new UnexpectedValueException('Failed to parse time string! (' . $row['Datum gekocht'] . ')', 'DateTime');
         }
 
-        /** @var Item $itemFromDatabase */
-        $itemFromDatabase = $this->em->getRepository(Item::class)
+        /** @var Material $materialFromDatabase */
+        $materialFromDatabase = $this->em->getRepository(Material::class)
             ->findOneBy([
-                'name' => $row['Naam'],
+                'name' => trim($row['Naam']),
             ]);
-        $item = clone $itemFromDatabase;
-        $this->em->detach($item);
 
-        if ($item == null) {
-            $item = new Item; // add new Item instead of updating existing
+        if (!empty($materialFromDatabase)) {
+            $material = clone $materialFromDatabase;
+            $this->em->detach($material);
+        } else {
+            $material = null;
         }
 
-        $item
-            ->setAmount((int)$row['Hoeveel'])
-            ->setName($row['Naam'])
-            ->setDescription($row['Omschrijving'])
-            ->setType($row['Type'])
-            ->setDateBought($dateTime)
-            ->setValue($value)
-            ->setStatus($row['Status'])
-            ->setLocation($row['Locatie']);
+        if ($material == null) {
+            $material = new Material; // add new Material instead of updating existing
+        }
 
-        if ($item == $itemFromDatabase) {
+        $material
+            ->setAmount((int)$row['Hoeveel'])
+            ->setName(trim($row['Naam']))
+            ->setDescription(trim($row['Omschrijving']))
+            ->setType(trim($row['Type']))
+            ->setDateBought($dateTime)
+            ->setValue((float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€')))
+            ->setManufacturer(trim($row['Fabrikant']))
+            ->setDepreciationYears((int)$row['Afschrijvingsjaren'])
+            ->setStatus(trim($row['Status']))
+            ->setLocation(trim($row['Locatie']));
+
+        if ($material == $materialFromDatabase) {
             return; // nothing has changed; no update required
         }
 
-        /** @var Item $item */
-        $item = $this->em->merge($item);
+        /** @var Material $material */
+        $material = $this->em->merge($material);
 
-        $this->updateTags($item, $row['Tags']);
+        $this->updateTags($material, $row['Tags']);
 
-        $this->em->persist($item);
+        $this->em->persist($material);
         $this->em->flush();
         $this->em->clear();
     }
 
-    private function updateTags(Item $item, $tags): void
+    private function updateTags(Material $material, $tags): void
     {
         $tags = array_map('trim', explode(',', $tags));
 
@@ -143,8 +148,8 @@ class ImportMaterialCommand extends Command
                 $this->em->persist($persistedTag);
             }
 
-            $persistedTag->addItem($item);
-            $item->addTag($persistedTag);
+            $persistedTag->addMaterial($material);
+            $material->addTag($persistedTag);
         }
     }
 }

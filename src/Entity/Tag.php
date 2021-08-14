@@ -30,13 +30,13 @@ class Tag
     private string $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Item::class, mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity=Material::class, mappedBy="tags")
      */
-    private Collection $items;
+    private Collection $materials;
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
+        $this->materials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,27 +57,27 @@ class Tag
     }
 
     /**
-     * @return Collection|Item[]
+     * @return Collection|Material[]
      */
-    public function getItems(): Collection
+    public function getMaterials(): Collection
     {
-        return $this->items;
+        return $this->materials;
     }
 
-    public function addItem(Item $item): self
+    public function addMaterial(Material $material): self
     {
-        if (!$this->items->contains($item)) {
-            $this->items[] = $item;
-            $item->addTag($this);
+        if (!$this->materials->contains($material)) {
+            $this->materials[] = $material;
+            $material->addTag($this);
         }
 
         return $this;
     }
 
-    public function removeItem(Item $item): self
+    public function removeMaterial(Material $material): self
     {
-        if ($this->items->removeElement($item)) {
-            $item->removeTag($this);
+        if ($this->materials->removeElement($material)) {
+            $material->removeTag($this);
         }
 
         return $this;

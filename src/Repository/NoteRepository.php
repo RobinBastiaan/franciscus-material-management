@@ -22,7 +22,7 @@ class NoteRepository extends ServiceEntityRepository
     /**
      * @return Note[] Returns an array of Note objects
      */
-    public function findByItems($value)
+    public function findByNote($value)
     {
         return $this->createQueryBuilder('n')
             ->andWhere('n.exampleField = :val')

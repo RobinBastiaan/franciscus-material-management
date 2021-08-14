@@ -2,9 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Item;
 use App\Entity\Loan;
-use App\Entity\Order;
+use App\Entity\Material;
 use App\Entity\Reservation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -23,7 +22,7 @@ class DashboardController extends AbstractDashboardController
         // redirect to some CRUD controller
         $routeBuilder = $this->get(AdminUrlGenerator::class);
 
-        return $this->redirect($routeBuilder->setController(ItemCrudController::class)->generateUrl());
+        return $this->redirect($routeBuilder->setController(MaterialCrudController::class)->generateUrl());
 
         // you can also render some template to display a proper Dashboard
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
@@ -39,7 +38,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Item', 'fas fa-list', Item::class);
+        yield MenuItem::linkToCrud('Material', 'fas fa-list', Material::class);
         yield MenuItem::linkToCrud('Loan', 'fas fa-list', Loan::class);
         yield MenuItem::linkToCrud('Reservation', 'fas fa-list', Reservation::class);
     }

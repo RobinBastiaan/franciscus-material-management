@@ -2,14 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Item;
+use App\Entity\Material;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class ItemCrudController extends AbstractCrudController
+class MaterialCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Item::class;
+        return Material::class;
     }
 
     /*

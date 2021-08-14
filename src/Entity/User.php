@@ -20,7 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     use TimestampableEntity;
 
     const ROLE_ROOT = 'ROLE_ROOT';
-    const ROLE_MATERIAAL_MEESTER = 'ROLE_MATERIAAL_MEESTER';
+    const ROLE_MATERIAL_MASTER = 'ROLE_MATERIAL_MASTER';
     const ROLE_USER = 'ROLE_USER';
 
     const AGE_GROUPS = ['Bevers', 'Parcival', 'Leonardus', 'Scouts', 'Explorers', 'Roverscouts', 'Stam', 'Bestuur', 'Overig'];
@@ -80,9 +80,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
-    public function getUsername(): string
+    public function getUserIdentifier(): string
     {
         return (string)$this->email;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier() instead
+     */
+    public function getUserName(): string
+    {
+        return $this->getUserIdentifier();
     }
 
     /**

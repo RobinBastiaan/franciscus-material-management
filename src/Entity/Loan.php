@@ -34,10 +34,10 @@ class Loan
     private string $returnedStatus;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="loan")
+     * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="loan")
      * @ORM\JoinColumn(nullable=false)
      */
-    private Item $loanedItem;
+    private Material $loanedMaterial;
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="loans")
@@ -73,14 +73,14 @@ class Loan
         return $this;
     }
 
-    public function getLoanedItem(): ?Item
+    public function getLoanedMaterial(): ?Material
     {
-        return $this->loanedItem;
+        return $this->loanedMaterial;
     }
 
-    public function setLoanedItem(?Item $loanedItem): self
+    public function setLoanedMaterial(?Material $loanedMaterial): self
     {
-        $this->loanedItem = $loanedItem;
+        $this->loanedMaterial = $loanedMaterial;
 
         return $this;
     }
