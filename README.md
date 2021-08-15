@@ -18,7 +18,8 @@ You can update the data for the materials via a CSV file with the own implemente
 
 # Screenshots
 
-Further down the development of this tool, we will provide some screenshots to give you a sense of what it looks like.
+The admin section includes ordering and filtering options.
+![Screenshot Admin](https://user-images.githubusercontent.com/38226878/129489239-399b01af-ce61-4e66-9c67-ba6a57b9e555.png)
 
 # Visualization of the codebase
 
