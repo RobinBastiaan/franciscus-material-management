@@ -54,7 +54,7 @@ class Reservation
     private DateTimeInterface $dateEnd;
 
     /**
-     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="order")
+     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="reservation", fetch="EAGER")
      */
     private Collection $loans;
 
@@ -68,7 +68,7 @@ class Reservation
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity=User::class)
      */
-    private User $updatedBy;
+    private ?User $updatedBy;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="reservations")

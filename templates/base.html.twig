@@ -17,11 +17,18 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
+
 <body>
-{% block header %}{% endblock %}
-{% block main %}{% endblock %}
-{% block footer %}
-    {% include 'partials/footer.html.twig' %}
-{% endblock %}
+    {% block header %}{% endblock %}
+    {% block body %}
+        {% include '/partials/header.html.twig' %}
+
+        <main class="container">
+            {% block main %}{% endblock %}
+        </main>
+    {% endblock %}
+    {% block footer %}
+        {% include 'partials/footer.html.twig' %}
+    {% endblock %}
 </body>
 </html>

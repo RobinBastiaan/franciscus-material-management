@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservaties{% endblock %}
+
+{% block main %}
+    <h1>Reservaties</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Speltak</th>
+            <th>Begin Datum</th>
+            <th>Eind Datum</th>
+            <th>Acties</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.name }}</td>
+                <td>{{ reservation.ageGroup }}</td>
+                <td>{{ reservation.dateStart ? reservation.dateStart|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.dateEnd ? reservation.dateEnd|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('reservation_show', {'slug': reservation.slug}) }}">Bekijken</a>
+                    <a href="{{ path('reservation_edit', {'slug': reservation.slug}) }}">Aanpassen</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Geen reservaties gevonden.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('reservation_new') }}">Nieuwe maken</a>
+{% endblock %}

@@ -17,6 +17,7 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
             'age_group'  => 'Scouts',
             'date_start' => '+0 days',
             'date_end'   => '+10 days',
+            'created_by' => 'Admin',
             'users'      => ['Materiaalmeester', 'User'],
         ],
         [
@@ -24,6 +25,7 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
             'age_group'  => 'Explorers',
             'date_start' => '+0 days',
             'date_end'   => '+7 days',
+            'created_by' => 'Materiaalmeester',
             'users'      => ['Materiaalmeester', 'User'],
         ],
         [
@@ -31,6 +33,7 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
             'age_group'  => 'Stam',
             'date_start' => '+0 days',
             'date_end'   => '+3 days',
+            'created_by' => 'User',
             'users'      => [],
         ],
     ];
@@ -46,6 +49,9 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
             $reservation->setAgeGroup($aReservation['age_group']);
             $reservation->setDateStart((new DateTime(date('Y/m/d', strtotime($aReservation['date_start'])))));
             $reservation->setDateEnd((new DateTime(date('Y/m/d', strtotime($aReservation['date_end'])))));
+            /** @var User $userReference */
+            $userReference = $this->getReference('user_' . $aReservation['created_by']);
+            $reservation->setCreatedBy($userReference);
             if (!empty($aReservation['users'])) {
                 foreach ($aReservation['users'] as $aUser) {
                     /** @var User $userReference */

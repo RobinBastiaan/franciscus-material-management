@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ reservation.name }}{% endblock %}
+
+{% block main %}
+    <h1>Reservatie</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Naam</th>
+            <td>{{ reservation.name }}</td>
+        </tr>
+        <tr>
+            <th>Speltak</th>
+            <td>{{ reservation.ageGroup }}</td>
+        </tr>
+        <tr>
+            <th>Begin Datum</th>
+            <td>{{ reservation.dateStart ? reservation.dateStart|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Eind Datum</th>
+            <td>{{ reservation.dateEnd ? reservation.dateEnd|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Aangemaakt</th>
+            <td>
+                {{ reservation.createdAt ? reservation.createdAt|date('Y-m-d H:i:s') : '' }}
+                {% if reservation.createdBy is defined %}
+                    door {{ reservation.createdBy }}
+                {% endif %}
+            </td>
+        </tr>
+        {% if reservation.createdAt != reservation.updatedAt %}
+            <tr>
+                <th>Aangepast</th>
+                <td>
+                    {{ reservation.updatedAt ? reservation.updatedAt|date('Y-m-d H:i:s') : '' }}
+                    {% if reservation.updatedBy is defined %}
+                        door {{ reservation.updatedBy }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <section class="card my-2">
+        <h2>Materialen</h2>
+        <table class="table">
+            {% if reservation.loans is not empty %}
+                {% for loan in reservation.loans %}
+                    {% set material = loan.loanedMaterial %}
+                    {{ include('material/_material.html.twig') }}
+                {% endfor %}
+            {% else %}
+                Op dit moment zijn er geen materialen bij deze reservering.
+            {% endif %}
+        </table>
+        <button class="btn btn-primary">Voeg toe</button>
+    </section>
+
+    <section class="card my-2">
+        <h2>Gebruikers</h2>
+        <table class="table">
+            {% if reservation.users is not empty %}
+                {% for user in reservation.users %}
+                    <tr>
+                        <td>{{ user.name }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                Op dit moment zijn er geen gebruikers bij deze reservering.
+            {% endif %}
+        </table>
+        <button class="btn btn-primary">Voeg toe</button>
+    </section>
+
+    <a href="{{ path('reservation_index') }}">Terug naar het overzicht</a>
+
+    <a href="{{ path('reservation_edit', {'slug': reservation.slug}) }}">Aanpassen</a>
+
+    {{ include('reservation/_delete_form.html.twig') }}
+{% endblock %}

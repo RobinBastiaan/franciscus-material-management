@@ -5,7 +5,7 @@
     <div class="card-body">
         <p><b>Locatie: </b>{{ material.location }}</p>
         <p><b>Aantal: </b>{{ material.amount }}</p>
-        <p><b>Gekocht: </b>{{ material.dateBought|date('F Y') }}  ({{ material.dateBought|ago }})</p>
+        <p><b>Gekocht: </b>{{ material.dateBought|date('F Y') }} ({{ material.dateBought|ago }})</p>
 
         <div><b>Tags: </b>
             {%- for tag in material.tags -%}
@@ -15,7 +15,12 @@
         </div>
 
         {% if app.request.attributes.get('_route') != 'material_list_pdf' %}
-            <button class="btn btn-primary">Voeg toe</button>
+            {% if app.request.attributes.get('_route') == 'material_index' %}
+                <button class="btn btn-primary">Voeg toe</button>
+            {% endif %}
+            {% if app.request.attributes.get('_route') == 'reservation_show' %}
+                <button class="btn btn-secondary">Verwijderen</button>
+            {% endif %}
         {% endif %}
     </div>
 </section>

@@ -105,7 +105,7 @@ class Material
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity=User::class)
      */
-    private User $createdBy;
+    private ?User $createdBy;
 
     /**
      * @Gedmo\Blameable(on="update")
