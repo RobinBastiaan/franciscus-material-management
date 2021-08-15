@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Reservation;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -25,6 +26,13 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
             'date_end'   => '+7 days',
             'users'      => ['Materiaalmeester', 'User'],
         ],
+        [
+            'name'       => 'Weekendkamp',
+            'age_group'  => 'Stam',
+            'date_start' => '+0 days',
+            'date_end'   => '+3 days',
+            'users'      => [],
+        ],
     ];
 
     /**
@@ -38,6 +46,13 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
             $reservation->setAgeGroup($aReservation['age_group']);
             $reservation->setDateStart((new DateTime(date('Y/m/d', strtotime($aReservation['date_start'])))));
             $reservation->setDateEnd((new DateTime(date('Y/m/d', strtotime($aReservation['date_end'])))));
+            if (!empty($aReservation['users'])) {
+                foreach ($aReservation['users'] as $aUser) {
+                    /** @var User $userReference */
+                    $userReference = $this->getReference('user_' . $aUser);
+                    $reservation->addUser($userReference);
+                }
+            }
 
             $manager->persist($reservation);
             $manager->flush();
