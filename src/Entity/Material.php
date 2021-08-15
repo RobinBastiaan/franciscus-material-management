@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MaterialRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -360,6 +361,19 @@ class Material
         $this->updatedBy = $updatedBy;
 
         return $this;
+    }
+
+    public function getCurrentValue(): ?float
+    {
+        if ($this->depreciationYears === 0) { // no current value from the start
+            return 0;
+        } elseif ($this->depreciationYears === null) { // never depreciating
+            return $this->value;
+        }
+
+        $expiredYears = $this->dateBought->diff(new DateTime('now'))->y;
+
+        return max(0, $this->value * (1 - ($expiredYears / $this->depreciationYears)));
     }
 
     public function __toString()
