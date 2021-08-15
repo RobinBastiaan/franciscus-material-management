@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Materiaal Overzicht{% endblock %}
+
+{% block main %}
+    <h1>Materiaallijst</h1>
+
+    {% if app.request.attributes.get('_route') != 'material_index_pdf' %}
+        <button class="btn btn-primary form-inline">Zoeken</button>
+        <button class="btn btn-primary form-inline">Filteren</button>
+        <a class="btn btn-primary form-inline" href="{{ path('material_index_pdf') }}">Download als PDF</a>
+    {% endif %}
+
+    {% for material in materials %}
+        {% include '/material/_material.html.twig' %}
+    {% endfor %}
+
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Aantal</th>#}
+{#                <th>Naam</th>#}
+{#                <th>Omschrijving</th>#}
+{#                <th>Type</th>#}
+{#                <th>Staat</th>#}
+{#                <th>Koop datum</th>#}
+{#                <th>Originele waarde</th>#}
+{#                <th>Afschrijvingsjaren</th>#}
+{#                <th>Fabrikant</th>#}
+{#                <th>Locatie</th>#}
+{#                <th>Tags</th>#}
+{#                <th>Acties</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for material in materials %}#}
+{#            <tr>#}
+{#                <td>{{ material.amount }}</td>#}
+{#                <td>{{ material.name }}</td>#}
+{#                <td>{{ material.description }}</td>#}
+{#                <td>{{ material.type }}</td>#}
+{#                <td>{{ material.state }}</td>#}
+{#                <td>{{ material.dateBought ? material.dateBought|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ material.value|format_currency('EUR') }}</td>#}
+{#                <td>{{ material.depreciationYears ? material.depreciationYears : 'nvt' }}</td>#}
+{#                <td>{{ material.manufacturer }}</td>#}
+{#                <td>{{ material.location }}</td>#}
+{#                <td>{{ material.location }}</td>#}
+{#                <td>#}
+{#                    <a href="{{ path('material_show', {'slug': material.slug}) }}">Bekijken</a>#}
+{#                    <a href="{{ path('material_edit', {'slug': material.slug}) }}">Aanpassen</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% else %}#}
+{#            <tr>#}
+{#                <td colspan="16">Geen materiaal gevonden met deze selectie</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+
+{#    <a href="{{ path('material_new') }}">Nieuwe aanmaken</a>#}
+{% endblock %}

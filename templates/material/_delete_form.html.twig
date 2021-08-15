@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('material_delete', {'slug': material.slug}) }}" onsubmit="return confirm('Weet je zeker dat je dit materiaal wil verwijderen?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ material.slug) }}">
+    <button class="btn">Verwijderen</button>
+</form>

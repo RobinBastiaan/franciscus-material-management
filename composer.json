@@ -27,7 +27,9 @@
         "symfony/validator": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.11",
         "symfony/workflow": "5.2.*",
-        "symfony/yaml": "5.2.*"
+        "symfony/yaml": "5.2.*",
+        "twig/extra-bundle": "^3.3",
+        "twig/intl-extra": "^3.3"
     },
     "replace": {
         "symfony/polyfill-ctype": "*",

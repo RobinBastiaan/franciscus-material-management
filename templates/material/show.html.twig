@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ material.name }}{% endblock %}
+
+{% block main %}
+    <h1>Materiaal</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Aantal</th>
+            <td>{{ material.amount }}</td>
+        </tr>
+            <tr>
+                <th>Naam</th>
+                <td>{{ material.name }}</td>
+            </tr>
+            <tr>
+                <th>Omschrijving</th>
+                <td>{{ material.description }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ material.type }}</td>
+            </tr>
+            <tr>
+                <th>Staat</th>
+                <td>{{ material.state }}</td>
+            </tr>
+            <tr>
+                <th>Koopdatum</th>
+                <td>{{ material.dateBought|date('F Y') }} ({{ material.dateBought|ago }})</td>
+            </tr>
+            <tr>
+                <th>Originele waarde</th>
+                <td>{{ material.value|format_currency('EUR') }}</td>
+            </tr>
+            <tr>
+                <th>Afschrijvingsjaren</th>
+                <td>
+                    {{ material.depreciationYears }}
+                    {% set depreciationYear = material.dateBought|date('Y')+material.depreciationYears %}
+                    {% if depreciationYear >= "now"|date("Y") %}
+                        (verloopt in {{ (depreciationYear) }})
+                    {% else %}
+                        (verliep in {{ (depreciationYear) }})
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Fabrikant</th>
+                <td>{{ material.manufacturer }}</td>
+            </tr>
+            <tr>
+                <th>Locatie</th>
+                <td>{{ material.location }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('material_index') }}">Terug naar overzicht</a>
+
+    <a href="{{ path('material_edit', {'slug': material.slug}) }}">Aanpassen</a>
+
+    {{ include('material/_delete_form.html.twig') }}
+{% endblock %}

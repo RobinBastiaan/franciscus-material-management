@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nieuw Materiaal{% endblock %}
+
+{% block body %}
+    <h1>Maak een nieuw materiaal aan</h1>
+
+    {{ include('material/_form.html.twig') }}
+
+    <a href="{{ path('material_index') }}">Terug naar overzicht</a>
+{% endblock %}

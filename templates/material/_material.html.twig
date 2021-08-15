@@ -1,6 +1,6 @@
 <section class="card my-2">
     <div class="card-header">
-        <h2>{{ material.name }}</h2>
+        <h2><a href="{{ path('material_show', {'slug': material.slug}) }}">{{ material.name }}</a></h2>
     </div>
     <div class="card-body">
         <p><b>Locatie: </b>{{ material.location }}</p>
@@ -14,7 +14,7 @@
             {%- endfor -%}
         </div>
 
-        {% if app.request.attributes.get('_route') != 'material_list_pdf' %}
+        {% if app.request.attributes.get('_route') != 'material_index_pdf' %}
             {% if app.request.attributes.get('_route') == 'material_index' %}
                 <button class="btn btn-primary">Voeg toe</button>
             {% endif %}
