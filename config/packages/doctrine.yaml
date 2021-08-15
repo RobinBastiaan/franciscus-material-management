@@ -20,3 +20,10 @@ doctrine:
         filters:
             active_checklist:
                 class: 'App\DBAL\ActiveChecklistFilter'
+
+        dql:
+            string_functions:
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
+                LEAST: DoctrineExtensions\Query\Mysql\Least
+                GREATEST: DoctrineExtensions\Query\Mysql\Greatest

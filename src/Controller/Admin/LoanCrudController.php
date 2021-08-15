@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Loan;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class LoanCrudController extends AbstractCrudController
@@ -10,6 +11,13 @@ class LoanCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Loan::class;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Uitlening')
+            ->setEntityLabelInPlural('Uitleningen');
     }
 
     /*

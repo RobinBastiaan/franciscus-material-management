@@ -4,42 +4,59 @@ namespace App\Controller\Admin;
 
 use App\Entity\Loan;
 use App\Entity\Material;
+use App\Entity\Note;
 use App\Entity\Reservation;
+use App\Entity\Tag;
+use App\Entity\User;
+use App\Repository\MaterialRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
+    private MaterialRepository $materialRepository;
+
+    public function __construct(MaterialRepository $materialRepository)
+    {
+        $this->materialRepository = $materialRepository;
+    }
+
     /**
      * @Route("/admin", name="admin")
      */
     public function index(): Response
     {
-        // redirect to some CRUD controller
-        $routeBuilder = $this->get(AdminUrlGenerator::class);
+        $materialTotals = $this->materialRepository->totals();
 
-        return $this->redirect($routeBuilder->setController(MaterialCrudController::class)->generateUrl());
-
-        // you can also render some template to display a proper Dashboard
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-//        return $this->render('some/path/my-dashboard.html.twig');
+        return $this->render('bundles/EasyAdminBundle/default/dashboard.html.twig', [
+            'material_totals' => $materialTotals,
+        ]);
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Franciscus Material Management');
+            ->setTitle('Franciscus Material Management')
+            ->setFaviconPath('/build/logo.svg');
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Material', 'fas fa-list', Material::class);
-        yield MenuItem::linkToCrud('Loan', 'fas fa-list', Loan::class);
-        yield MenuItem::linkToCrud('Reservation', 'fas fa-list', Reservation::class);
+
+        yield MenuItem::section('Toegang');
+        yield MenuItem::linkToCrud('Gebruikers', 'fas fa-user', User::class);
+
+        yield MenuItem::section('Materiaal');
+        yield MenuItem::linkToCrud('Materiaal', 'fas fa-boxes', Material::class);
+        yield MenuItem::linkToCrud('Notities', 'fas fa-pen', Note::class);
+        yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class);
+
+        yield MenuItem::section('Uitlenen');
+        yield MenuItem::linkToCrud('Reservaties', 'fas fa-campground', Reservation::class);
+        yield MenuItem::linkToCrud('Uitleningen', 'fas fa-trailer', Loan::class);
     }
 }

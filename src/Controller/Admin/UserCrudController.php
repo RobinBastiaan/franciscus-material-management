@@ -2,23 +2,23 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Reservation;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class ReservationCrudController extends AbstractCrudController
+class UserCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Reservation::class;
+        return User::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Reservatie')
-            ->setEntityLabelInPlural('Reservaties')
-            ->setDefaultSort(['dateStart' => 'ASC']);
+            ->setEntityLabelInSingular('Gebruiker')
+            ->setEntityLabelInPlural('Gebruikers')
+            ->setDefaultSort(['name' => 'ASC']);
     }
 
     /*
