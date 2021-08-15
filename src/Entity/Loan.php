@@ -7,6 +7,7 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -50,6 +51,18 @@ class Loan
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="loan")
      */
     private ?Collection $notes;
+
+    /**
+     * @Gedmo\Blameable(on="create")
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private ?User $createdBy;
+
+    /**
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private ?User $updatedBy;
 
     public function __construct()
     {
@@ -139,8 +152,20 @@ class Loan
         return $this;
     }
 
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $updatedBy): self
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
     public function __toString()
     {
-        return (string)$this->getId();
+        return $this->getReservation() . '/' . $this->getLoanedMaterial();
     }
 }

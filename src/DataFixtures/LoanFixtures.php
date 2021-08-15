@@ -48,7 +48,7 @@ class LoanFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($loan);
             $manager->flush();
 
-            $this->addReference('loan_' . $loan->getReservation() . '-' . $loan->getLoanedMaterial(), $loan);
+            $this->addReference('loan_' . $loan->getReservation() . '/' . $loan->getLoanedMaterial(), $loan);
         }
 
         $manager->flush();

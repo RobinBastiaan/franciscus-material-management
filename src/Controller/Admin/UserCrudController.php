@@ -4,7 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -21,14 +27,28 @@ class UserCrudController extends AbstractCrudController
             ->setDefaultSort(['name' => 'ASC']);
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('name', 'Naam'),
+            EmailField::new('email', 'E-mail'),
+            ChoiceField::new('roles', 'Rechten')
+                ->setChoices(['Gebruiker' => User::ROLE_USER, 'Materiaalmeester' => User::ROLE_MATERIAL_MASTER, 'Admin' => User::ROLE_ROOT])
+                ->allowMultipleChoices()
+                ->setPermission(User::ROLE_ROOT),
+            ChoiceField::new('ageGroup', 'Speltak')
+                ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS))
+                ->allowMultipleChoices()
+                ->setHelp('Dit heeft invloed op welke reserveringen deze gebruiker kan zien en bewerken.'),
+            DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
+            DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
         ];
     }
-    */
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(ChoiceFilter::new('ageGroup')
+                ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS))->setLabel('Speltak'));
+    }
 }

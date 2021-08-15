@@ -3,8 +3,19 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Reservation;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 class ReservationCrudController extends AbstractCrudController
 {
@@ -21,14 +32,29 @@ class ReservationCrudController extends AbstractCrudController
             ->setDefaultSort(['dateStart' => 'ASC']);
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('name', 'Naam'),
+            ChoiceField::new('ageGroup', 'Speltak')
+                ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS)),
+            AssociationField::new('users', 'Extra Gebruikers')->setHelp('De extra gebruikers van buiten de geselecteerde speltak.'),
+            DateField::new('dateStart', 'Begin datum'),
+            DateField::new('dateEnd', 'Eind datum'),
+            AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
+            DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
+            DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
         ];
     }
-    */
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(TextFilter::new('name')->setLabel('Name'))
+            ->add(ChoiceFilter::new('ageGroup')
+                ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS))->setLabel('Speltak'))
+            ->add(DateTimeFilter::new('dateStart')->setLabel('Begin datum'))
+            ->add(DateTimeFilter::new('dateEnd')->setLabel('Eind datum'))
+            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'));
+    }
 }
