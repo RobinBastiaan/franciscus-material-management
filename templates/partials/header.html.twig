@@ -3,4 +3,7 @@
     <a href="{{ path('material_index') }}">Materiaal</a>
     <a>Agenda</a>
     <a>Account</a>
+    {% if is_granted('IS_IMPERSONATOR') %}
+        <a href="{{ impersonation_exit_path(path('homepage') ) }}">Exit impersonation</a>
+    {% endif %}
 </nav>

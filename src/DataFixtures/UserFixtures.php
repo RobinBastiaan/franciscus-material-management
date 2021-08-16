@@ -11,21 +11,21 @@ class UserFixtures extends Fixture
 {
     private array $users = [
         [
-            'name'           => 'Admin',
+            'name'           => 'Alexander de Admin',
             'email'          => 'aad@min.com',
             'plain_password' => 'admin',
             'roles'          => [User::ROLE_ROOT],
             'age_group'      => ['Overig'],
         ],
         [
-            'name'           => 'Materiaalmeester',
+            'name'           => 'Marit de Materiaalmeester',
             'email'          => 'materiaal@meester.com',
             'plain_password' => 'materiaal',
             'roles'          => [User::ROLE_MATERIAL_MASTER],
             'age_group'      => ['Overig'],
         ],
         [
-            'name'           => 'User',
+            'name'           => 'Ursula de User',
             'email'          => 'user@user.com',
             'plain_password' => 'user',
             'roles'          => [User::ROLE_USER],
