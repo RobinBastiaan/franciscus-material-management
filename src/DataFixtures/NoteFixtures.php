@@ -15,9 +15,9 @@ class NoteFixtures extends Fixture implements DependentFixtureInterface
     private array $notes = [
         [
             'text'       => 'We hebben hem afgelopen jaar nog geïmpregneerd. Dit is waar we hem hebben gekocht: www.winkel.nl/impregneermiddel',
-            'created_by' => 'Materiaalmeester',
+            'created_by' => 'Marit de Materiaalmeester',
             'material'   => 'Groepstent',
-            'loan'       => 'Zomerkamp 2022-Groepstent',
+            'loan'       => 'Zomerkamp 2022/Groepstent',
         ],
     ];
 

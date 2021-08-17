@@ -14,7 +14,7 @@ class UserFixtures extends Fixture
             'name'           => 'Alexander de Admin',
             'email'          => 'aad@min.com',
             'plain_password' => 'aadmin',
-            'roles'          => [User::ROLE_ROOT],
+            'roles'          => [User::ROLE_ADMIN],
             'age_group'      => ['Overig'],
         ],
         [
