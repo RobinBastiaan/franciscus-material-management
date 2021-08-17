@@ -17,20 +17,20 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: ~
+            anonymous: true
             lazy: true
-            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
             logout:
-                path: app_logout
-                target: /
-            form_login:
-                login_path: homepage
-                default_target_path: homepage
-                failure_path: homepage
+                path: logout
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /
 
+#            provider: app_user_provider
 #            custom_authenticator: App\Security\LoginFormAuthenticator
-#            form_login: ~
-#            entry_point: form_login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -42,7 +42,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } # PUBLIC_ACCESS
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY } # PUBLIC_ACCESS
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/(material|reservation)/, roles: ROLE_USER }
         - { path: ^/, roles: ROLE_USER } # all remaining routes
