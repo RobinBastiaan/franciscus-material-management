@@ -3,9 +3,31 @@
 {% block title %}Franciscus Material Management{% endblock %}
 
 {% block main %}
-    <main>
-        <h1>Franciscus Material Management</h1>
+    <h1>Franciscus Material Management</h1>
 
-        Hier komt het inlog formulier.
-    </main>
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                Je bent ingelogd als {{ app.user.username }}, <a href="{{ path('logout') }}">Uitloggen</a>
+            </div>
+        {% else %}
+            <h1 class="h3 mb-3 font-weight-normal">Inloggen</h1>
+            <label for="inputEmail">E-mail</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+            <label for="inputPassword">Wachtwoord</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required minlength="6">
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="checkbox mb-3">
+                <label><input type="checkbox" name="_remember_me" checked> Houd mij ingelogd</label>
+            </div>
+
+            <button class="btn btn-lg btn-primary" type="submit">Inloggen</button>
+        {% endif %}
+    </form>
 {% endblock %}
