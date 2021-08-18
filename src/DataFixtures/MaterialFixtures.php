@@ -47,7 +47,7 @@ class MaterialFixtures extends Fixture
      */
     private function addMaterial($row): void
     {
-        $dateTime = date('Y/m/d', strtotime($row['Datum gekocht'])); // use European data format
+        $dateTime = date('Y/m/d', strtotime($row['Koopdatum'])); // use European data format
         $dateTime = (new DateTime($dateTime));
 
         /** @var Material $materialFromDatabase */
@@ -68,9 +68,10 @@ class MaterialFixtures extends Fixture
         }
 
         $material
-            ->setAmount((int)$row['Hoeveel'])
+            ->setAmount((int)$row['Aantal'])
             ->setName(trim($row['Naam']))
-            ->setDescription(trim($row['Omschrijving']))
+            ->setDescription(trim($row['Korte omschrijving']))
+            ->setInformation(trim($row['Uitgebreide informatie']))
             ->setType(trim($row['Type']))
             ->setDateBought($dateTime)
             ->setValue((float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€')))
