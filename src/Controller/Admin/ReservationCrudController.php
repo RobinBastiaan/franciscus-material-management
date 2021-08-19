@@ -7,6 +7,7 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -34,16 +35,23 @@ class ReservationCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        if (Crud::PAGE_INDEX === $pageName || Crud::PAGE_DETAIL === $pageName) {
+            $field = ArrayField::new('users', 'Extra Gebruikers');
+        } else {
+            $field = AssociationField::new('users', 'Extra Gebruikers')->autocomplete();
+        }
+
         return [
             TextField::new('name', 'Naam'),
             ChoiceField::new('ageGroup', 'Speltak')
                 ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS)),
-            AssociationField::new('users', 'Extra Gebruikers')->setHelp('De extra gebruikers van buiten de geselecteerde speltak.'),
+            $field->setSortable(false)->setHelp('De extra gebruikers van buiten de geselecteerde speltak.'),
             DateField::new('dateStart', 'Begin datum'),
             DateField::new('dateEnd', 'Eind datum'),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
+            AssociationField::new('loans', 'Aantal uitleningen')->hideOnForm(),
         ];
     }
 
