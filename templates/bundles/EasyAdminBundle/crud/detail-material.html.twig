@@ -1,0 +1,12 @@
+{# DO THIS: the '!' symbol tells Symfony to extend from the original template #}
+{% extends '@!EasyAdmin/crud/detail.html.twig' %}
+
+{% block main %}
+    {{ parent() }}
+
+    {# Possble way to extend the material details #}
+{#    <section class="content">#}
+{#        {{ entity }}#}
+{#    </section>#}
+
+{% endblock %}

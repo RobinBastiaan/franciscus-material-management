@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
@@ -32,7 +33,8 @@ class MaterialCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Materiaal')
             ->setEntityLabelInPlural('Materialen')
-            ->setDefaultSort(['name' => 'ASC']);
+            ->setDefaultSort(['name' => 'ASC'])
+            ->overrideTemplate('crud/detail', 'bundles/EasyAdminBundle/crud/detail-material.html.twig');
     }
 
     public function configureFields(string $pageName): iterable
@@ -58,6 +60,7 @@ class MaterialCrudController extends AbstractCrudController
             TextField::new('location', 'Locatie'),
             $field->setSortable(false),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
+            ArrayField::new('notes', 'Notities')->onlyOnDetail(),
         ];
     }
 

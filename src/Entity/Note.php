@@ -120,6 +120,6 @@ class Note
 
     public function __toString()
     {
-        return (string) $this->getId();
+        return $this->getCreatedBy() . ': ' . $this->getText();
     }
 }
