@@ -21,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
 
-    const ROLE_ROOT = 'ROLE_ROOT';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_MATERIAL_MASTER = 'ROLE_MATERIAL_MASTER';
     const ROLE_USER = 'ROLE_USER';
 

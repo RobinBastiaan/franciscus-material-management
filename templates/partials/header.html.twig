@@ -1,8 +1,10 @@
 <nav class="bg-light">
     <a href="{{ path('reservation_index') }}">Reservaties</a>
     <a href="{{ path('material_index') }}">Materiaal</a>
-    <a>Agenda</a>
-    <a>Account</a>
+    <a href="#">Agenda</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin') }}">Admin</a>
+    {% endif %}
     {% if is_granted('IS_IMPERSONATOR') %}
         <a href="{{ impersonation_exit_path(path('homepage') ) }}">Exit impersonation</a>
     {% endif %}

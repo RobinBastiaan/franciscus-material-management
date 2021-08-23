@@ -83,10 +83,10 @@ class ImportMaterialCommand extends Command
     private function addMaterial($row): void
     {
         try {
-            $dateTime = date('Y/m/d', strtotime($row['Datum gekocht'])); // use European data format
+            $dateTime = date('Y/m/d', strtotime($row['Koopdatum'])); // use European data format
             $dateTime = (new DateTime($dateTime));
         } catch (Exception $e) {
-            throw new UnexpectedValueException('Failed to parse time string! (' . $row['Datum gekocht'] . ')', 'DateTime');
+            throw new UnexpectedValueException('Failed to parse time string! (' . $row['Koopdatum'] . ')', 'DateTime');
         }
 
         /** @var Material $materialFromDatabase */
@@ -107,9 +107,10 @@ class ImportMaterialCommand extends Command
         }
 
         $material
-            ->setAmount((int)$row['Hoeveel'])
+            ->setAmount((int)$row['Aantal'])
             ->setName(trim($row['Naam']))
-            ->setDescription(trim($row['Omschrijving']))
+            ->setDescription(trim($row['Korte omschrijving']))
+            ->setInformation(trim($row['Uitgebreide informatie']))
             ->setType(trim($row['Type']))
             ->setDateBought($dateTime)
             ->setValue((float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€')))

@@ -31,8 +31,8 @@ class LoanCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('reservation', 'Reservatie'),
             AssociationField::new('loanedMaterial', 'Materiaal'),
+            AssociationField::new('reservation', 'Reservatie'),
             ChoiceField::new('returnedState', 'Staat bij inleveren')
                 ->setChoices(array_combine(Material::STATES, Material::STATES))
                 ->setHelp('Laat dit veld leeg wanneer deze nog niet is teruggelegd na uitlening.')

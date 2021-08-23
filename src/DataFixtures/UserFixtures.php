@@ -13,8 +13,8 @@ class UserFixtures extends Fixture
         [
             'name'           => 'Alexander de Admin',
             'email'          => 'aad@min.com',
-            'plain_password' => 'admin',
-            'roles'          => [User::ROLE_ROOT],
+            'plain_password' => 'aadmin',
+            'roles'          => [User::ROLE_ADMIN],
             'age_group'      => ['Overig'],
         ],
         [
@@ -27,7 +27,7 @@ class UserFixtures extends Fixture
         [
             'name'           => 'Ursula de User',
             'email'          => 'user@user.com',
-            'plain_password' => 'user',
+            'plain_password' => 'ursula',
             'roles'          => [User::ROLE_USER],
             'age_group'      => ['Overig'],
         ],

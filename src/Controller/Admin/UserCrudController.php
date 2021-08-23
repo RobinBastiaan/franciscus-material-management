@@ -33,9 +33,9 @@ class UserCrudController extends AbstractCrudController
             TextField::new('name', 'Naam'),
             EmailField::new('email', 'E-mail'),
             ChoiceField::new('roles', 'Rechten')
-                ->setChoices(['Gebruiker' => User::ROLE_USER, 'Materiaalmeester' => User::ROLE_MATERIAL_MASTER, 'Admin' => User::ROLE_ROOT])
+                ->setChoices(['Gebruiker' => User::ROLE_USER, 'Materiaalmeester' => User::ROLE_MATERIAL_MASTER, 'Admin' => User::ROLE_ADMIN])
                 ->allowMultipleChoices()
-                ->setPermission(User::ROLE_ROOT),
+                ->setPermission(User::ROLE_ADMIN),
             ChoiceField::new('ageGroup', 'Speltak')
                 ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS))
                 ->allowMultipleChoices()

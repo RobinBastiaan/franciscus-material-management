@@ -31,6 +31,8 @@ class Note
 
     /**
      * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="notes")
+     * @ORM\JoinColumn(nullable=false)
+     *
      */
     private Material $material;
 
@@ -68,7 +70,7 @@ class Note
         return $this;
     }
 
-    public function getMaterial(): ?Material
+    public function getMaterial(): Material
     {
         return $this->material;
     }

@@ -48,6 +48,11 @@ class Material
     private ?string $description;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private ?string $information;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private string $type;
@@ -158,6 +163,18 @@ class Material
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getInformation(): ?string
+    {
+        return $this->information;
+    }
+
+    public function setInformation(?string $information): self
+    {
+        $this->information = $information;
 
         return $this;
     }
