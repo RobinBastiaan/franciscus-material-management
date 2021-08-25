@@ -4,9 +4,15 @@
 {% block main %}
     {{ parent() }}
 
-    {# Possble way to extend the material details #}
-{#    <section class="content">#}
-{#        {{ entity }}#}
-{#    </section>#}
+    {# Display material details via extension #}
+{#    {% for field in entity.fields %}#}
+{#        {% if field.label == 'Notities' %}#}
+{#            <ul>#}
+{#                {% for note in field.value %}#}
+{#                    <li>{{ note }}</li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
 
 {% endblock %}
