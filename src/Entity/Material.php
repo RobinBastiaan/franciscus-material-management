@@ -89,6 +89,7 @@ class Material
 
     /**
      * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="materials", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private ?Location $location;
 

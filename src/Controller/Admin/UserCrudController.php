@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -42,6 +43,7 @@ class UserCrudController extends AbstractCrudController
                 ->setHelp('Dit heeft invloed op welke reserveringen deze gebruiker kan zien en bewerken.'),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
+            DateTimeField::new('deletedAt', 'Verwijderd'),
         ];
     }
 
@@ -49,6 +51,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $filters
             ->add(ChoiceFilter::new('ageGroup')
-                ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS))->setLabel('Speltak'));
+                ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS))->setLabel('Speltak'))
+            ->add(NullFilter::new('deletedAt')->setLabel('Verwijderd')->setChoiceLabels('Nee', 'Ja'));
     }
 }

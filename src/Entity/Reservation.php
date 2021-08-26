@@ -9,16 +9,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
  * @UniqueEntity("name")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Reservation
 {
     use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @ORM\Id
@@ -54,7 +57,7 @@ class Reservation
     private DateTimeInterface $dateEnd;
 
     /**
-     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="reservation", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="reservation", fetch="EAGER", cascade={"remove"})
      */
     private Collection $loans;
 
@@ -170,12 +173,7 @@ class Reservation
 
     public function removeLoan(Loan $loan): self
     {
-        if ($this->loans->removeElement($loan)) {
-            // set the owning side to null (unless already changed)
-            if ($loan->getReservation() === $this) {
-                $loan->setReservation(null);
-            }
-        }
+        $this->loans->removeElement($loan);
 
         return $this;
     }

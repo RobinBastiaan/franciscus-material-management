@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 class ReservationCrudController extends AbstractCrudController
@@ -28,8 +29,8 @@ class ReservationCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Reservatie')
-            ->setEntityLabelInPlural('Reservaties')
+            ->setEntityLabelInSingular('Reservering')
+            ->setEntityLabelInPlural('Reservering')
             ->setDefaultSort(['dateStart' => 'ASC']);
     }
 
@@ -52,6 +53,7 @@ class ReservationCrudController extends AbstractCrudController
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
             AssociationField::new('loans', 'Aantal uitleningen')->hideOnForm(),
+            DateTimeField::new('deletedAt', 'Verwijderd'),
         ];
     }
 
@@ -63,6 +65,7 @@ class ReservationCrudController extends AbstractCrudController
                 ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS))->setLabel('Speltak'))
             ->add(DateTimeFilter::new('dateStart')->setLabel('Begin datum'))
             ->add(DateTimeFilter::new('dateEnd')->setLabel('Eind datum'))
-            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'));
+            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'))
+            ->add(NullFilter::new('deletedAt')->setLabel('Verwijderd')->setChoiceLabels('Nee', 'Ja'));
     }
 }

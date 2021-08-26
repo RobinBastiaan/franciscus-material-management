@@ -60,10 +60,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Locaties', 'fas fa-map-marker-alt', Location::class);
 
         yield MenuItem::section('Uitlenen');
-        yield MenuItem::linkToCrud('Reservaties', 'fas fa-campground', Reservation::class);
+        yield MenuItem::linkToCrud('Reserveringen', 'fas fa-campground', Reservation::class);
         yield MenuItem::linkToCrud('Uitleningen', 'fas fa-trailer', Loan::class);
     }
 
+    /**
+     * @param User $user
+     */
     public function configureUserMenu(UserInterface $user): UserMenu
     {
         return parent::configureUserMenu($user)

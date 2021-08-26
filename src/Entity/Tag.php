@@ -96,6 +96,18 @@ class Tag
         return $this;
     }
 
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
     public function getUpdatedBy(): ?User
     {
         return $this->updatedBy;

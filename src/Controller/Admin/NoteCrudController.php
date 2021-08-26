@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 
 class NoteCrudController extends AbstractCrudController
 {
@@ -29,12 +30,13 @@ class NoteCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('material', 'Materiaal'),
+            AssociationField::new('material', 'Materiaal')->setRequired(true),
             AssociationField::new('loan', 'Uitlening')->setHelp('Optioneel kan een notitie bij een uitlening geplaatst worden.'),
             TextField::new('text', 'Tekst'),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Geschreven')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
+            DateTimeField::new('deletedAt', 'Verwijderd'),
         ];
     }
 
@@ -43,6 +45,7 @@ class NoteCrudController extends AbstractCrudController
         return $filters
             ->add(EntityFilter::new('material')->setLabel('Materiaal'))
             ->add(EntityFilter::new('loan')->setLabel('Uitlening'))
-            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'));
+            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'))
+            ->add(NullFilter::new('deletedAt')->setLabel('Verwijderd')->setChoiceLabels('Nee', 'Ja'));
     }
 }

@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 
 class LoanCrudController extends AbstractCrudController
 {
@@ -31,8 +32,8 @@ class LoanCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('loanedMaterial', 'Materiaal'),
-            AssociationField::new('reservation', 'Reservatie'),
+            AssociationField::new('loanedMaterial', 'Materiaal')->setRequired(true),
+            AssociationField::new('reservation', 'Reservering')->setRequired(true),
             ChoiceField::new('returnedState', 'Staat bij inleveren')
                 ->setChoices(array_combine(Material::STATES, Material::STATES))
                 ->setHelp('Laat dit veld leeg wanneer deze nog niet is teruggelegd na uitlening.')
@@ -40,16 +41,18 @@ class LoanCrudController extends AbstractCrudController
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
+            DateTimeField::new('deletedAt', 'Verwijderd'),
         ];
     }
 
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(EntityFilter::new('reservation')->setLabel('Reservatie'))
+            ->add(EntityFilter::new('reservation')->setLabel('Reservering'))
             ->add(EntityFilter::new('loanedMaterial')->setLabel('Materiaal'))
             ->add(ChoiceFilter::new('returnedState')
                 ->setChoices(array_merge(['Nog niet ingeleverd' => null], array_combine(Material::STATES, Material::STATES)))->setLabel('Staat'))
-            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'));
+            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'))
+            ->add(NullFilter::new('deletedAt')->setLabel('Verwijderd')->setChoiceLabels('Nee', 'Ja'));
     }
 }

@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -17,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
@@ -54,7 +56,7 @@ class MaterialCrudController extends AbstractCrudController
             TextEditorField::new('information', 'Uitgebreide informatie'),
             ChoiceField::new('state', 'Staat')->setChoices(array_combine(Material::STATES, Material::STATES)),
             DateField::new('dateBought', 'Koopdatum'),
-            MoneyField::new('value', 'Aankoopwaarde')->setCurrency('EUR')->setStoredAsCents(false),
+            MoneyField::new('value', 'Aankoopwaarde')->setCurrency('EUR')->setStoredAsCents(false)->setHelp('Wat dit materiaal heeft gekost of zou kosten als dit materiaal niet gesponsord zou zijn.'),
             MoneyField::new('currentValue', 'Huidige waarde')->setCurrency('EUR')->setStoredAsCents(false)->hideOnForm(),
             TextField::new('manufacturer', 'Fabrikant'),
             NumberField::new('depreciationYears', 'Afschrijvingsjaren')->setHelp('Laat dit veld leeg wanneer dit materiaal niet vervangen hoeft te worden.'),
@@ -62,6 +64,7 @@ class MaterialCrudController extends AbstractCrudController
             $tagField->setSortable(false),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             ArrayField::new('notes', 'Notities')->onlyOnDetail(),
+            DateTimeField::new('deletedAt', 'Verwijderd'),
         ];
     }
 
@@ -75,6 +78,7 @@ class MaterialCrudController extends AbstractCrudController
             ->add(TextFilter::new('location')->setLabel('Locatie'))
             ->add(NumericFilter::new('value')->setLabel('Aankoopwaarde'))
             ->add(EntityFilter::new('tags'))
-            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'));
+            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'))
+            ->add(NullFilter::new('deletedAt')->setLabel('Verwijderd')->setChoiceLabels('Nee', 'Ja'));
     }
 }

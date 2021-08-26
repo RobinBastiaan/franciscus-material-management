@@ -8,14 +8,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=LoanRepository::class)
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Loan
 {
     use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     const STATES = ['Goed', 'Matig', 'Slecht', 'Afgeschreven'];
 
@@ -44,11 +47,12 @@ class Loan
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="loans")
+     * @ORM\JoinColumn(nullable=false)
      */
     private Reservation $reservation;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="loan")
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="loan", cascade={"remove"})
      */
     private ?Collection $notes;
 
@@ -110,12 +114,12 @@ class Loan
         return $this;
     }
 
-    public function getReservation(): ?Reservation
+    public function getReservation(): Reservation
     {
         return $this->reservation;
     }
 
-    public function setReservation(?Reservation $reservation): self
+    public function setReservation(Reservation $reservation): self
     {
         $this->reservation = $reservation;
 
@@ -148,6 +152,18 @@ class Loan
                 $note->setLoan(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }
