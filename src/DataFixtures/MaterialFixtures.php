@@ -2,8 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Location;
 use App\Entity\Material;
 use App\Entity\Tag;
+use App\Repository\LocationRepository;
 use App\Repository\TagRepository;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -77,8 +79,7 @@ class MaterialFixtures extends Fixture
             ->setValue((float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€')))
             ->setManufacturer(trim($row['Fabrikant']))
             ->setDepreciationYears((int)$row['Afschrijvingsjaren'])
-            ->setState(trim($row['Staat']))
-            ->setLocation(trim($row['Locatie']));
+            ->setState(trim($row['Staat']));
 
         if ($material == $materialFromDatabase) {
             return; // nothing has changed; no update required
@@ -87,13 +88,31 @@ class MaterialFixtures extends Fixture
         /** @var Material $material */
         $material = $this->em->merge($material);
 
+        $this->updateLocation($material, $row['Locatie']);
         $this->updateTags($material, $row['Tags']);
 
         $this->em->persist($material);
         $this->em->flush();
         $this->addReference('material_' . $material->getName(), $material);
         $this->em->clear();
+    }
 
+    private function updateLocation(Material $material, $location): void
+    {
+        /** @var LocationRepository $locationRepository */
+        $locationRepository = $this->em->getRepository(Location::class);
+
+        $persistedLocation = $locationRepository->findOneByName($location);
+
+        if (!isset($persistedLocation)) {
+            $persistedLocation = new Location();
+            $persistedLocation->setName($location);
+            $persistedLocation->addMaterial($material);
+            $this->em->persist($persistedLocation);
+            $this->em->flush();
+        }
+
+        $material->setLocation($persistedLocation);
     }
 
     private function updateTags(Material $material, $tags): void
@@ -109,10 +128,11 @@ class MaterialFixtures extends Fixture
             if (!isset($persistedTag)) {
                 $persistedTag = new Tag();
                 $persistedTag->setName($tag);
+                $persistedTag->addMaterial($material);
                 $this->em->persist($persistedTag);
+                $this->em->flush();
             }
 
-            $persistedTag->addMaterial($material);
             $material->addTag($persistedTag);
         }
     }

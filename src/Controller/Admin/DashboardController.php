@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Loan;
+use App\Entity\Location;
 use App\Entity\Material;
 use App\Entity\Note;
 use App\Entity\Reservation;
@@ -56,6 +57,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Materiaal', 'fas fa-boxes', Material::class);
         yield MenuItem::linkToCrud('Notities', 'fas fa-pen', Note::class);
         yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class);
+        yield MenuItem::linkToCrud('Locaties', 'fas fa-map-marker-alt', Location::class);
 
         yield MenuItem::section('Uitlenen');
         yield MenuItem::linkToCrud('Reservaties', 'fas fa-campground', Reservation::class);

@@ -88,9 +88,9 @@ class Material
     private ?string $manufacturer;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="materials", cascade={"persist"})
      */
-    private ?string $location;
+    private ?Location $location;
 
     /**
      * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="loanedMaterial")
@@ -103,7 +103,7 @@ class Material
     private Collection $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="materials")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="materials", cascade={"persist"})
      */
     private Collection $tags;
 
@@ -265,12 +265,12 @@ class Material
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): ?Location
     {
         return $this->location;
     }
 
-    public function setLocation(string $location): self
+    public function setLocation(?Location $location): self
     {
         $this->location = $location;
 

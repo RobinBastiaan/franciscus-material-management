@@ -15,7 +15,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
@@ -40,9 +39,11 @@ class MaterialCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         if (Crud::PAGE_INDEX === $pageName || Crud::PAGE_DETAIL === $pageName) {
-            $field = ArrayField::new('tags');
+            $locationField = ArrayField::new('location', 'Locatie');
+            $tagField = ArrayField::new('tags');
         } else {
-            $field = AssociationField::new('tags')->autocomplete();
+            $locationField = AssociationField::new('location', 'Locatie');
+            $tagField = AssociationField::new('tags')->autocomplete();
         }
 
         return [
@@ -54,11 +55,11 @@ class MaterialCrudController extends AbstractCrudController
             ChoiceField::new('state', 'Staat')->setChoices(array_combine(Material::STATES, Material::STATES)),
             DateField::new('dateBought', 'Koopdatum'),
             MoneyField::new('value', 'Aankoopwaarde')->setCurrency('EUR')->setStoredAsCents(false),
-            MoneyField::new('currentValue', 'Huidige waarde')->setCurrency('EUR')->setStoredAsCents(false),
+            MoneyField::new('currentValue', 'Huidige waarde')->setCurrency('EUR')->setStoredAsCents(false)->hideOnForm(),
             TextField::new('manufacturer', 'Fabrikant'),
             NumberField::new('depreciationYears', 'Afschrijvingsjaren')->setHelp('Laat dit veld leeg wanneer dit materiaal niet vervangen hoeft te worden.'),
-            TextField::new('location', 'Locatie'),
-            $field->setSortable(false),
+            $locationField,
+            $tagField->setSortable(false),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             ArrayField::new('notes', 'Notities')->onlyOnDetail(),
         ];
