@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\LoanRepository;
 use App\Repository\ReservationRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -159,6 +160,16 @@ class Reservation
     public function getLoans(): Collection
     {
         return $this->loans;
+    }
+
+    /**
+     * @return Collection|Loan[]
+     */
+    public function getNonReturnedLoans(): Collection
+    {
+        $criteria = LoanRepository::createNonReturnedCriteria();
+
+        return $this->loans->matching($criteria);
     }
 
     public function addLoan(Loan $loan): self

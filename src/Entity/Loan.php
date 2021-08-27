@@ -32,12 +32,12 @@ class Loan
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private DateTimeInterface $dateReturned;
+    private ?DateTimeInterface $dateReturned;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $returnedState;
+    private ?string $returnedState;
 
     /**
      * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="loan")

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Loan;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,8 +20,9 @@ class LoanRepository extends ServiceEntityRepository
         parent::__construct($registry, Loan::class);
     }
 
-    public function getAllLoansInCirculation()
+    public static function createNonReturnedCriteria(): Criteria
     {
-
+        return Criteria::create()
+            ->andWhere(Criteria::expr()->neq('dateReturned', null));
     }
 }
