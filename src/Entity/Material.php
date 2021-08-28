@@ -394,6 +394,13 @@ class Material
         return max(0, $this->value * (1 - ($expiredYears / $this->depreciationYears)));
     }
 
+    public function isDeprecated(): bool
+    {
+        $expiredYears = $this->dateBought->diff(new DateTime('now'))->y;
+
+        return $expiredYears > $this->depreciationYears;
+    }
+
     public function __toString()
     {
         return $this->getName();
