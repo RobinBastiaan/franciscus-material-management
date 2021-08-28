@@ -10,6 +10,7 @@ use App\Entity\Reservation;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Repository\MaterialRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
@@ -22,9 +23,11 @@ class DashboardController extends AbstractDashboardController
 {
     private MaterialRepository $materialRepository;
 
-    public function __construct(MaterialRepository $materialRepository)
+    public function __construct(MaterialRepository $materialRepository, EntityManagerInterface $entityManager)
     {
         $this->materialRepository = $materialRepository;
+
+        $entityManager->getFilters()->disable('softdeleteable');
     }
 
     /**
