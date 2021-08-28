@@ -11,6 +11,7 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Repository\MaterialRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
@@ -36,9 +37,11 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         $materialTotals = $this->materialRepository->totals();
+        $materialStatus = $this->materialRepository->status();
 
         return $this->render('bundles/EasyAdminBundle/default/dashboard.html.twig', [
             'material_totals' => $materialTotals,
+            'material_status' => $materialStatus,
         ]);
     }
 
@@ -80,5 +83,10 @@ class DashboardController extends AbstractDashboardController
             ->addMenuItems([
                 MenuItem::linkToRoute('Terug naar applicatie', 'fa fa-back', 'homepage'),
             ]);
+    }
+
+    public function configureAssets(): Assets
+    {
+        return Assets::new()->addCssFile('build/admin.css');
     }
 }
