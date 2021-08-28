@@ -7,7 +7,6 @@ use App\Repository\ReservationRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
@@ -43,9 +42,10 @@ class Reservation
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=AgeGroup::class, inversedBy="reservations")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private string $ageGroup;
+    private ?AgeGroup $ageGroup;
 
     /**
      * @ORM\Column(type="date")
@@ -114,17 +114,13 @@ class Reservation
         return $this;
     }
 
-    public function getAgeGroup(): ?string
+    public function getAgeGroup(): ?AgeGroup
     {
         return $this->ageGroup;
     }
 
-    public function setAgeGroup(string $ageGroup): self
+    public function setAgeGroup(?AgeGroup $ageGroup): self
     {
-        if (!in_array($ageGroup, User::AGE_GROUPS)) {
-            throw new InvalidArgumentException($ageGroup . ' is not a valid age group.');
-        }
-
         $this->ageGroup = $ageGroup;
 
         return $this;

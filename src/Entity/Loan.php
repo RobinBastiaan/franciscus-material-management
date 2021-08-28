@@ -20,8 +20,6 @@ class Loan
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
-    const STATES = ['Goed', 'Matig', 'Slecht', 'Afgeschreven'];
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

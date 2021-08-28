@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\AgeGroup;
 use App\Entity\Loan;
 use App\Entity\Location;
 use App\Entity\Material;
@@ -63,6 +64,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Toegang');
         yield MenuItem::linkToCrud('Gebruikers', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('Speltak', 'fas fa-users', AgeGroup::class);
 
         yield MenuItem::section('Materiaal');
         yield MenuItem::linkToCrud('Materiaal', 'fas fa-boxes', Material::class);

@@ -32,8 +32,9 @@ class ReservationRepository extends ServiceEntityRepository
     public function openReservations(): array
     {
         $query = $this->createQueryBuilder('r')
-            ->select('r.id, r.name, r.ageGroup, r.dateEnd, COUNT(l.id) as notHandedInCount')
+            ->select('r.id, r.name, r.dateEnd, COUNT(l.id) as notHandedInCount')
             ->addSelect('(SELECT COUNT(l2.id) FROM App\Entity\Loan l2 WHERE l2.reservation = r.id AND l2.deletedAt IS NULL) AS totalCount')
+            ->addSelect('(SELECT a.name FROM App\Entity\AgeGroup a WHERE a.id = r.ageGroup AND a.deletedAt IS NULL) AS ageGroup')
             ->join(Loan::class, 'l', Join::WITH, 'r.id = l.reservation')
             ->andWhere('r.dateEnd <= CURRENT_DATE()')
             ->andWhere('r.deletedAt IS NULL')

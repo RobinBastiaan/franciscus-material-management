@@ -13,7 +13,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -68,18 +67,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $slug;
 
     /**
-     * @ORM\Column(type="array")
-     */
-    private array $ageGroup = [];
-
-    /**
      * @ORM\ManyToMany(targetEntity=Reservation::class, mappedBy="users")
      */
     private Collection $reservations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=AgeGroup::class, mappedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private Collection $ageGroups;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->ageGroups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,22 +196,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAgeGroup(): ?array
-    {
-        return $this->ageGroup;
-    }
-
-    public function setAgeGroup(array $ageGroup): self
-    {
-        if (in_array($ageGroup, self::AGE_GROUPS)) {
-            throw new InvalidArgumentException('Not a valid age group.');
-        }
-
-        $this->ageGroup = $ageGroup;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Reservation[]
      */
@@ -233,6 +218,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->reservations->removeElement($reservation)) {
             $reservation->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AgeGroup[]
+     */
+    public function getAgeGroups(): Collection
+    {
+        return $this->ageGroups;
+    }
+
+    public function addAgeGroup(AgeGroup $ageGroup): self
+    {
+        if (!$this->ageGroups->contains($ageGroup)) {
+            $this->ageGroups[] = $ageGroup;
+            $ageGroup->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgeGroup(AgeGroup $ageGroup): self
+    {
+        if ($this->ageGroups->removeElement($ageGroup)) {
+            $ageGroup->removeUser($this);
         }
 
         return $this;
