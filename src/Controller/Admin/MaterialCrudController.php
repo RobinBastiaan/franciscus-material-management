@@ -62,9 +62,8 @@ class MaterialCrudController extends AbstractCrudController
             NumberField::new('depreciationYears', 'Afschrijvingsjaren')->setHelp('Laat dit veld leeg wanneer dit materiaal niet vervangen hoeft te worden.'),
             $locationField,
             $tagField->setSortable(false),
-            AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             ArrayField::new('notes', 'Notities')->onlyOnDetail(),
-            DateTimeField::new('deletedAt', 'Verwijderd'),
+            DateTimeField::new('deletedAt', 'Verwijderd')->hideWhenCreating(),
         ];
     }
 

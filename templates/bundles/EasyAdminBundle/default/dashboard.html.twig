@@ -1,44 +1,80 @@
 {% extends '@!EasyAdmin/page/content.html.twig' %}
 
 {% block content %}
-    <div class="container-fluid row">
-        <section class="col-md-6">
-            <h1>Financiën</h1>
-            <dl class="stats-details">
-                <div>
-                    <dt>Totale aankoopwaarde</dt>
-                    <dd>{{ material_totals.value|format_currency('EUR') }}</dd>
-                </div>
-                <div>
-                    <dt>Berekende huidige waarde</dt>
-                    <dd>{{ material_totals.current_value|format_currency('EUR') }}</dd>
-                </div>
-            </dl>
-        </section>
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <section class="col-md-6">
+                <h1>Financiën</h1>
+                <dl class="stats-details">
+                    <div>
+                        <dt>Totale aankoopwaarde</dt>
+                        <dd>{{ material_totals.value|format_currency('EUR') }}</dd>
+                    </div>
+                    <div>
+                        <dt>Berekende huidige waarde</dt>
+                        <dd>{{ material_totals.current_value|format_currency('EUR') }}</dd>
+                    </div>
+                </dl>
+            </section>
 
-        <section class="col-md-6">
-            <h1>Materialen status</h1>
-            <dl class="stats-details">
-                <div>
-                    <dt>Totaal materialen in beheer</dt>
-                    <dd>{{ material_status.totaal }}</dd>
-                </div>
-            </dl>
+            <section class="col-md-6">
+                <h1>Materialen status</h1>
+                <dl class="stats-details">
+                    <div>
+                        <dt>Totaal materialen in beheer</dt>
+                        <dd>{{ material_status.totaal }}</dd>
+                    </div>
+                </dl>
 
-            <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                     style="width: {{ material_status.goed / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.goed / material_status.totaal * 100 }}">
-                    <a href="{{ (material_status.goed_url) }}">{{ material_status.goed }} Goed</a>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                         style="width: {{ material_status.goed / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.goed / material_status.totaal * 100 }}">
+                        <a href="{{ (material_status.goed_url) }}">{{ material_status.goed }} Goed</a>
+                    </div>
+                    <div class="progress-bar bg-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                         style="width: {{ material_status.matig / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.matig / material_status.totaal * 100 }}">
+                        <a href="{{ (material_status.matig_url) }}">{{ material_status.matig }} Matig</a>
+                    </div>
+                    <div class="progress-bar bg-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                         style="width: {{ material_status.slecht / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.slecht / material_status.totaal * 100 }}">
+                        <a href="{{ (material_status.slecht_url) }}">{{ material_status.slecht }} Slecht</a>
+                    </div>
                 </div>
-                <div class="progress-bar bg-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                     style="width: {{ material_status.matig / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.matig / material_status.totaal * 100 }}">
-                    <a href="{{ (material_status.matig_url) }}">{{ material_status.matig }} Matig</a>
-                </div>
-                <div class="progress-bar bg-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                     style="width: {{ material_status.slecht / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.slecht / material_status.totaal * 100 }}">
-                    <a href="{{ (material_status.slecht_url) }}">{{ material_status.slecht }} Slecht</a>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
+
+        <div class="row pt-4">
+            <section class="col">
+                <h1>In te leveren Reserveringen</h1>
+                <p>Check hier welke reserveringen al afgelopen zijn maar waarbij nog niet alles in ingeleverd.</p>
+
+                {% if open_reservations %}
+                    <table class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Speltak</th>
+                            <th>Eind datum</th>
+                            <th>Aantal nog in te leveren</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for reservation in open_reservations %}
+                            <tr>
+                                <td><a href="{{ (reservation.reservation_url) }}">{{ reservation.name }}</a></td>
+                                <td>{{ reservation.ageGroup }}</td>
+                                <td>{{ reservation.dateEnd ? reservation.dateEnd|date('Y-m-d') : '' }} ({{ reservation.dateEnd|ago }})</td>
+                                <td>{{ reservation.notHandedInCount }} van de {{ reservation.totalCount }} <a href="{{ (reservation.material_url) }}" class="btn btn-secondary mx-3">Bekijk</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                {% else %}
+                    Fantastisch! Alles is juist ingeleverd!
+                {% endif %}
+            </section>
+        </div>
     </div>
 {% endblock %}

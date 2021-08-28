@@ -55,7 +55,7 @@ class ReservationCrudController extends AbstractCrudController
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
             AssociationField::new('loans', 'Aantal uitleningen')->hideOnForm(),
             CollectionField::new('nonReturnedLoans', 'Waarvan ingeleverd')->hideOnForm(),
-            DateTimeField::new('deletedAt', 'Verwijderd'),
+            DateTimeField::new('deletedAt', 'Verwijderd')->hideWhenCreating(),
         ];
     }
 

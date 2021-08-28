@@ -36,7 +36,7 @@ class NoteCrudController extends AbstractCrudController
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Geschreven')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
-            DateTimeField::new('deletedAt', 'Verwijderd'),
+            DateTimeField::new('deletedAt', 'Verwijderd')->hideWhenCreating(),
         ];
     }
 

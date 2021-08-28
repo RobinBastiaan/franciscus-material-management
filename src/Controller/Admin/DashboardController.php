@@ -10,6 +10,7 @@ use App\Entity\Reservation;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Repository\MaterialRepository;
+use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -23,10 +24,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class DashboardController extends AbstractDashboardController
 {
     private MaterialRepository $materialRepository;
+    private ReservationRepository $reservationRepository;
 
-    public function __construct(MaterialRepository $materialRepository, EntityManagerInterface $entityManager)
+    public function __construct(MaterialRepository $materialRepository, ReservationRepository $reservationRepository, EntityManagerInterface $entityManager)
     {
         $this->materialRepository = $materialRepository;
+        $this->reservationRepository = $reservationRepository;
 
         $entityManager->getFilters()->disable('softdeleteable');
     }
@@ -38,10 +41,12 @@ class DashboardController extends AbstractDashboardController
     {
         $materialTotals = $this->materialRepository->totals();
         $materialStatus = $this->materialRepository->status();
+        $openReservations = $this->reservationRepository->openReservations();
 
         return $this->render('bundles/EasyAdminBundle/default/dashboard.html.twig', [
-            'material_totals' => $materialTotals,
-            'material_status' => $materialStatus,
+            'material_totals'   => $materialTotals,
+            'material_status'   => $materialStatus,
+            'open_reservations' => $openReservations,
         ]);
     }
 

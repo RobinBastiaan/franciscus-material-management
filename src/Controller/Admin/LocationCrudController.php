@@ -19,6 +19,8 @@ class LocationCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setEntityLabelInSingular('Locatie')
+            ->setEntityLabelInPlural('Locaties')
             ->setDefaultSort(['name' => 'ASC']);
     }
 

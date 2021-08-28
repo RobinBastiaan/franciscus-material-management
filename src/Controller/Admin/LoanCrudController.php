@@ -34,6 +34,7 @@ class LoanCrudController extends AbstractCrudController
         return [
             AssociationField::new('loanedMaterial', 'Materiaal')->setRequired(true),
             AssociationField::new('reservation', 'Reservering')->setRequired(true),
+            DateTimeField::new('dateReturned', 'Ingeleverd op')->hideWhenCreating(),
             ChoiceField::new('returnedState', 'Staat bij inleveren')
                 ->setChoices(array_combine(Material::STATES, Material::STATES))
                 ->setHelp('Laat dit veld leeg wanneer deze nog niet is teruggelegd na uitlening.')
@@ -41,7 +42,7 @@ class LoanCrudController extends AbstractCrudController
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
-            DateTimeField::new('deletedAt', 'Verwijderd'),
+            DateTimeField::new('deletedAt', 'Verwijderd')->hideWhenCreating(),
         ];
     }
 

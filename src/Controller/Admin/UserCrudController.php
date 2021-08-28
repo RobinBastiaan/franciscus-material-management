@@ -43,7 +43,7 @@ class UserCrudController extends AbstractCrudController
                 ->setHelp('Dit heeft invloed op welke reserveringen deze gebruiker kan zien en bewerken.'),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
-            DateTimeField::new('deletedAt', 'Verwijderd'),
+            DateTimeField::new('deletedAt', 'Verwijderd')->hideWhenCreating(),
         ];
     }
 
