@@ -10,31 +10,40 @@ class AgeGroupFixtures extends Fixture
 {
     private array $ageGroups = [
         [
-            'name' => 'Bevers',
+            'name'  => 'Bevers',
+            'color' => '#ff1919',
         ],
         [
-            'name' => 'Parcival',
+            'name'  => 'Parcival',
+            'color' => '#2db242',
         ],
         [
-            'name' => 'Leonardus',
+            'name'  => 'Leonardus',
+            'color' => '#5ff009',
         ],
         [
-            'name' => 'Scouts',
+            'name'  => 'Scouts',
+            'color' => '#ffb700',
         ],
         [
-            'name' => 'Explorers',
+            'name'  => 'Explorers',
+            'color' => '#DC143C',
         ],
         [
-            'name' => 'Roverscouts',
+            'name'  => 'Roverscouts',
+            'color' => '#a83636',
         ],
         [
-            'name' => 'Stam',
+            'name'  => 'Stam',
+            'color' => '#ff99cc',
         ],
         [
-            'name' => 'Bestuur',
+            'name'  => 'Bestuur',
+            'color' => '#993366',
         ],
         [
-            'name' => 'Overig',
+            'name'  => 'Overig',
+            'color' => '#808080',
         ],
     ];
 
@@ -46,6 +55,7 @@ class AgeGroupFixtures extends Fixture
         foreach ($this->ageGroups as $anAgeGroup) {
             $ageGroup = new AgeGroup();
             $ageGroup->setName($anAgeGroup['name']);
+            $ageGroup->setColor($anAgeGroup['color']);
 
             $manager->persist($ageGroup);
             $manager->flush();

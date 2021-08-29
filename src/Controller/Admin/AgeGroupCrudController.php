@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
@@ -30,6 +31,7 @@ class AgeGroupCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Naam'),
+            ColorField::new('color', 'Kleur'),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
