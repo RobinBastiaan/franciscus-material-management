@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MaterialRepository::class)
@@ -59,6 +60,7 @@ class Material
 
     /**
      * @ORM\Column(type="integer", options={"default": "1"})
+     * @Assert\Positive
      */
     private int $amount = 1;
 
@@ -79,6 +81,7 @@ class Material
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Positive
      */
     private ?int $depreciationYears;
 

@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
@@ -54,6 +55,7 @@ class Reservation
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Expression("this.getDateEnd() >= this.getDateStart()", message="De einddatum moet op of na de begindatum vallen.")
      */
     private DateTimeInterface $dateEnd;
 

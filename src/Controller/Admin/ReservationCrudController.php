@@ -44,8 +44,8 @@ class ReservationCrudController extends AbstractCrudController
             TextField::new('name', 'Naam'),
             AssociationField::new('ageGroup', 'Speltak'),
             $field->setSortable(false)->setHelp('De extra gebruikers van buiten de geselecteerde speltak.'),
-            DateField::new('dateStart', 'Begin datum'),
-            DateField::new('dateEnd', 'Eind datum'),
+            DateField::new('dateStart', 'Begindatum'),
+            DateField::new('dateEnd', 'Einddatum'),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
@@ -60,8 +60,8 @@ class ReservationCrudController extends AbstractCrudController
         return $filters
             ->add(TextFilter::new('name')->setLabel('Name'))
             ->add(EntityFilter::new('ageGroup')->setLabel('Speltak'))
-            ->add(DateTimeFilter::new('dateStart')->setLabel('Begin datum'))
-            ->add(DateTimeFilter::new('dateEnd')->setLabel('Eind datum'))
+            ->add(DateTimeFilter::new('dateStart')->setLabel('Begindatum'))
+            ->add(DateTimeFilter::new('dateEnd')->setLabel('Einddatum'))
             ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'))
             ->add(NullFilter::new('deletedAt')->setLabel('Verwijderd')->setChoiceLabels('Nee', 'Ja'));
     }

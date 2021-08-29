@@ -1,0 +1,10 @@
+{# DO THIS: the '!' symbol tells Symfony to extend from the original template #}
+{% extends '@!EasyAdmin/crud/new.html.twig' %}
+
+{% block main %}
+    {{ parent() }}
+
+    {# add additional spacing on the bottom of the page #}
+    <div class="my-5"><br></div>
+
+{% endblock %}

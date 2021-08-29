@@ -35,16 +35,17 @@ class MaterialCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Materiaal')
             ->setEntityLabelInPlural('Materialen')
             ->setDefaultSort(['name' => 'ASC'])
-            ->overrideTemplate('crud/detail', 'bundles/EasyAdminBundle/crud/detail-material.html.twig');
+            ->overrideTemplate('crud/detail', 'bundles/EasyAdminBundle/crud/detail-material.html.twig')
+            ->overrideTemplate('crud/new', 'bundles/EasyAdminBundle/crud/new-material.html.twig');
     }
 
     public function configureFields(string $pageName): iterable
     {
         if (Crud::PAGE_INDEX === $pageName || Crud::PAGE_DETAIL === $pageName) {
-            $locationField = ArrayField::new('location', 'Locatie');
+            $locationField = ArrayField::new('location', 'Opslaglocatie');
             $tagField = ArrayField::new('tags');
         } else {
-            $locationField = AssociationField::new('location', 'Locatie');
+            $locationField = AssociationField::new('location', 'Opslaglocatie');
             $tagField = AssociationField::new('tags')->autocomplete();
         }
 
@@ -74,7 +75,7 @@ class MaterialCrudController extends AbstractCrudController
             ->add(TextFilter::new('type'))
             ->add(ChoiceFilter::new('state')
                 ->setChoices(array_combine(Material::STATES, Material::STATES))->setLabel('Staat'))
-            ->add(TextFilter::new('location')->setLabel('Locatie'))
+            ->add(TextFilter::new('location')->setLabel('Opslaglocatie'))
             ->add(NumericFilter::new('value')->setLabel('Aankoopwaarde'))
             ->add(EntityFilter::new('tags'))
             ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'))

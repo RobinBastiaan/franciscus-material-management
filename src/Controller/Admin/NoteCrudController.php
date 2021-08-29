@@ -8,7 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 
@@ -32,7 +32,7 @@ class NoteCrudController extends AbstractCrudController
         return [
             AssociationField::new('material', 'Materiaal')->setRequired(true),
             AssociationField::new('loan', 'Uitlening')->setHelp('Optioneel kan een notitie bij een uitlening geplaatst worden.'),
-            TextField::new('text', 'Tekst'),
+            TextEditorField::new('text', 'Tekst'),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Geschreven')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
