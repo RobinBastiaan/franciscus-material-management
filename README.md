@@ -18,9 +18,9 @@ You can update the data for the materials via a CSV file with the own implemente
 
 # Screenshots
 
-The admin section includes ordering and filtering options.
-![Screenshot Admin](https://user-images.githubusercontent.com/38226878/129489239-399b01af-ce61-4e66-9c67-ba6a57b9e555.png)
+The admin section includes ordering and filtering options and comes with a custom dashboard with useful information.
+![Screenshot Admin](docs/screenshots/admin-dashboard.png)
 
 # Visualization of the codebase
 
-![Visualization of the codebase](./diagram.svg)
+![Visualization of the codebase](docs/diagram.svg)
