@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
@@ -34,7 +35,8 @@ class LoanCrudController extends AbstractCrudController
         return [
             AssociationField::new('loanedMaterial', 'Materiaal')->setRequired(true),
             AssociationField::new('reservation', 'Reservering')->setRequired(true),
-            DateTimeField::new('dateReturned', 'Ingeleverd op')->hideWhenCreating(),
+            DateField::new('dateReturned', 'Ingeleverd op')->hideWhenCreating()
+                ->setHelp('Wordt automatisch gevuld wanneer de staat bij inleveren wordt ingevuld.'),
             ChoiceField::new('returnedState', 'Staat bij inleveren')
                 ->setChoices(array_combine(Material::STATES, Material::STATES))
                 ->setHelp('Laat dit veld leeg wanneer deze nog niet is teruggelegd na uitlening.')

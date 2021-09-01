@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\LoanRepository;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
@@ -14,6 +16,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * @ORM\Entity(repositoryClass=LoanRepository::class)
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Loan
 {
@@ -181,5 +184,17 @@ class Loan
     public function __toString()
     {
         return $this->getReservation() . '/' . $this->getLoanedMaterial();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function markAsDone(PreUpdateEventArgs $event): void
+    {
+        if (!$event->hasChangedField('returnedState') && $event->getOldValue('dateReturned') === null) {
+            return;
+        }
+
+        $this->setDateReturned(new DateTimeImmutable());
     }
 }
