@@ -77,6 +77,7 @@ class MaterialFixtures extends Fixture
             ->setType(trim($row['Type']))
             ->setDateBought($dateTime)
             ->setValue((float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€')))
+            ->setResidualValue((float)str_replace(',', '', ltrim($row['Restwaarde'], '€')))
             ->setManufacturer(trim($row['Fabrikant']))
             ->setDepreciationYears((int)$row['Afschrijvingsjaren'])
             ->setState(trim($row['Staat']));
@@ -88,7 +89,7 @@ class MaterialFixtures extends Fixture
         /** @var Material $material */
         $material = $this->em->merge($material);
 
-        $this->updateLocation($material, $row['Locatie']);
+        $this->updateLocation($material, $row['Opslaglocatie']);
         $this->updateTags($material, $row['Tags']);
 
         $this->em->persist($material);

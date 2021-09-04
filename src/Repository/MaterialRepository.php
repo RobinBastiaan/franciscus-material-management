@@ -38,7 +38,7 @@ class MaterialRepository extends ServiceEntityRepository
 
         $query = $entityManager->createQuery(
             'SELECT SUM(GREATEST(0,
-                m.value * (1 - ((YEAR(CURRENT_DATE()) - YEAR(m.dateBought)) / m.depreciationYears))
+                (m.value - m.residualValue) * (1 - ((YEAR(CURRENT_DATE()) - YEAR(m.dateBought)) / m.depreciationYears)) + m.residualValue
             ))
             FROM App\Entity\Material m'
         );

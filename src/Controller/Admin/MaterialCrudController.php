@@ -59,6 +59,7 @@ class MaterialCrudController extends AbstractCrudController
             DateField::new('dateBought', 'Koopdatum'),
             MoneyField::new('value', 'Aankoopwaarde')->setCurrency('EUR')->setStoredAsCents(false)->setHelp('Wat dit materiaal heeft gekost of zou kosten als dit materiaal niet gesponsord zou zijn.'),
             MoneyField::new('currentValue', 'Huidige waarde')->setCurrency('EUR')->setStoredAsCents(false)->hideOnForm(),
+            MoneyField::new('residualValue', 'Restwaarde')->setCurrency('EUR')->setStoredAsCents(false),
             TextField::new('manufacturer', 'Fabrikant'),
             NumberField::new('depreciationYears', 'Afschrijvingsjaren')->setHelp('Laat dit veld leeg wanneer dit materiaal niet vervangen hoeft te worden.'),
             $locationField,

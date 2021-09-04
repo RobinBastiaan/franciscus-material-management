@@ -20,6 +20,7 @@ class MaterialType extends AbstractType
             ->add('state')
             ->add('dateBought')
             ->add('value')
+            ->add('residualValue')
             ->add('depreciationYears')
             ->add('manufacturer')
             ->add('location')

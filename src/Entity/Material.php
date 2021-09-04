@@ -80,6 +80,11 @@ class Material
     private ?float $value;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private ?float $residualValue = 0;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Positive
      */
@@ -245,6 +250,18 @@ class Material
         return $this;
     }
 
+    public function getResidualValue(): ?float
+    {
+        return $this->residualValue;
+    }
+
+    public function setResidualValue(?float $residualValue): self
+    {
+        $this->residualValue = $residualValue;
+
+        return $this;
+    }
+
     public function getDepreciationYears(): ?int
     {
         return $this->depreciationYears;
@@ -394,7 +411,7 @@ class Material
 
         $expiredYears = $this->dateBought->diff(new DateTime('now'))->y;
 
-        return max(0, $this->value * (1 - ($expiredYears / $this->depreciationYears)));
+        return max(0, ($this->value - $this->residualValue) * (1 - ($expiredYears / $this->depreciationYears)) + $this->residualValue);
     }
 
     public function isDeprecated(): bool
