@@ -14,6 +14,14 @@
                         <dt>Berekende huidige waarde</dt>
                         <dd>{{ material_totals.current_value|format_currency('EUR') }}</dd>
                     </div>
+                    <div>
+                        <dt>Afschrijvingsdruk per kwartaal</dt>
+                        <dd>{{ material_totals.depreciation_pressure|format_currency('EUR') }}</dd>
+                    </div>
+                    <div>
+                        <dt>Verwacht opgebouwd vermogen</dt>
+                        <dd>{{ material_totals.expected_capital|format_currency('EUR') }}</dd>
+                    </div>
                 </dl>
             </section>
 

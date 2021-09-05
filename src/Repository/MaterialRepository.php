@@ -40,13 +40,27 @@ class MaterialRepository extends ServiceEntityRepository
             'SELECT SUM(GREATEST(0,
                 GREATEST(0, m.value - m.residualValue) * GREATEST(0, 1 - (YEAR(CURRENT_DATE()) - YEAR(m.dateBought)) / m.depreciationYears) + m.residualValue
             ))
-            FROM App\Entity\Material m'
+            FROM App\Entity\Material m
+            WHERE m.depreciationYears IS NOT NULL'
         );
         $currentValue = $query->getSingleScalarResult();
 
+        $query = $entityManager->createQuery(
+            'SELECT SUM(GREATEST(0,
+                GREATEST(0, m.value - m.residualValue) / m.depreciationYears / 4
+            ))
+            FROM App\Entity\Material m
+            WHERE m.depreciationYears IS NOT NULL'
+        );
+        $depreciationPressure = $query->getSingleScalarResult();
+
+        $expectedCapital = $value - $currentValue;
+
         return [
-            'value'         => $value,
-            'current_value' => $currentValue,
+            'value'                 => $value,
+            'current_value'         => $currentValue,
+            'depreciation_pressure' => $depreciationPressure,
+            'expected_capital'      => $expectedCapital,
         ];
     }
 
