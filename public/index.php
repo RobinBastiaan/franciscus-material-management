@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 require dirname(__DIR__).'/vendor/autoload.php'; // DEV
 //require __DIR__.'/../symfony/vendor/autoload.php'; // PROD
 //$_SERVER['APP_ENV']='prod';
-//$_SERVER['DATABASE_URL']='mysql://robin:pwd@witherhosting.com:2083/cweufdea_franciscus_material_management';
+//$_SERVER['DATABASE_URL']='mysql://cweufdea_robin:pwd@localhost:3306/cweufdea_franciscus_material_management';
 
 (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
