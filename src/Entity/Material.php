@@ -411,7 +411,7 @@ class Material
 
         $expiredYears = $this->dateBought->diff(new DateTime('now'))->y;
 
-        return max(0, ($this->value - $this->residualValue) * (1 - ($expiredYears / $this->depreciationYears)) + $this->residualValue);
+        return max(0, max(0, $this->value - $this->residualValue) * max(0, 1 - ($expiredYears / $this->depreciationYears)) + $this->residualValue);
     }
 
     public function isDeprecated(): bool
