@@ -91,6 +91,10 @@ class ImportMaterialCommand extends Command
             throw new UnexpectedValueException('Failed to parse time string! (' . $row['Koopdatum'] . ')', 'DateTime');
         }
 
+        if (empty(trim($row['Naam']))) {
+            return;
+        }
+
         /** @var Material $materialFromDatabase */
         $materialFromDatabase = $this->em->getRepository(Material::class)
             ->findOneBy([
@@ -119,7 +123,7 @@ class ImportMaterialCommand extends Command
             ->setResidualValue((float)str_replace(',', '', ltrim($row['Restwaarde'], '€')))
             ->setManufacturer(trim($row['Fabrikant']))
             ->setDepreciationYears((int)$row['Afschrijvingsjaren'])
-            ->setState(trim($row['Staat']));
+            ->setState(!empty($row['Staat']) ? trim($row['Staat']) : 'Goed');
 
         /** @var Material $material */
         $material = $this->em->merge($material);
@@ -165,6 +169,10 @@ class ImportMaterialCommand extends Command
             $persistedTag = $tagRepository->findOneByName($tag);
 
             if (!isset($persistedTag)) {
+                if ($tag === '') {
+                    continue;
+                }
+
                 $persistedTag = new Tag();
                 $persistedTag->setName($tag);
                 $persistedTag->addMaterial($material);

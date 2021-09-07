@@ -52,6 +52,10 @@ class MaterialFixtures extends Fixture
         $dateTime = date('Y/m/d', strtotime($row['Koopdatum'])); // use European data format
         $dateTime = (new DateTime($dateTime));
 
+        if (empty(trim($row['Naam']))) {
+            return;
+        }
+
         /** @var Material $materialFromDatabase */
         $materialFromDatabase = $this->em->getRepository(Material::class)
             ->findOneBy([
@@ -80,7 +84,7 @@ class MaterialFixtures extends Fixture
             ->setResidualValue((float)str_replace(',', '', ltrim($row['Restwaarde'], '€')))
             ->setManufacturer(trim($row['Fabrikant']))
             ->setDepreciationYears((int)$row['Afschrijvingsjaren'])
-            ->setState(trim($row['Staat']));
+            ->setState(!empty($row['Staat']) ? trim($row['Staat']) : 'Goed');
 
         if ($material == $materialFromDatabase) {
             return; // nothing has changed; no update required
@@ -127,6 +131,10 @@ class MaterialFixtures extends Fixture
             $persistedTag = $tagRepository->findOneByName($tag);
 
             if (!isset($persistedTag)) {
+                if ($tag === '') {
+                    continue;
+                }
+
                 $persistedTag = new Tag();
                 $persistedTag->setName($tag);
                 $persistedTag->addMaterial($material);
