@@ -39,14 +39,18 @@
                          style="width: {{ material_status.goed / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.goed / material_status.totaal * 100 }}">
                         <a href="{{ (material_status.goed_url) }}">{{ material_status.goed }} Goed</a>
                     </div>
-                    <div class="progress-bar bg-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                         style="width: {{ material_status.matig / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.matig / material_status.totaal * 100 }}">
-                        <a href="{{ (material_status.matig_url) }}">{{ material_status.matig }} Matig</a>
-                    </div>
-                    <div class="progress-bar bg-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                         style="width: {{ material_status.slecht / material_status.totaal * 100 }}%" aria-valuenow="{{ material_status.slecht / material_status.totaal * 100 }}">
-                        <a href="{{ (material_status.slecht_url) }}">{{ material_status.slecht }} Slecht</a>
-                    </div>
+                    {% if material_status.matig %}
+                        <div class="progress-bar bg-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                             style="width: {{ max(10, material_status.matig / material_status.totaal * 100) }}%" aria-valuenow="{{ material_status.matig / material_status.totaal * 100 }}">
+                            <a href="{{ (material_status.matig_url) }}">{{ material_status.matig }} Matig</a>
+                        </div>
+                    {% endif %}
+                    {% if material_status.slecht %}
+                        <div class="progress-bar bg-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                             style="width: {{ max(10, material_status.slecht / material_status.totaal * 100) }}%" aria-valuenow="{{ material_status.slecht / material_status.totaal * 100 }}">
+                            <a href="{{ (material_status.slecht_url) }}">{{ material_status.slecht }} Slecht</a>
+                        </div>
+                    {% endif %}
                 </div>
             </section>
         </div>
