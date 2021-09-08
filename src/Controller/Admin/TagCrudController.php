@@ -25,7 +25,7 @@ class TagCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name', 'Naam'),
+            TextField::new('name', 'Naam')->setCssClass('js-row-action'),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),

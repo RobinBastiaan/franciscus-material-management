@@ -29,8 +29,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     const ROLE_MATERIAL_MASTER = 'ROLE_MATERIAL_MASTER';
     const ROLE_USER = 'ROLE_USER';
 
-    const AGE_GROUPS = ['Bevers', 'Parcival', 'Leonardus', 'Scouts', 'Explorers', 'Roverscouts', 'Stam', 'Bestuur', 'Overig'];
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

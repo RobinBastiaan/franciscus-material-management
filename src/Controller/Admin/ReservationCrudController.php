@@ -41,7 +41,7 @@ class ReservationCrudController extends AbstractCrudController
         }
 
         return [
-            TextField::new('name', 'Naam'),
+            TextField::new('name', 'Naam')->setCssClass('js-row-action'),
             AssociationField::new('ageGroup', 'Speltak'),
             $field->setSortable(false)->setHelp('De extra gebruikers van buiten de geselecteerde speltak.'),
             DateField::new('dateStart', 'Begindatum'),

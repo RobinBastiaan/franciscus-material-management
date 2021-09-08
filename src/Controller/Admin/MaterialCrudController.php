@@ -51,7 +51,7 @@ class MaterialCrudController extends AbstractCrudController
 
         return [
             NumberField::new('amount', 'Aantal'),
-            TextField::new('name', 'Naam'),
+            TextField::new('name', 'Naam')->setCssClass('js-row-action'),
             TextField::new('type'),
             TextareaField::new('description', 'Korte omschrijving'),
             TextEditorField::new('information', 'Uitgebreide informatie'),

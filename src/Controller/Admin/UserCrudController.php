@@ -41,7 +41,7 @@ class UserCrudController extends AbstractCrudController
 
         return [
             AvatarField::new('name')->setIsGravatarEmail(),
-            TextField::new('name', 'Naam'),
+            TextField::new('name', 'Naam')->setCssClass('js-row-action'),
             EmailField::new('email', 'E-mail'),
             ChoiceField::new('roles', 'Rechten')
                 ->setChoices(['Gebruiker' => User::ROLE_USER, 'Materiaalmeester' => User::ROLE_MATERIAL_MASTER, 'Admin' => User::ROLE_ADMIN])

@@ -30,7 +30,7 @@ class AgeGroupCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name', 'Naam'),
+            TextField::new('name', 'Naam')->setCssClass('js-row-action'),
             ColorField::new('color', 'Kleur'),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
