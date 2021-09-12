@@ -5,6 +5,18 @@ vich_uploader:
         materials:
             uri_prefix: /images/materials
             upload_destination: '%kernel.project_dir%/public/images/materials'
+            namer:
+                service: Vich\UploaderBundle\Naming\PropertyNamer
+                options: { property: 'slug' }
         receipts:
             uri_prefix: /images/receipts
             upload_destination: '%kernel.project_dir%/public/images/receipts'
+            namer:
+                service: Vich\UploaderBundle\Naming\PropertyNamer
+                options: { property: 'slug' }
+        avatars:
+            uri_prefix: /images/avatars
+            upload_destination: '%kernel.project_dir%/public/images/avatars'
+            namer:
+                service: Vich\UploaderBundle\Naming\PropertyNamer
+                options: { property: 'slug' }

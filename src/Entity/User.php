@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,15 +11,18 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity("email")
  * @UniqueEntity("name")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @Vich\Uploadable()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -63,6 +67,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Gedmo\Slug(fields={"name"})
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $avatar = null;
+
+    /**
+     * @Vich\UploadableField(mapping="avatars", fileNameProperty="avatar")
+     */
+    private ?File $avatarFile;
 
     /**
      * @ORM\ManyToMany(targetEntity=Reservation::class, mappedBy="users")
@@ -170,7 +184,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -243,6 +257,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->ageGroups->removeElement($ageGroup)) {
             $ageGroup->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
+    }
+
+    public function setAvatarFile($avatarFile): self
+    {
+        $this->avatarFile = $avatarFile;
+
+        if ($avatarFile) {
+            $this->updatedAt = new DateTime();
         }
 
         return $this;

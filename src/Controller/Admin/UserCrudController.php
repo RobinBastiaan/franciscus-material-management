@@ -12,9 +12,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AvatarField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -35,12 +37,18 @@ class UserCrudController extends AbstractCrudController
     {
         if (Crud::PAGE_INDEX === $pageName || Crud::PAGE_DETAIL === $pageName) {
             $ageGroupField = ArrayField::new('ageGroups', 'Speltak');
+            $avatarField = ImageField::new('avatar', '')
+                ->setBasePath('/images/avatars')
+                ->addCssClass('image-avatar');
         } else {
             $ageGroupField = AssociationField::new('ageGroups', 'Speltak');
+            $avatarField = TextField::new('avatarFile', 'Avatar')
+                ->setFormType(VichImageType::class)
+                ->addCssClass('image-avatar');
         }
 
         return [
-            AvatarField::new('name')->setIsGravatarEmail(),
+            $avatarField,
             TextField::new('name', 'Naam')->setCssClass('js-row-action'),
             EmailField::new('email', 'E-mail'),
             ChoiceField::new('roles', 'Rechten')

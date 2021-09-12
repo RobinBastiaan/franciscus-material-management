@@ -163,7 +163,7 @@ class Material
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -504,6 +504,6 @@ class Material
 
     public function __toString()
     {
-        return (string)$this->getName();
+        return $this->getName();
     }
 }

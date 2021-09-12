@@ -22,3 +22,26 @@ dl.stats-details {
     text-decoration: underline;
   }
 }
+
+.image-avatar {
+  img.img-fluid, img {
+    border: 0;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+    object-fit: cover;
+  }
+
+  img {
+    height: 64px;
+    width: 64px;
+  }
+
+  .badge.badge-secondary {
+    text-indent: -9999px;
+    background-image: url(https://www.gravatar.com/avatar/f262d913373a9b475a84fbf43e220a8d?s=24&d=mp);
+    background-size: cover;
+    height: 32px;
+    width: 32px;
+  }
+}
