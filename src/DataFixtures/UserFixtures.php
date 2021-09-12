@@ -32,6 +32,20 @@ class UserFixtures extends Fixture
             'roles'          => [User::ROLE_USER],
             'age_groups'     => ['Overig', 'Parcival'],
         ],
+        [
+            'name'           => 'Robin Bastiaan',
+            'email'          => 'robinbastiaan@gmail.com',
+            'plain_password' => 'robinrobin',
+            'roles'          => [User::ROLE_USER],
+            'age_groups'     => ['Scouts'],
+        ],
+        [
+            'name'           => 'Mark Meuleman',
+            'email'          => 'mmeuleman@hotmail.com',
+            'plain_password' => 'markmark',
+            'roles'          => [User::ROLE_ADMIN],
+            'age_groups'     => ['Overig'],
+        ],
     ];
 
     private UserPasswordHasherInterface $passwordHasher;

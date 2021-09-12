@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -21,6 +22,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class MaterialCrudController extends AbstractCrudController
 {
@@ -44,13 +46,18 @@ class MaterialCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName || Crud::PAGE_DETAIL === $pageName) {
             $locationField = ArrayField::new('location', 'Opslaglocatie');
             $tagField = ArrayField::new('tags');
+            $imageField = ImageField::new('image', 'Afbeelding')->setBasePath('/images/materials');
+            $receiptField = ImageField::new('receipt', 'Bonnetje')->setBasePath('/images/receipts');
         } else {
             $locationField = AssociationField::new('location', 'Opslaglocatie');
             $tagField = AssociationField::new('tags')->autocomplete();
+            $imageField = TextField::new('imageFile', 'Afbeelding')->setFormType(VichImageType::class);
+            $receiptField = TextField::new('receiptFile', 'Bonnetje')->setFormType(VichImageType::class);
         }
 
         return [
             NumberField::new('amount', 'Aantal'),
+            $imageField,
             TextField::new('name', 'Naam')->setCssClass('js-row-action'),
             TextField::new('type'),
             TextareaField::new('description', 'Korte omschrijving'),
@@ -66,6 +73,7 @@ class MaterialCrudController extends AbstractCrudController
             $tagField->setSortable(false),
             ArrayField::new('notes', 'Notities')->onlyOnDetail(),
             DateTimeField::new('deletedAt', 'Verwijderd')->hideWhenCreating(),
+            $receiptField,
         ];
     }
 
