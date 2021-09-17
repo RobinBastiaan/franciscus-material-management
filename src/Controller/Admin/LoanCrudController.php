@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Loan;
 use App\Entity\Material;
-use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -19,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LoanCrudController extends AbstractCrudController
 {
@@ -73,25 +73,61 @@ class LoanCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $handInLoan = Action::new('handInLoan', 'Inleveren')
-            ->linkToCrudAction('handInLoan');
+        $handInLoanBad = Action::new('handInLoanBad', 'Inleveren - Slechte staat')
+            ->linkToCrudAction('handInLoanBad')
+            ->setIcon('fa fa-times-circle')
+            ->setCssClass('text-danger')
+            ->displayIf(static function ($entity) {
+                return empty($entity->getReturnedState());
+            });
+        $handInLoanMediocre = Action::new('handInLoanMediocre', 'Inleveren - Matige staat')
+            ->linkToCrudAction('handInLoanMediocre')
+            ->setIcon('fa fa-question-circle')
+            ->setCssClass('text-warning')
+            ->displayIf(static function ($entity) {
+                return empty($entity->getReturnedState());
+            });
+        $handInLoanGood = Action::new('handInLoanGood', 'Inleveren - Goede staat')
+            ->linkToCrudAction('handInLoanGood')
+            ->setIcon('fa fa-check-circle')
+            ->setCssClass('text-success')
+            ->displayIf(static function ($entity) {
+                return empty($entity->getReturnedState());
+            });
 
         return $actions
-            ->add(Crud::PAGE_INDEX, $handInLoan);
+            ->add(Crud::PAGE_INDEX, $handInLoanBad)
+            ->add(Crud::PAGE_INDEX, $handInLoanMediocre)
+            ->add(Crud::PAGE_INDEX, $handInLoanGood)
+            ->reorder(Crud::PAGE_INDEX, [Action::EDIT, Action::DELETE]);
     }
 
-    public function handInLoan(AdminContext $context)
+    public function handInLoanBad(AdminContext $context): RedirectResponse
+    {
+        return $this->handInLoan($context, 'Slecht');
+    }
+
+    public function handInLoanMediocre(AdminContext $context): RedirectResponse
+    {
+        return $this->handInLoan($context, 'Matig');
+    }
+
+    public function handInLoanGood(AdminContext $context): RedirectResponse
+    {
+        return $this->handInLoan($context, 'Goed');
+    }
+
+    public function handInLoan(AdminContext $context, string $state): RedirectResponse
     {
         /** @var Loan $loan */
         $loan = $context->getEntity()->getInstance();
-        $loan->setReturnedState('Goed');
-        $loan->setDateReturned(new DateTime());
+        $loan->handIn($state);
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($loan);
         $manager->flush();
 
         $url = $this->adminUrlGenerator
-            ->setController(LoanCrudController::class)
+            ->setController(__CLASS__)
             ->setAction(Action::INDEX)
             ->generateUrl();
 

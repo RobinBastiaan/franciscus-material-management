@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LoanRepository;
+use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -177,6 +178,14 @@ class Loan
     public function setUpdatedBy(?User $updatedBy): self
     {
         $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    public function handIn(string $state): self
+    {
+        $this->setReturnedState($state);
+        $this->setDateReturned(new DateTime());
 
         return $this;
     }
