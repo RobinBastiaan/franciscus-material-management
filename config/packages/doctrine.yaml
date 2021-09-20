@@ -20,6 +20,9 @@ doctrine:
         filters:
             active_checklist:
                 class: 'App\DBAL\ActiveChecklistFilter'
+            softdeleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                enabled: true
 
         dql:
             string_functions:

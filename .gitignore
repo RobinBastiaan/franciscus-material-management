@@ -1,5 +1,6 @@
 /.idea
 /data
+/public/images/
 
 ###> symfony/framework-bundle ###
 /.env.local

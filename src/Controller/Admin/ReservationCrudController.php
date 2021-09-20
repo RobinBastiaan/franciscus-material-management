@@ -3,19 +3,18 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Reservation;
-use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 class ReservationCrudController extends AbstractCrudController
@@ -28,8 +27,8 @@ class ReservationCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Reservatie')
-            ->setEntityLabelInPlural('Reservaties')
+            ->setEntityLabelInSingular('Reservering')
+            ->setEntityLabelInPlural('Reservering')
             ->setDefaultSort(['dateStart' => 'ASC']);
     }
 
@@ -42,16 +41,17 @@ class ReservationCrudController extends AbstractCrudController
         }
 
         return [
-            TextField::new('name', 'Naam'),
-            ChoiceField::new('ageGroup', 'Speltak')
-                ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS)),
+            TextField::new('name', 'Naam')->setCssClass('js-row-action'),
+            AssociationField::new('ageGroup', 'Speltak'),
             $field->setSortable(false)->setHelp('De extra gebruikers van buiten de geselecteerde speltak.'),
-            DateField::new('dateStart', 'Begin datum'),
-            DateField::new('dateEnd', 'Eind datum'),
+            DateField::new('dateStart', 'Begindatum'),
+            DateField::new('dateEnd', 'Einddatum'),
             AssociationField::new('createdBy', 'Toegevoegd door')->hideOnForm(),
             DateTimeField::new('createdAt', 'Aangemaakt')->hideOnForm(),
             DateTimeField::new('updatedAt', 'Aangepast')->hideOnForm(),
             AssociationField::new('loans', 'Aantal uitleningen')->hideOnForm(),
+            CollectionField::new('nonReturnedLoans', 'Waarvan ingeleverd')->hideOnForm(),
+            DateTimeField::new('deletedAt', 'Verwijderd')->hideWhenCreating(),
         ];
     }
 
@@ -59,10 +59,10 @@ class ReservationCrudController extends AbstractCrudController
     {
         return $filters
             ->add(TextFilter::new('name')->setLabel('Name'))
-            ->add(ChoiceFilter::new('ageGroup')
-                ->setChoices(array_combine(User::AGE_GROUPS, User::AGE_GROUPS))->setLabel('Speltak'))
-            ->add(DateTimeFilter::new('dateStart')->setLabel('Begin datum'))
-            ->add(DateTimeFilter::new('dateEnd')->setLabel('Eind datum'))
-            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'));
+            ->add(EntityFilter::new('ageGroup')->setLabel('Speltak'))
+            ->add(DateTimeFilter::new('dateStart')->setLabel('Begindatum'))
+            ->add(DateTimeFilter::new('dateEnd')->setLabel('Einddatum'))
+            ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'))
+            ->add(NullFilter::new('deletedAt')->setLabel('Verwijderd')->setChoiceLabels('Nee', 'Ja'));
     }
 }

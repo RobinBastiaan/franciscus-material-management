@@ -2,23 +2,27 @@
 
 namespace App\Entity;
 
+use App\Repository\LoanRepository;
 use App\Repository\ReservationRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
  * @UniqueEntity("name")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Reservation
 {
     use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @ORM\Id
@@ -39,9 +43,10 @@ class Reservation
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=AgeGroup::class, inversedBy="reservations")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private string $ageGroup;
+    private ?AgeGroup $ageGroup;
 
     /**
      * @ORM\Column(type="date")
@@ -50,11 +55,12 @@ class Reservation
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Expression("this.getDateEnd() >= this.getDateStart()", message="De einddatum moet op of na de begindatum vallen.")
      */
     private DateTimeInterface $dateEnd;
 
     /**
-     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="reservation", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="reservation", fetch="EAGER", cascade={"remove"})
      */
     private Collection $loans;
 
@@ -110,17 +116,13 @@ class Reservation
         return $this;
     }
 
-    public function getAgeGroup(): ?string
+    public function getAgeGroup(): ?AgeGroup
     {
         return $this->ageGroup;
     }
 
-    public function setAgeGroup(string $ageGroup): self
+    public function setAgeGroup(?AgeGroup $ageGroup): self
     {
-        if (!in_array($ageGroup, User::AGE_GROUPS)) {
-            throw new InvalidArgumentException($ageGroup . ' is not a valid age group.');
-        }
-
         $this->ageGroup = $ageGroup;
 
         return $this;
@@ -158,6 +160,16 @@ class Reservation
         return $this->loans;
     }
 
+    /**
+     * @return Collection|Loan[]
+     */
+    public function getNonReturnedLoans(): Collection
+    {
+        $criteria = LoanRepository::createNonReturnedCriteria();
+
+        return $this->loans->matching($criteria);
+    }
+
     public function addLoan(Loan $loan): self
     {
         if (!$this->loans->contains($loan)) {
@@ -170,12 +182,7 @@ class Reservation
 
     public function removeLoan(Loan $loan): self
     {
-        if ($this->loans->removeElement($loan)) {
-            // set the owning side to null (unless already changed)
-            if ($loan->getReservation() === $this) {
-                $loan->setReservation(null);
-            }
-        }
+        $this->loans->removeElement($loan);
 
         return $this;
     }

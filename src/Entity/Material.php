@@ -11,18 +11,22 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=MaterialRepository::class)
  * @UniqueEntity("name")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @Vich\Uploadable()
  */
 class Material
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
-    const STATES = ['Goed', 'Matig', 'Slecht', 'Afgeschreven'];
+    public const STATES = ['Goed', 'Matig', 'Slecht', 'Afgeschreven'];
 
     /**
      * @ORM\Id
@@ -59,6 +63,7 @@ class Material
 
     /**
      * @ORM\Column(type="integer", options={"default": "1"})
+     * @Assert\Positive
      */
     private int $amount = 1;
 
@@ -78,9 +83,35 @@ class Material
     private ?float $value;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private ?float $residualValue = 0;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(min = 0)
      */
     private ?int $depreciationYears;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $image = null;
+
+    /**
+     * @Vich\UploadableField(mapping="materials", fileNameProperty="image")
+     */
+    private ?File $imageFile;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $receipt = null;
+
+    /**
+     * @Vich\UploadableField(mapping="receipts", fileNameProperty="receipt")
+     */
+    private ?File $receiptFile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -88,9 +119,10 @@ class Material
     private ?string $manufacturer;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="materials", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
-    private ?string $location;
+    private ?Location $location;
 
     /**
      * @ORM\OneToMany(targetEntity=Loan::class, mappedBy="loanedMaterial")
@@ -103,7 +135,7 @@ class Material
     private Collection $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="materials")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="materials", cascade={"persist"})
      */
     private Collection $tags;
 
@@ -131,7 +163,7 @@ class Material
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -241,6 +273,18 @@ class Material
         return $this;
     }
 
+    public function getResidualValue(): ?float
+    {
+        return $this->residualValue;
+    }
+
+    public function setResidualValue(?float $residualValue): self
+    {
+        $this->residualValue = $residualValue;
+
+        return $this;
+    }
+
     public function getDepreciationYears(): ?int
     {
         return $this->depreciationYears;
@@ -265,12 +309,12 @@ class Material
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): ?Location
     {
         return $this->location;
     }
 
-    public function setLocation(string $location): self
+    public function setLocation(?Location $location): self
     {
         $this->location = $location;
 
@@ -384,13 +428,78 @@ class Material
     {
         if ($this->depreciationYears === 0) { // no current value from the start
             return 0;
-        } elseif ($this->depreciationYears === null) { // never depreciating
+        }
+
+        if ($this->depreciationYears === null) { // never depreciating
             return $this->value;
         }
 
         $expiredYears = $this->dateBought->diff(new DateTime('now'))->y;
 
-        return max(0, $this->value * (1 - ($expiredYears / $this->depreciationYears)));
+        return max(0, max(0, $this->value - $this->residualValue) * max(0, 1 - ($expiredYears / $this->depreciationYears)) + $this->residualValue);
+    }
+
+    public function isDeprecated(): bool
+    {
+        $expiredYears = $this->dateBought->diff(new DateTime('now'))->y;
+
+        return $expiredYears > $this->depreciationYears;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile($imageFile): self
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->updatedAt = new DateTime();
+        }
+
+        return $this;
+    }
+
+    public function getReceipt(): ?string
+    {
+        return $this->receipt;
+    }
+
+    public function setReceipt(?string $receipt): self
+    {
+        $this->receipt = $receipt;
+
+        return $this;
+    }
+
+    public function getReceiptFile()
+    {
+        return $this->receiptFile;
+    }
+
+    public function setReceiptFile($receiptFile): self
+    {
+        $this->receiptFile = $receiptFile;
+
+        if ($receiptFile) {
+            $this->updatedAt = new DateTime();
+        }
+
+        return $this;
     }
 
     public function __toString()

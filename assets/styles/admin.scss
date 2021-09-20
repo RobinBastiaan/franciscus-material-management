@@ -1,0 +1,59 @@
+/**
+ * Layout
+ * All the CSS that handles the layout, such as the container and any grid systems.
+ */
+
+dl.stats-details {
+
+  dt {
+    display: inline;
+  }
+
+  dd {
+    display: inline;
+  }
+}
+
+.progress {
+  height: 20px;
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+}
+
+.image-avatar {
+  img.img-fluid, img {
+    border: 0;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+    object-fit: cover;
+  }
+
+  img {
+    height: 64px;
+    width: 64px;
+  }
+
+  .badge.badge-secondary {
+    text-indent: -9999px;
+    background-image: url(https://www.gravatar.com/avatar/f262d913373a9b475a84fbf43e220a8d?s=24&d=mp);
+    background-size: cover;
+    height: 32px;
+    width: 32px;
+  }
+}
+
+.dropdown-item.text-success i {
+  color: #1ea471;
+}
+
+.dropdown-item.text-warning i {
+  color: #d97817;
+}
+
+.dropdown-item.text-danger i {
+  color: #cd3c63;
+}

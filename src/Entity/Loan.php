@@ -3,21 +3,26 @@
 namespace App\Entity;
 
 use App\Repository\LoanRepository;
+use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=LoanRepository::class)
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Loan
 {
     use TimestampableEntity;
-
-    const STATES = ['Goed', 'Matig', 'Slecht', 'Afgeschreven'];
+    use SoftDeleteableEntity;
 
     /**
      * @ORM\Id
@@ -29,12 +34,12 @@ class Loan
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private DateTimeInterface $dateReturned;
+    private ?DateTimeInterface $dateReturned;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $returnedState;
+    private ?string $returnedState;
 
     /**
      * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="loan")
@@ -44,11 +49,12 @@ class Loan
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="loans")
+     * @ORM\JoinColumn(nullable=false)
      */
     private Reservation $reservation;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="loan")
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="loan", cascade={"remove"})
      */
     private ?Collection $notes;
 
@@ -110,12 +116,12 @@ class Loan
         return $this;
     }
 
-    public function getReservation(): ?Reservation
+    public function getReservation(): Reservation
     {
         return $this->reservation;
     }
 
-    public function setReservation(?Reservation $reservation): self
+    public function setReservation(Reservation $reservation): self
     {
         $this->reservation = $reservation;
 
@@ -152,6 +158,18 @@ class Loan
         return $this;
     }
 
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
     public function getUpdatedBy(): ?User
     {
         return $this->updatedBy;
@@ -164,8 +182,28 @@ class Loan
         return $this;
     }
 
+    public function handIn(string $state): self
+    {
+        $this->setReturnedState($state);
+        $this->setDateReturned(new DateTime());
+
+        return $this;
+    }
+
     public function __toString()
     {
         return $this->getReservation() . '/' . $this->getLoanedMaterial();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function markAsDone(PreUpdateEventArgs $event): void
+    {
+        if (!$event->hasChangedField('returnedState') && $event->getOldValue('dateReturned') === null) {
+            return;
+        }
+
+        $this->setDateReturned(new DateTimeImmutable());
     }
 }

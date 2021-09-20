@@ -3,9 +3,10 @@
         <h2><a href="{{ path('material_show', {'slug': material.slug}) }}">{{ material.name }}</a></h2>
     </div>
     <div class="card-body">
-        <p><b>Locatie: </b>{{ material.location }}</p>
+        <p><b>Opslaglocatie: </b>{{ material.location }}</p>
         <p><b>Aantal: </b>{{ material.amount }}</p>
         <p><b>Gekocht: </b>{{ material.dateBought|date('F Y') }} ({{ material.dateBought|ago }})</p>
+        <p><b>Is afgeschreven: </b>{{ material.isDeprecated ? 'Ja' : 'Nee' }}</p>
 
         <div><b>Tags: </b>
             {%- for tag in material.tags -%}

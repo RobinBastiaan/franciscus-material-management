@@ -46,7 +46,7 @@ class MaterialController extends AbstractController
 
         return $this->render('material/new.html.twig', [
             'material' => $material,
-            'form' => $form->createView(),
+            'form'     => $form->createView(),
         ]);
     }
 
@@ -76,7 +76,7 @@ class MaterialController extends AbstractController
 
         return $this->render('material/edit.html.twig', [
             'material' => $material,
-            'form' => $form->createView(),
+            'form'     => $form->createView(),
         ]);
     }
 
@@ -85,7 +85,7 @@ class MaterialController extends AbstractController
      */
     public function delete(Request $request, Material $material): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$material->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $material->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($material);
             $entityManager->flush();

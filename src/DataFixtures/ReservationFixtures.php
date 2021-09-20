@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AgeGroup;
 use App\Entity\Reservation;
 use App\Entity\User;
 use DateTime;
@@ -46,7 +47,9 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
         foreach ($this->reservations as $aReservation) {
             $reservation = new Reservation();
             $reservation->setName($aReservation['name']);
-            $reservation->setAgeGroup($aReservation['age_group']);
+            /** @var AgeGroup $ageGroupReference */
+            $ageGroupReference = $this->getReference('age_group_' . $aReservation['age_group']);
+            $reservation->setAgeGroup($ageGroupReference);
             $reservation->setDateStart((new DateTime(date('Y/m/d', strtotime($aReservation['date_start'])))));
             $reservation->setDateEnd((new DateTime(date('Y/m/d', strtotime($aReservation['date_end'])))));
             /** @var User $userReference */

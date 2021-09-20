@@ -1,0 +1,18 @@
+{# DO THIS: the '!' symbol tells Symfony to extend from the original template #}
+{% extends '@!EasyAdmin/crud/detail.html.twig' %}
+
+{% block main %}
+    {{ parent() }}
+
+    {# Display material details via extension #}
+{#    {% for field in entity.fields %}#}
+{#        {% if field.label == 'Notities' %}#}
+{#            <ul>#}
+{#                {% for note in field.value %}#}
+{#                    <li>{{ note }}</li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+
+{% endblock %}

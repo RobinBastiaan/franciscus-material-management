@@ -3,29 +3,35 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Exception\InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity("email")
  * @UniqueEntity("name")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @Vich\Uploadable()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_MATERIAL_MASTER = 'ROLE_MATERIAL_MASTER';
     const ROLE_USER = 'ROLE_USER';
-
-    const AGE_GROUPS = ['Bevers', 'Parcival', 'Leonardus', 'Scouts', 'Explorers', 'Roverscouts', 'Stam', 'Bestuur', 'Overig'];
 
     /**
      * @ORM\Id
@@ -45,10 +51,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @var string|null The hashed password
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotCompromisedPassword
      */
-    private string $password;
+    private ?string $password;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -56,18 +63,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $name;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="string", length=100, unique=true)
+     * @Gedmo\Slug(fields={"name"})
      */
-    private array $ageGroup = [];
+    private $slug;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $avatar = null;
+
+    /**
+     * @Vich\UploadableField(mapping="avatars", fileNameProperty="avatar")
+     */
+    private ?File $avatarFile;
 
     /**
      * @ORM\ManyToMany(targetEntity=Reservation::class, mappedBy="users")
      */
     private Collection $reservations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=AgeGroup::class, mappedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private Collection $ageGroups;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->ageGroups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,12 +152,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -159,7 +184,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -171,18 +196,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAgeGroup(): ?array
+    public function getSlug(): ?string
     {
-        return $this->ageGroup;
+        return $this->slug;
     }
 
-    public function setAgeGroup(array $ageGroup): self
+    public function setSlug(string $slug): self
     {
-        if (in_array($ageGroup, self::AGE_GROUPS)) {
-            throw new InvalidArgumentException('Not a valid age group.');
-        }
-
-        $this->ageGroup = $ageGroup;
+        $this->slug = $slug;
 
         return $this;
     }
@@ -209,6 +230,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->reservations->removeElement($reservation)) {
             $reservation->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AgeGroup[]
+     */
+    public function getAgeGroups(): Collection
+    {
+        return $this->ageGroups;
+    }
+
+    public function addAgeGroup(AgeGroup $ageGroup): self
+    {
+        if (!$this->ageGroups->contains($ageGroup)) {
+            $this->ageGroups[] = $ageGroup;
+            $ageGroup->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgeGroup(AgeGroup $ageGroup): self
+    {
+        if ($this->ageGroups->removeElement($ageGroup)) {
+            $ageGroup->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
+    }
+
+    public function setAvatarFile($avatarFile): self
+    {
+        $this->avatarFile = $avatarFile;
+
+        if ($avatarFile) {
+            $this->updatedAt = new DateTime();
         }
 
         return $this;

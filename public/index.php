@@ -5,7 +5,10 @@ use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
-require dirname(__DIR__).'/vendor/autoload.php';
+require dirname(__DIR__).'/vendor/autoload.php'; // DEV
+//require __DIR__.'/../symfony/vendor/autoload.php'; // PROD
+//$_SERVER['APP_ENV']='prod';
+//$_SERVER['DATABASE_URL']='mysql://cweufdea_robin:pwd@localhost:3306/cweufdea_franciscus_material_management';
 
 (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 

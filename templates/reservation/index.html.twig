@@ -10,8 +10,8 @@
         <tr>
             <th>Naam</th>
             <th>Speltak</th>
-            <th>Begin Datum</th>
-            <th>Eind Datum</th>
+            <th>Begindatum</th>
+            <th>Einddatum</th>
             <th>Acties</th>
         </tr>
         </thead>
@@ -19,7 +19,7 @@
         {% for reservation in reservations %}
             <tr>
                 <td>{{ reservation.name }}</td>
-                <td>{{ reservation.ageGroup }}</td>
+                <td>{{ reservation.ageGroup }} <span style="background-color: {{ reservation.ageGroup.color }}">({{ reservation.ageGroup.color }})</span></td>
                 <td>{{ reservation.dateStart ? reservation.dateStart|date('Y-m-d') : '' }}</td>
                 <td>{{ reservation.dateEnd ? reservation.dateEnd|date('Y-m-d') : '' }}</td>
                 <td>
