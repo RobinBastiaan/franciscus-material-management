@@ -1,0 +1,1197 @@
+[33mcommit a2ed6a3d943b8551b995df05b6cf60d06660d72c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: a18933d 1bb6e0a
+Author: Ro1Gr1 <ro1_gr1@hotmail.com>
+Date:   Mon Sep 20 16:29:02 2021 +0200
+
+    Merge branch 'master' of https://github.com/RobinBastiaan/franciscus-material-management into master
+
+[33mcommit 1bb6e0a21ed9358a4f5a0308d9b03834ef347b31[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Fri Sep 17 20:59:54 2021 +0200
+
+    :sparkles: Add hand in load buttons
+
+ assets/styles/admin.scss                    | 12 [32m+++++++[m
+ src/Controller/Admin/LoanCrudController.php | 52 [32m++++++++++++++++++++++++[m[31m-----[m
+ src/Entity/Loan.php                         |  9 [32m+++++[m
+ 3 files changed, 65 insertions(+), 8 deletions(-)
+
+[33mcommit 076320e31fb389bcc12b2164304f6b6c1ebd40e5[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Sep 15 23:58:52 2021 +0200
+
+    :sparkles: Add custom action to hand in loan
+
+ src/Controller/Admin/LoanCrudController.php | 39 [32m+++++++++++++++++++++++++++++[m
+ 1 file changed, 39 insertions(+)
+
+[33mcommit 819bdc25bd8f3df5197826874b6057069ce76a56[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 12 19:11:57 2021 +0200
+
+    :sparkles: Add user avatar
+
+ assets/styles/admin.scss                    | 23 [32m+++++++++++++++[m
+ config/packages/vich_uploader.yaml          | 12 [32m++++++++[m
+ migrations/Version20210912161234.php        | 26 [32m+++++++++++++++++[m
+ src/Controller/Admin/UserCrudController.php | 10 [32m++++++[m[31m-[m
+ src/Entity/Material.php                     |  4 [32m+[m[31m--[m
+ src/Entity/User.php                         | 44 [32m++++++++++++++++++++++++++++[m[31m-[m
+ 6 files changed, 115 insertions(+), 4 deletions(-)
+
+[33mcommit 8e5b73a5ec7ece118daa21cd8d922e25fb0dad67[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 12 16:44:15 2021 +0200
+
+    :sparkles: Add material image and receipt field
+
+ .gitignore                                      |   1 [32m+[m
+ composer.json                                   |   3 [32m+[m[31m-[m
+ composer.lock                                   | 342 [32m+++++++++++++++++++++++[m[31m-[m
+ config/bundles.php                              |   1 [32m+[m
+ config/packages/vich_uploader.yaml              |  10 [32m+[m
+ migrations/Version20210911162842.php            |  28 [32m++[m
+ public/images/.gitignore                        |   0
+ src/Controller/Admin/MaterialCrudController.php |   8 [32m+[m
+ src/DataFixtures/UserFixtures.php               |  14 [32m+[m
+ src/Entity/Material.php                         |  87 [32m+++++[m[31m-[m
+ symfony.lock                                    |  21 [32m++[m
+ 11 files changed, 510 insertions(+), 5 deletions(-)
+
+[33mcommit b22e95b8d9f70ae6c700d667a72f20b9bf1bc139[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Sep 8 19:39:37 2021 +0200
+
+    :sparkles: Add edit link to admin entity listing
+
+ assets/admin.js                                    | 9 [32m+++++++++[m
+ src/Controller/Admin/AgeGroupCrudController.php    | 2 [32m+[m[31m-[m
+ src/Controller/Admin/DashboardController.php       | 3 [32m++[m[31m-[m
+ src/Controller/Admin/LocationCrudController.php    | 2 [32m+[m[31m-[m
+ src/Controller/Admin/MaterialCrudController.php    | 2 [32m+[m[31m-[m
+ src/Controller/Admin/ReservationCrudController.php | 2 [32m+[m[31m-[m
+ src/Controller/Admin/TagCrudController.php         | 2 [32m+[m[31m-[m
+ src/Controller/Admin/UserCrudController.php        | 2 [32m+[m[31m-[m
+ src/Entity/Material.php                            | 2 [32m+[m[31m-[m
+ src/Entity/User.php                                | 2 [31m--[m
+ 10 files changed, 18 insertions(+), 10 deletions(-)
+
+[33mcommit 1011f771b2e2d601c498cd8b71c1038b157ba0b8[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Sep 8 00:37:26 2021 +0200
+
+    :lipstick: Improve display of material status bar
+
+ .../EasyAdminBundle/default/dashboard.html.twig      | 20 [32m++++++++++++[m[31m--------[m
+ 1 file changed, 12 insertions(+), 8 deletions(-)
+
+[33mcommit 0c3b1ec631d775cc222f080793eb3e261da1f96a[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Tue Sep 7 23:57:59 2021 +0200
+
+    :bug: Better defaults on material import + prevent empty values
+
+ src/Command/ImportMaterialCommand.php | 10 [32m+++++++++[m[31m-[m
+ src/DataFixtures/MaterialFixtures.php | 10 [32m+++++++++[m[31m-[m
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+[33mcommit df346e8efbda66157802101d14279733165e299e[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Mon Sep 6 23:42:14 2021 +0200
+
+    :sparkles: Add gravatar field
+
+ src/Controller/Admin/UserCrudController.php | 2 [32m++[m
+ 1 file changed, 2 insertions(+)
+
+[33mcommit 1b665080d4ddf6baae5ebc2e068787b7b826c402[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 5 19:48:26 2021 +0200
+
+    :bug: Fix db url format
+
+ public/index.php | 2 [32m+[m[31m-[m
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[33mcommit e030459e5a51bd6867f98f41d17bd7606c115c76[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 5 19:06:54 2021 +0200
+
+    :rocket: Add symfony/apache-pack
+
+ composer.json    |  1 [32m+[m
+ composer.lock    | 28 [32m+++++++++++++++++++++[m[31m-[m
+ public/.htaccess | 73 [32m++++++++++++++++++++++++++++++++++++++++++++++++++++++++[m
+ symfony.lock     | 12 [32m++++++++++[m
+ 4 files changed, 113 insertions(+), 1 deletion(-)
+
+[33mcommit 1f9e494f2617f9a355ae06d2b52e4cbcbf856655[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 5 15:06:09 2021 +0200
+
+    :rocket: Add project dir to kernel
+
+ src/Kernel.php | 5 [32m+++++[m
+ 1 file changed, 5 insertions(+)
+
+[33mcommit 093dd5793d3617b8fd59b6d2436ab239206ded20[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 5 14:35:51 2021 +0200
+
+    :rocket: Add prod configuration
+
+ public/index.php | 5 [32m++++[m[31m-[m
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+[33mcommit 4492573715918407bb32609d23676022163c415f[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 5 12:41:41 2021 +0200
+
+    :rocket: Add cpanel deploy script
+
+ .cpanel.yml | 18 [32m++++++++++++++++++[m
+ 1 file changed, 18 insertions(+)
+
+[33mcommit 0f73d876ca83fccb3ab4ea540a91ec23c94bb1d8[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 5 10:36:15 2021 +0200
+
+    :sparkles: Add depreciation pressure calculation
+
+ src/Repository/MaterialRepository.php                | 20 [32m+++++++++++++++++[m[31m---[m
+ .../EasyAdminBundle/default/dashboard.html.twig      |  8 [32m++++++++[m
+ 2 files changed, 25 insertions(+), 3 deletions(-)
+
+[33mcommit c937d80981cf0f5064300215f1251eb8bcba2c18[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Sep 5 10:20:11 2021 +0200
+
+    :card_file_box: Update example data
+
+ data/materiaallijst.csv               | 12 [32m++++++[m[31m------[m
+ src/Entity/Material.php               |  2 [32m+[m[31m-[m
+ src/Repository/MaterialRepository.php |  2 [32m+[m[31m-[m
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+[33mcommit 94793fb2b6a32928cb1e23b2efc7be8e12b9f335[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Sep 4 23:58:57 2021 +0200
+
+    :sparkles: Add material residual value
+
+ migrations/Version20210904213551.php            | 26 [32m+++++++++++++++++++++++++[m
+ src/Command/ImportMaterialCommand.php           |  3 [32m++[m[31m-[m
+ src/Controller/Admin/MaterialCrudController.php |  1 [32m+[m
+ src/DataFixtures/MaterialFixtures.php           |  3 [32m++[m[31m-[m
+ src/Entity/Material.php                         | 19 [32m+++++++++++++++++[m[31m-[m
+ src/Form/MaterialType.php                       |  1 [32m+[m
+ src/Repository/MaterialRepository.php           |  2 [32m+[m[31m-[m
+ templates/material/_material.html.twig          |  2 [32m+[m[31m-[m
+ templates/material/index.html.twig              |  2 [32m+[m[31m-[m
+ templates/material/show.html.twig               |  2 [32m+[m[31m-[m
+ 10 files changed, 54 insertions(+), 7 deletions(-)
+
+[33mcommit b322656384e1e80dcf6eafc9ae2b95bdce6ca9fd[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Thu Sep 2 00:29:24 2021 +0200
+
+    :sparkles: Auto update returned date with state (2)
+
+ src/Controller/Admin/LoanCrudController.php |  4 [32m++[m[31m-[m
+ src/Entity/Loan.php                         | 15 [32m+++++++++++[m
+ src/EventListener/DoneLoanSubscriber.php    | 39 [31m-----------------------------[m
+ 3 files changed, 18 insertions(+), 40 deletions(-)
+
+[33mcommit 2d432c66b04cd098b06fdeb98bc63ea93a09b8e1[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Sep 1 23:58:03 2021 +0200
+
+    :sparkles: Auto update returned date with state
+
+ src/EventListener/DoneLoanSubscriber.php | 39 [32m++++++++++++++++++++++++++++++++[m
+ 1 file changed, 39 insertions(+)
+
+[33mcommit 4289108ffb58017d41dca5b5043aaf9352869b76[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 29 23:19:21 2021 +0200
+
+    :sparkles: Add ageGroup colors
+
+ migrations/Version20210829201441.php            | 26 [32m+++++++++++++++++++++++[m
+ src/Controller/Admin/AgeGroupCrudController.php |  2 [32m++[m
+ src/DataFixtures/AgeGroupFixtures.php           | 28 [32m+++++++++++++++++[m[31m--------[m
+ src/Entity/AgeGroup.php                         | 17 [32m+++++++++++++++[m
+ templates/reservation/index.html.twig           |  2 [32m+[m[31m-[m
+ 5 files changed, 65 insertions(+), 10 deletions(-)
+
+[33mcommit e0dec32df62d147f2eaf41a41382efc70eca2bbc[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 29 13:42:08 2021 +0200
+
+    :sparkles: Add field assertions like beginDate <= endDate
+
+ src/Controller/Admin/DashboardController.php                  |  2 [32m+[m[31m-[m
+ src/Controller/Admin/LocationCrudController.php               |  4 [32m++[m[31m--[m
+ src/Controller/Admin/MaterialCrudController.php               |  9 [32m+++++[m[31m----[m
+ src/Controller/Admin/NoteCrudController.php                   |  4 [32m++[m[31m--[m
+ src/Controller/Admin/ReservationCrudController.php            |  8 [32m++++[m[31m----[m
+ src/Entity/Material.php                                       |  3 [32m+++[m
+ src/Entity/Reservation.php                                    |  2 [32m++[m
+ templates/bundles/EasyAdminBundle/crud/new-material.html.twig | 10 [32m++++++++++[m
+ templates/bundles/EasyAdminBundle/default/dashboard.html.twig |  2 [32m+[m[31m-[m
+ templates/reservation/index.html.twig                         |  4 [32m++[m[31m--[m
+ templates/reservation/show.html.twig                          |  2 [32m+[m[31m-[m
+ 11 files changed, 33 insertions(+), 17 deletions(-)
+
+[33mcommit 14de731db3fe05393c392172be559b336c1c2db3[m
+Author: repo-visualizer <repo-visualizer@users.noreply.github.com>
+Date:   Sun Aug 29 10:38:43 2021 +0000
+
+    Repo visualizer: updated diagram
+
+ docs/diagram.svg | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
+
+[33mcommit 754c882fa5a4f392159652fe125dc76f8c054440[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 29 12:38:23 2021 +0200
+
+    :memo: Update screenshot
+
+ .github/workflows/create-diagram.yml |   1 [32m+[m
+ README.md                            |   6 [32m+++[m[31m---[m
+ diagram.svg                          |   1 [31m-[m
+ docs/screenshots/admin-dashboard.png | Bin [31m0[m -> [32m71996[m bytes
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+[33mcommit 679364832ce0b0dcf7298b5d1eab34e5293f39a3[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 29 00:40:06 2021 +0200
+
+    :card_file_box: Add AgeGroup as an entity
+
+ migrations/Version20210828215859.php               |  41 [32m++++++[m
+ src/Controller/Admin/AgeGroupCrudController.php    |  47 [32m++++++[m
+ src/Controller/Admin/DashboardController.php       |   2 [32m+[m
+ src/Controller/Admin/ReservationCrudController.php |   9 [32m+[m[31m-[m
+ src/Controller/Admin/UserCrudController.php        |  17 [32m++[m[31m-[m
+ src/DataFixtures/AgeGroupFixtures.php              |  58 [32m++++++++[m
+ src/DataFixtures/ReservationFixtures.php           |   5 [32m+[m[31m-[m
+ src/DataFixtures/UserFixtures.php                  |  15 [32m+[m[31m-[m
+ src/Entity/AgeGroup.php                            | 163 [32m+++++++++++++++++++++[m
+ src/Entity/Loan.php                                |   2 [31m-[m
+ src/Entity/Reservation.php                         |  14 [32m+[m[31m-[m
+ src/Entity/User.php                                |  54 [32m++++[m[31m---[m
+ src/Repository/AgeGroupRepository.php              |  37 [32m+++++[m
+ src/Repository/ReservationRepository.php           |   3 [32m+[m[31m-[m
+ 14 files changed, 416 insertions(+), 51 deletions(-)
+
+[33mcommit da9b5d745e32c9e9cab3151bf255144f20a0f24e[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Aug 28 23:23:06 2021 +0200
+
+    :sparkles: Add open reservations to dashboard
+
+ src/Controller/Admin/DashboardController.php       |  11 [32m++[m[31m-[m
+ src/Controller/Admin/LoanCrudController.php        |   3 [32m+[m[31m-[m
+ src/Controller/Admin/LocationCrudController.php    |   2 [32m+[m
+ src/Controller/Admin/MaterialCrudController.php    |   3 [32m+[m[31m-[m
+ src/Controller/Admin/NoteCrudController.php        |   2 [32m+[m[31m-[m
+ src/Controller/Admin/ReservationCrudController.php |   2 [32m+[m[31m-[m
+ src/Controller/Admin/UserCrudController.php        |   2 [32m+[m[31m-[m
+ src/Repository/ReservationRepository.php           |  51 [32m+++++++++[m[31m-[m
+ .../EasyAdminBundle/default/dashboard.html.twig    | 108 [32m++++++++++++++[m[31m-------[m
+ 9 files changed, 138 insertions(+), 46 deletions(-)
+
+[33mcommit 1951d4b3032181ca5c514fd79f697a14e982343c[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Aug 28 21:30:45 2021 +0200
+
+    :sparkles: Add material status on dashboard
+
+ assets/admin.js                                    |  6 [32m+++[m
+ assets/app.js                                      |  5 [32m+[m[31m--[m
+ assets/styles/admin.scss                           | 24 [32m+++++++++++[m
+ src/Controller/Admin/DashboardController.php       |  8 [32m++++[m
+ src/Repository/MaterialRepository.php              | 45 [32m++++++++++++++++++++[m[31m-[m
+ .../EasyAdminBundle/default/dashboard.html.twig    | 47 [32m++++++++++++++++++[m[31m----[m
+ webpack.config.js                                  |  1 [32m+[m
+ 7 files changed, 124 insertions(+), 12 deletions(-)
+
+[33mcommit f3db20f5e095dfb10c14d2311547baa8bb88fb14[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Aug 28 15:24:31 2021 +0200
+
+    :lock: Filter out deleted entries for non-admin routes
+
+ config/packages/doctrine.yaml                | 3 [32m+++[m
+ src/Controller/Admin/DashboardController.php | 5 [32m++++[m[31m-[m
+ src/Controller/MaterialController.php        | 6 [32m+++[m[31m---[m
+ 3 files changed, 10 insertions(+), 4 deletions(-)
+
+[33mcommit d6669a0a4d57f11b4fcd3df880d55b723b260dd5[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Aug 28 13:39:06 2021 +0200
+
+    :sparkles: Add material.isDeprecated
+
+ src/Entity/Material.php                | 7 [32m+++++++[m
+ templates/material/_material.html.twig | 1 [32m+[m
+ 2 files changed, 8 insertions(+)
+
+[33mcommit f0da329829c2b0c67f1b71d8f9fc2bb028609cbb[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Fri Aug 27 23:43:35 2021 +0200
+
+    :sparkles: Add NonReturnedCriteria
+
+ src/Controller/Admin/ReservationCrudController.php |  2 [32m++[m
+ src/Entity/Loan.php                                |  4 [32m++[m[31m--[m
+ src/Entity/Reservation.php                         | 11 [32m+++++++++++[m
+ src/Repository/LoanRepository.php                  |  6 [32m++++[m[31m--[m
+ src/Repository/ReservationRepository.php           |  2 [32m+[m[31m-[m
+ 5 files changed, 20 insertions(+), 5 deletions(-)
+
+[33mcommit 34121b2f52b317df932d3f1c27f925e4b42e6756[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Fri Aug 27 01:51:49 2021 +0200
+
+    :sparkles: Add more soft deletions
+
+ migrations/Version20210826224141.php               | 43 [32m++++++++++++++++++++++[m
+ src/Controller/Admin/DashboardController.php       |  5 [32m++[m[31m-[m
+ src/Controller/Admin/LoanCrudController.php        | 11 [32m++++[m[31m--[m
+ src/Controller/Admin/MaterialCrudController.php    |  8 [32m+++[m[31m-[m
+ src/Controller/Admin/NoteCrudController.php        |  7 [32m+++[m[31m-[m
+ src/Controller/Admin/ReservationCrudController.php |  9 [32m+++[m[31m--[m
+ src/Controller/Admin/UserCrudController.php        |  5 [32m++[m[31m-[m
+ src/Entity/Loan.php                                | 22 [32m+++++++++[m[31m--[m
+ src/Entity/Location.php                            | 12 [32m++++++[m
+ src/Entity/Material.php                            |  1 [32m+[m
+ src/Entity/Reservation.php                         | 12 [32m+++[m[31m---[m
+ src/Entity/Tag.php                                 | 12 [32m++++++[m
+ src/Entity/User.php                                | 22 [32m+++++++++++[m
+ 13 files changed, 146 insertions(+), 23 deletions(-)
+
+[33mcommit 69a529e3527f1b6b81800468cd8f4f0c1d99a039[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Fri Aug 27 00:25:04 2021 +0200
+
+    :sparkles: Add Location as an entity
+
+ migrations/Version20210826215234.php            |  34 [32m+++++++[m
+ src/Command/ImportMaterialCommand.php           |  35 [32m++++++[m[31m--[m
+ src/Controller/Admin/DashboardController.php    |   2 [32m+[m
+ src/Controller/Admin/LocationCrudController.php |  35 [32m++++++++[m
+ src/Controller/Admin/MaterialCrudController.php |  13 [32m+[m[31m--[m
+ src/DataFixtures/MaterialFixtures.php           |  26 [32m+++++[m[31m-[m
+ src/Entity/Location.php                         | 113 [32m++++++++++++++++++++++++[m
+ src/Entity/Material.php                         |  10 [32m+[m[31m--[m
+ src/Repository/LocationRepository.php           |  36 [32m++++++++[m
+ 9 files changed, 283 insertions(+), 21 deletions(-)
+
+[33mcommit 23b53e8923b99a6c3f6c50062bd762a581a776ba[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Thu Aug 26 23:35:55 2021 +0200
+
+    :lock: Add @Assert\NotCompromisedPassword
+
+ composer.json                        |  1 [32m+[m
+ composer.lock                        | 89 [32m+++++++++++++++++++++++++++++++++++[m[31m-[m
+ migrations/Version20210826213434.php | 26 [32m+++++++++++[m
+ src/Entity/User.php                  | 12 [32m+++[m[31m--[m
+ symfony.lock                         |  3 [32m++[m
+ 5 files changed, 125 insertions(+), 6 deletions(-)
+
+[33mcommit fdace28618c58e5f832d20e6265f31ab95360349[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Aug 25 21:42:09 2021 +0200
+
+    :sparkles: Display material details via extension
+
+ .../bundles/EasyAdminBundle/crud/detail-material.html.twig | 14 [32m++++++++++[m[31m----[m
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+[33mcommit 8f976ad50072f5522535a21bdb96a976716f0d8a[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Mon Aug 23 23:51:19 2021 +0200
+
+    :sparkles: Show material notes on details
+
+ src/Controller/Admin/MaterialCrudController.php              |  5 [32m++++[m[31m-[m
+ src/Entity/Note.php                                          |  2 [32m+[m[31m-[m
+ .../bundles/EasyAdminBundle/crud/detail-material.html.twig   | 12 [32m++++++++++++[m
+ 3 files changed, 17 insertions(+), 2 deletions(-)
+
+[33mcommit a18933dde5a8a619ee19fd579209f275f9ab6b7d[m
+Merge: 39c2bc3 50e7165
+Author: Ro1Gr1 <ro1_gr1@hotmail.com>
+Date:   Mon Aug 23 20:22:59 2021 +0200
+
+    Merge branch 'master' of https://github.com/RobinBastiaan/franciscus-material-management into master
+
+[33mcommit 50e71651507d12a28a578189cb9f92bf21c3b66e[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Thu Aug 19 23:58:06 2021 +0200
+
+    :lipstick: Improve display of admin field types
+
+ migrations/Version20210819215456.php               | 26 [32m++++++++++++++++++++++[m
+ src/Controller/Admin/LoanCrudController.php        |  2 [32m+[m[31m-[m
+ src/Controller/Admin/MaterialCrudController.php    | 12 [32m++++++++[m[31m--[m
+ src/Controller/Admin/ReservationCrudController.php | 10 [32m++++++++[m[31m-[m
+ src/Entity/Note.php                                |  4 [32m+++[m[31m-[m
+ 5 files changed, 49 insertions(+), 5 deletions(-)
+
+[33mcommit cd74f30b692b26317f116853100c65b7d286ba6a[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Aug 18 23:51:45 2021 +0200
+
+    Add material information
+
+ data/materiaallijst.csv                         | 14 [32m+++++++[m[31m------[m
+ migrations/Version20210818214148.php            | 26 [32m+++++++++++++++++++++++++[m
+ src/Command/ImportMaterialCommand.php           |  9 [32m+++++[m[31m----[m
+ src/Controller/Admin/MaterialCrudController.php |  8 [32m+++++[m[31m---[m
+ src/DataFixtures/MaterialFixtures.php           |  7 [32m++++[m[31m---[m
+ src/Entity/Material.php                         | 17 [32m++++++++++++++++[m
+ templates/material/show.html.twig               |  6 [32m+++++[m[31m-[m
+ 7 files changed, 70 insertions(+), 17 deletions(-)
+
+[33mcommit b94cd4969eb456289fe42d9f5fc6477f481d9421[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Aug 18 01:00:10 2021 +0200
+
+    :lipstick: Add navigate to and from admin
+
+ src/Controller/Admin/DashboardController.php | 14 [32m++++++++++++++[m
+ src/Controller/Admin/UserCrudController.php  |  4 [32m++[m[31m--[m
+ src/DataFixtures/NoteFixtures.php            |  4 [32m++[m[31m--[m
+ src/DataFixtures/ReservationFixtures.php     | 10 [32m+++++[m[31m-----[m
+ src/DataFixtures/UserFixtures.php            |  2 [32m+[m[31m-[m
+ src/Entity/User.php                          |  2 [32m+[m[31m-[m
+ templates/partials/header.html.twig          |  6 [32m++++[m[31m--[m
+ 7 files changed, 29 insertions(+), 13 deletions(-)
+
+[33mcommit b3f79954aa7b473451452e47531400ed494a02b1[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Tue Aug 17 23:43:56 2021 +0200
+
+    :lock: Add login and logout
+
+ config/packages/security.yaml           | 21 [32m++++[m[31m----[m
+ src/Controller/HomeController.php       | 19 [32m+++++[m[31m--[m
+ src/Controller/SecurityController.php   | 36 [31m-------------[m
+ src/DataFixtures/UserFixtures.php       |  4 [32m+[m[31m-[m
+ src/Security/LoginFormAuthenticator.php | 96 [32m++++++++++++++++++++++++[m[31m---------[m
+ templates/home/index.html.twig          | 30 [32m+++++++++[m[31m--[m
+ templates/security/login.html.twig      | 42 [31m---------------[m
+ 7 files changed, 124 insertions(+), 124 deletions(-)
+
+[33mcommit 39c2bc30a297613dd3996e8dfb6826d2bfea9a56[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Tue Aug 17 23:43:56 2021 +0200
+
+    :lock: Add login and logout
+
+ config/packages/security.yaml           | 21 [32m++++[m[31m----[m
+ src/Controller/HomeController.php       | 19 [32m+++++[m[31m--[m
+ src/Controller/SecurityController.php   | 36 [31m-------------[m
+ src/Security/LoginFormAuthenticator.php | 96 [32m++++++++++++++++++++++++[m[31m---------[m
+ templates/home/index.html.twig          | 30 [32m+++++++++[m[31m--[m
+ templates/security/login.html.twig      | 42 [31m---------------[m
+ 6 files changed, 122 insertions(+), 122 deletions(-)
+
+[33mcommit 2d13cae4d6fde0259ba6fbacf9c1ff127e72029b[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Mon Aug 16 23:52:39 2021 +0200
+
+    :construction: Add security
+
+ config/packages/security.yaml                   | 23 [32m+++++++[m[31m--[m
+ src/Controller/Admin/MaterialCrudController.php |  2 [31m-[m
+ src/Controller/Admin/NoteCrudController.php     |  2 [31m-[m
+ src/Controller/HomeController.php               |  2 [32m+[m[31m-[m
+ src/Controller/SecurityController.php           | 36 [32m++++++++++++++[m
+ src/DataFixtures/UserFixtures.php               |  6 [32m+[m[31m--[m
+ src/Security/LoginFormAuthenticator.php         | 62 [32m+++++++++++++++++++++++++[m
+ templates/partials/header.html.twig             |  3 [32m++[m
+ templates/security/login.html.twig              | 42 [32m+++++++++++++++++[m
+ 9 files changed, 167 insertions(+), 11 deletions(-)
+
+[33mcommit 206e6163b3e7896bba84aa4b368d80fdc49d081e[m
+Author: repo-visualizer <repo-visualizer@users.noreply.github.com>
+Date:   Sun Aug 15 19:05:15 2021 +0000
+
+    Repo visualizer: updated diagram
+
+ diagram.svg | 2 [32m+[m[31m-[m
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[33mcommit cd40621915cfe7cfaea0d3af2a2bd55f99faf382[m
+Author: Robin Bastiaan <38226878+RobinBastiaan@users.noreply.github.com>
+Date:   Sun Aug 15 20:59:45 2021 +0200
+
+    :memo: Add admin screenshot to README.md
+
+ README.md | 3 [32m++[m[31m-[m
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+[33mcommit 684ecfd60866e8fe71a71f0a74bf00b06e731443[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 15 20:20:46 2021 +0200
+
+    :sparkles: Configue admin fields and add filter options
+
+ migrations/Version20210815181624.php               | 44 [32m++++++++++++++++++++++[m
+ src/Controller/Admin/LoanCrudController.php        | 34 [32m++++++++++++++[m[31m---[m
+ src/Controller/Admin/MaterialCrudController.php    | 44 [32m+++++++++++++++++++[m[31m---[m
+ src/Controller/Admin/NoteCrudController.php        | 29 [32m+++++++++++[m[31m---[m
+ src/Controller/Admin/ReservationCrudController.php | 36 [32m+++++++++++++++[m[31m---[m
+ src/Controller/Admin/TagCrudController.php         | 13 [32m++++[m[31m---[m
+ src/Controller/Admin/UserCrudController.php        | 30 [32m++++++++++++[m[31m---[m
+ src/DataFixtures/LoanFixtures.php                  |  2 [32m+[m[31m-[m
+ src/Entity/Loan.php                                | 27 [32m++++++++++++[m[31m-[m
+ src/Entity/Tag.php                                 | 25 [32m++++++++++++[m
+ 10 files changed, 250 insertions(+), 34 deletions(-)
+
+[33mcommit dbbadf51aea9166514603e0d141cf26b166eee09[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 15 15:43:33 2021 +0200
+
+    :art: Set admin CRUD structure
+
+ composer.json                                      |  1 [32m+[m
+ composer.lock                                      | 59 [32m+++++++++++++++++++++[m[31m-[m
+ config/packages/doctrine.yaml                      |  7 [32m+++[m
+ src/Controller/Admin/DashboardController.php       | 41 [32m++++++++++[m[31m-----[m
+ src/Controller/Admin/LoanCrudController.php        |  8 [32m+++[m
+ src/Controller/Admin/MaterialCrudController.php    |  9 [32m++++[m
+ src/Controller/Admin/NoteCrudController.php        | 33 [32m++++++++++++[m
+ src/Controller/Admin/ReservationCrudController.php |  9 [32m++++[m
+ src/Controller/Admin/TagCrudController.php         | 32 [32m++++++++++++[m
+ src/Controller/Admin/UserCrudController.php        | 34 [32m+++++++++++++[m
+ src/Repository/MaterialRepository.php              | 24 [32m+++++++++[m
+ symfony.lock                                       |  3 [32m++[m
+ .../EasyAdminBundle/default/dashboard.html.twig    | 11 [32m++++[m
+ 13 files changed, 258 insertions(+), 13 deletions(-)
+
+[33mcommit c53e612e9fbbc73bd31adb8105bb23ff9e2f1166[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 15 14:34:10 2021 +0200
+
+    :sparkles: Calculate current material value
+
+ config/packages/security.yaml     |  2 [32m+[m[31m-[m
+ src/Entity/Material.php           | 14 [32m++++++[m
+ templates/material/show.html.twig | 93 [32m+++++++++++++++++++++[m[31m------------------[m
+ 3 files changed, 64 insertions(+), 45 deletions(-)
+
+[33mcommit 50f7027888d7bad61ffb236de07fb4b492b3ebf2[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 15 13:53:20 2021 +0200
+
+    :lipstick: Add material templates
+
+ composer.json                              |   4 [32m+[m[31m-[m
+ composer.lock                              | 149 [32m++++++++++++++++++++++++++++[m[31m-[m
+ config/bundles.php                         |   1 [32m+[m
+ src/Controller/MaterialController.php      |  85 [32m++++++++++++++[m[31m--[m
+ src/Form/MaterialType.php                  |  41 [32m++++++++[m
+ symfony.lock                               |   6 [32m++[m
+ templates/material/_delete_form.html.twig  |   4 [32m+[m
+ templates/material/_form.html.twig         |   4 [32m+[m
+ templates/material/_material.html.twig     |   4 [32m+[m[31m-[m
+ templates/material/edit.html.twig          |  13 [32m+++[m
+ templates/material/index.html.twig         |  63 [32m++++++++++++[m
+ templates/material/material-list.html.twig |  21 [31m----[m
+ templates/material/new.html.twig           |  11 [32m+++[m
+ templates/material/show.html.twig          |  66 [32m+++++++++++++[m
+ templates/partials/header.html.twig        |   2 [32m+[m[31m-[m
+ templates/reservation/_form.html.twig      |   2 [32m+[m[31m-[m
+ 16 files changed, 442 insertions(+), 34 deletions(-)
+
+[33mcommit 822a276625c7f60e9ae26887874ecc621be36f28[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 15 11:39:31 2021 +0200
+
+    :lipstick: Add reservation templates
+
+ composer.json                                      |  1 [32m+[m
+ composer.lock                                      | 80 [32m+++++++++++++++++[m[31m-[m
+ config/bundles.php                                 |  1 [32m+[m
+ config/packages/sensio_framework_extra.yaml        |  3 [32m+[m
+ src/Controller/ReservationController.php           | 94 [32m++++++++++++++++++++++[m
+ src/DataFixtures/ReservationFixtures.php           |  6 [32m++[m
+ src/Entity/Material.php                            |  2 [32m+[m[31m-[m
+ src/Entity/Reservation.php                         |  4 [32m+[m[31m-[m
+ src/Form/ReservationType.php                       | 34 [32m++++++++[m
+ symfony.lock                                       | 12 [32m+++[m
+ templates/base.html.twig                           | 17 [32m++[m[31m--[m
+ .../material.html.twig => _material.html.twig}     |  9 [32m++[m[31m-[m
+ templates/material/material-list.html.twig         |  4 [32m+[m[31m-[m
+ templates/partials/footer.html.twig                |  2 [32m+[m[31m-[m
+ templates/partials/header.html.twig                |  3 [32m+[m[31m-[m
+ templates/reservation/_delete_form.html.twig       |  4 [32m+[m
+ templates/reservation/_form.html.twig              |  4 [32m+[m
+ templates/reservation/edit.html.twig               | 13 [32m+++[m
+ templates/reservation/index.html.twig              | 39 [32m+++++++++[m
+ templates/reservation/new.html.twig                | 13 [32m+++[m
+ templates/reservation/show.html.twig               | 85 [32m+++++++++++++++++++[m
+ 21 files changed, 415 insertions(+), 15 deletions(-)
+
+[33mcommit 30d88784e5b6ffda52fee4d76ac8b6776e4b89b6[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 15 10:48:19 2021 +0200
+
+    :card_file_box: Add ManyToMany relationship between User and Reservation
+
+ migrations/Version20210815084448.php     | 28 [32m+++++++++++++++++++++++[m
+ src/DataFixtures/ReservationFixtures.php | 15 [32m++++++++++++[m
+ src/Entity/Reservation.php               | 30 [32m++++++++++++++++++++++++[m
+ src/Entity/User.php                      | 39 [32m++++++++++++++++++++++++++++++++[m
+ 4 files changed, 112 insertions(+)
+
+[33mcommit d4f3b558a8588d1e47ebe0fef7b04c850599589f[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Aug 14 19:37:46 2021 +0200
+
+    :card_file_box: Add fixtures for all entities
+
+ README.md                                |   5 [32m+[m[31m-[m
+ data/materiaallijst.csv                  |   4 [32m+[m[31m-[m
+ migrations/Version20210417213438.php     |   2 [32m+[m[31m-[m
+ migrations/Version20210618215040.php     |   2 [32m+[m[31m-[m
+ migrations/Version20210618224850.php     |   2 [32m+[m[31m-[m
+ migrations/Version20210810222912.php     |   2 [32m+[m[31m-[m
+ migrations/Version20210812205515.php     |   2 [32m+[m[31m-[m
+ migrations/Version20210812222000.php     |   2 [32m+[m[31m-[m
+ migrations/Version20210814173135.php     |  34 [32m+++++++++[m
+ src/Command/ImportMaterialCommand.php    |   2 [32m+[m[31m-[m
+ src/DataFixtures/LoanFixtures.php        |  64 [32m+++++++++++++++++[m
+ src/DataFixtures/MaterialFixtures.php    | 115 [32m++++++++++++++++++++++++++[m[31m-----[m
+ src/DataFixtures/NoteFixtures.php        |  59 [32m++++++++++++++++[m
+ src/DataFixtures/ReservationFixtures.php |  57 [32m+++++++++++++++[m
+ src/DataFixtures/UserFixtures.php        |   3 [32m+[m[31m-[m
+ src/Entity/Loan.php                      |  56 [32m+++++++++++++[m[31m--[m
+ src/Entity/Material.php                  |  46 [32m+++++++[m[31m------[m
+ src/Entity/Note.php                      |  31 [32m+++++++[m[31m--[m
+ src/Entity/Reservation.php               |  24 [32m+++[m[31m----[m
+ 19 files changed, 433 insertions(+), 79 deletions(-)
+
+[33mcommit 9a8610812728bd969920f524b10fd806a844fc6b[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Aug 14 18:26:22 2021 +0200
+
+    :sparkles: Load the MaterialFixtures from the example material list file
+
+ src/DataFixtures/MaterialFixtures.php | 41 [32m+++++++++++++++++++++++++++++++++++[m
+ 1 file changed, 41 insertions(+)
+
+[33mcommit 2d8fd5383acc8ddf8df8c79a7fdb36f582bb3276[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Aug 14 17:39:11 2021 +0200
+
+    :sparkles: Rename Item to Material
+
+ config/packages/doctrine.yaml                      |  1 [31m-[m
+ config/packages/workflow.yaml                      |  2 [32m+[m[31m-[m
+ data/materiaallijst.csv                            | 12 [32m++[m[31m---[m
+ migrations/Version20210814152932.php               | 62 [32m++++++++++++++++++++++[m
+ src/Command/ImportMaterialCommand.php              | 61 [32m+++++++++++[m[31m----------[m
+ src/Controller/Admin/DashboardController.php       |  7 [32m++[m[31m-[m
+ ...udController.php => MaterialCrudController.php} |  6 [32m+[m[31m--[m
+ src/Controller/MaterialController.php              | 14 [32m++[m[31m---[m
+ src/DataFixtures/UserFixtures.php                  |  2 [32m+[m[31m-[m
+ src/Entity/Loan.php                                | 12 [32m++[m[31m---[m
+ src/Entity/{Item.php => Material.php}              | 32 [32m+++++[m[31m------[m
+ src/Entity/Note.php                                | 12 [32m++[m[31m---[m
+ src/Entity/Tag.php                                 | 26 [32m++++[m[31m-----[m
+ src/Entity/User.php                                | 12 [32m++++[m[31m-[m
+ src/Repository/ItemRepository.php                  | 21 [31m--------[m
+ src/Repository/MaterialRepository.php              | 21 [32m++++++++[m
+ src/Repository/NoteRepository.php                  |  2 [32m+[m[31m-[m
+ templates/material/material-list.html.twig         |  4 [32m+[m[31m-[m
+ .../{item.html.twig => material.html.twig}         | 10 [32m++[m[31m--[m
+ 19 files changed, 196 insertions(+), 123 deletions(-)
+
+[33mcommit 4fc2231970d802819ec7577068747877221a7c62[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Aug 14 14:35:43 2021 +0200
+
+    :sparkles: Only update Item via import if something changed
+
+ src/Command/ImportMaterialCommand.php              | 42 [32m++++++++++++++[m[31m--------[m
+ src/Controller/Admin/DashboardController.php       |  3 [32m+[m[31m-[m
+ ...ontroller.php => ReservationCrudController.php} |  6 [32m++[m[31m--[m
+ src/Entity/Item.php                                |  2 [32m+[m[31m-[m
+ src/Entity/Reservation.php                         |  6 [32m++[m[31m--[m
+ 5 files changed, 37 insertions(+), 22 deletions(-)
+
+[33mcommit 48f97d803b9211eeef67a5a83bb2b9944f7ff5ed[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Fri Aug 13 00:09:01 2021 +0200
+
+    :card_file_box: Set default values on user properties
+
+ migrations/Version20210812222000.php | 37 [32m++++++++++++++++++++++++++++++++++++[m
+ src/DataFixtures/UserFixtures.php    |  2 [32m+[m[31m-[m
+ src/Entity/Item.php                  | 36 [32m+++++++++++++++++[m[31m------------------[m
+ src/Entity/Reservation.php           | 23 [32m+++++++++++++++++++++[m[31m-[m
+ 4 files changed, 78 insertions(+), 20 deletions(-)
+
+[33mcommit fc18f9f4bfb95d7f48862b1f493423b44c383117[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Thu Aug 12 23:48:47 2021 +0200
+
+    :sparkles: Make amount optional for import-material
+
+ data/materiaallijst.csv               |   8 [32m+[m[31m--[m
+ docs/material_statuses.svg            | 113 [32m++++++++++++++++++++++++++++++++++[m
+ src/Command/ImportMaterialCommand.php |   6 [32m+[m[31m-[m
+ src/Entity/Item.php                   |   2 [32m+[m
+ 4 files changed, 122 insertions(+), 7 deletions(-)
+
+[33mcommit dee54d72912136cade446d79c77f04e02127e3fa[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Thu Aug 12 23:00:25 2021 +0200
+
+    :card_file_box: Rename Order to Reservation and update Symfony to version 5.3
+
+ composer.json                             |    7 [32m+[m[31m-[m
+ composer.lock                             | 1247 [32m++++++++++++++[m[31m---------------[m
+ config/packages/doctrine.yaml             |    4 [32m+[m
+ migrations/Version20210812205515.php      |   42 [32m+[m
+ src/DataFixtures/AppFixtures.php          |   17 [31m-[m
+ src/DataFixtures/UserFixtures.php         |   62 [32m++[m
+ src/Entity/Loan.php                       |   12 [32m+[m[31m-[m
+ src/Entity/{Order.php => Reservation.php} |    8 [32m+[m[31m-[m
+ src/Entity/User.php                       |   11 [32m+[m[31m-[m
+ src/Repository/ItemRepository.php         |   29 [31m-[m
+ src/Repository/LoanRepository.php         |    2 [32m+[m[31m-[m
+ src/Repository/OrderRepository.php        |   50 [31m--[m
+ src/Repository/ReservationRepository.php  |   21 [32m+[m
+ src/Repository/UserRepository.php         |   36 [32m+[m[31m-[m
+ symfony.lock                              |    3 [32m+[m
+ 15 files changed, 766 insertions(+), 785 deletions(-)
+
+[33mcommit a692974b2498d86ff2b67e6fc901e8017d8d655e[m
+Author: repo-visualizer <repo-visualizer@users.noreply.github.com>
+Date:   Thu Aug 12 19:28:42 2021 +0000
+
+    Repo visualizer: updated diagram
+
+ diagram.svg | 2 [32m+[m[31m-[m
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[33mcommit 383d0af0c2aa91e8a1f943c7db3dffe45ea7844f[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Thu Aug 12 21:27:43 2021 +0200
+
+    :memo: Update README.md with npm commands
+
+ README.md | 6 [32m++++[m[31m--[m
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+[33mcommit 44975a86f91b89b36d8952fc95f8da8a693480d1[m
+Author: repo-visualizer <repo-visualizer@users.noreply.github.com>
+Date:   Tue Aug 10 22:53:18 2021 +0000
+
+    Repo visualizer: updated diagram
+
+ diagram.svg | 2 [32m+[m[31m-[m
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[33mcommit 8a63947a57fb23aa98c6a34740ad5a40c9207593[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Aug 11 00:52:59 2021 +0200
+
+    :card_file_box: Add User entity and implement *-able doctrine extensions.
+
+ composer.json                                 |   4 [32m+[m[31m-[m
+ composer.lock                                 |  17 [32m+[m[31m--[m
+ config/packages/security.yaml                 |  14 [32m++[m[31m-[m
+ config/packages/stof_doctrine_extensions.yaml |   8 [32m+[m[31m-[m
+ migrations/Version20210810222912.php          |  74 [32m+++++++++++[m
+ src/Entity/Item.php                           |  78 [32m+++++++++++[m[31m-[m
+ src/Entity/Loan.php                           |  31 [32m+++[m[31m--[m
+ src/Entity/Note.php                           |  48 [32m++++++++[m
+ src/Entity/Order.php                          |  85 [32m++++++++++[m[31m---[m
+ src/Entity/Tag.php                            |  10 [32m+[m[31m-[m
+ src/Entity/User.php                           | 169 [32m++++++++++++++++++++++++++[m
+ src/Repository/LoanRepository.php             |  28 [32m+[m[31m----[m
+ src/Repository/UserRepository.php             |  67 [32m++++++++++[m
+ 13 files changed, 560 insertions(+), 73 deletions(-)
+
+[33mcommit 7590a3e4e7f3f2807e2eaef9bb9d148e90c89601[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Tue Aug 10 22:19:18 2021 +0200
+
+    :memo: Add ADR 001 and 002
+
+ docs/adr/001-record-architecture-decisions.md      | 19 [32m++++++++++++++++[m
+ ...-implementation-as-a-single-page-application.md | 25 [32m++++++++++++++++++++++[m
+ docs/adr/template.md                               | 24 [32m+++++++++++++++++++++[m
+ 3 files changed, 68 insertions(+)
+
+[33mcommit ba0ef153a8d3f1d4d3ff27bec35ec334dfe7e357[m
+Author: repo-visualizer <repo-visualizer@users.noreply.github.com>
+Date:   Sun Aug 8 17:04:35 2021 +0000
+
+    Repo visualizer: updated diagram
+
+ diagram.svg | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
+
+[33mcommit 9d828d8389716409c03cf55b2bf3c08c8c49db84[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Aug 8 19:04:13 2021 +0200
+
+    :chart_with_upwards_trend: Add visualization of the codebase to readme
+
+ .github/workflows/create-diagram.yml | 16 [32m++++++++++++++++[m
+ README.md                            |  4 [32m++++[m
+ 2 files changed, 20 insertions(+)
+
+[33mcommit 9fab6c18db5e8734de73faf5933c1f6b8ee43e3d[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Mon Aug 2 23:30:08 2021 +0200
+
+    :heavy_plus_sign: Require phpstan and fix errors
+
+ composer.json                                |   7 [32m+[m[31m-[m
+ composer.lock                                | 248 [32m++++++++++++++++++++++++++[m[31m-[m
+ phpstan.neon.dist                            |   4 [32m+[m
+ src/Command/ImportMaterialCommand.php        |   6 [32m+[m[31m-[m
+ src/Controller/Admin/DashboardController.php |   2 [32m+[m[31m-[m
+ src/Entity/Item.php                          |   7 [32m+[m[31m-[m
+ symfony.lock                                 |  12 [32m++[m
+ 7 files changed, 275 insertions(+), 11 deletions(-)
+
+[33mcommit 1ef1ac86e00421571d4263a188942c024996fe19[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Jul 7 23:12:45 2021 +0200
+
+    :sparkles: Add optional argument to import-material command
+
+ composer.json                         |  3 [32m++[m[31m-[m
+ src/Command/ImportMaterialCommand.php | 12 [32m++++++++[m[31m----[m
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+[33mcommit e793fc5aaf09d4eab222a1fd6e4f25c793bc95c3[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Jun 30 00:50:57 2021 +0200
+
+    :lipstick: Add more styling to workflow graph dump
+
+ config/packages/workflow.yaml | 25 [32m+++++++++++++++++[m[31m--------[m
+ 1 file changed, 17 insertions(+), 8 deletions(-)
+
+[33mcommit 1f144afe3ec9dbbaa64cead5b211bb2b6132c988[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Tue Jun 29 23:57:55 2021 +0200
+
+    :sparkles: Setup symfony workflow
+
+ composer.json                 |   2 [32m+[m
+ composer.lock                 | 148 [32m+++++++++++++++++++++++++++++++++++++++++[m[31m-[m
+ config/packages/security.yaml |   7 [32m+[m[31m-[m
+ config/packages/workflow.yaml |  73 [32m+++++++++++++++++++++[m
+ symfony.lock                  |  15 [32m+++++[m
+ 5 files changed, 242 insertions(+), 3 deletions(-)
+
+[33mcommit 9db3ae5f039310561ea28294e67d0805d9d5242c[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Mon Jun 28 23:55:21 2021 +0200
+
+    :lipstick: Add styling to pdf download
+
+ src/Controller/MaterialController.php      |  2 [32m+[m[31m-[m
+ templates/base.html.twig                   | 10 [32m+++++++[m[31m---[m
+ templates/material/material-list.html.twig |  5 [32m++[m[31m---[m
+ templates/material/partials/item.html.twig |  4 [32m+++[m[31m-[m
+ 4 files changed, 13 insertions(+), 8 deletions(-)
+
+[33mcommit 6c846402f2901075250b5189c95b2207632323ba[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Jun 26 09:56:51 2021 +0200
+
+    :memo: Add README.md
+
+ README.md | 16 [32m++++++++++++++++[m
+ 1 file changed, 16 insertions(+)
+
+[33mcommit dda29df93efc9f93dbbe81802f946b401615f91f[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Mon Jun 21 08:23:04 2021 +0200
+
+    :sparkles: Add pdf download button
+
+ .env                                       |   5 [32m+[m
+ composer.json                              |   1 [32m+[m
+ composer.lock                              | 198 [32m++++++++++++++++++++++++++++[m[31m-[m
+ config/bundles.php                         |   1 [32m+[m
+ config/packages/knp_snappy.yaml            |   9 [32m++[m
+ src/Controller/MaterialController.php      |  19 [32m+++[m
+ symfony.lock                               |  18 [32m+++[m
+ templates/material/material-list.html.twig |   8 [32m+[m[31m-[m
+ templates/material/partials/item.html.twig |   2 [32m+[m[31m-[m
+ 9 files changed, 257 insertions(+), 4 deletions(-)
+
+[33mcommit edf0548ead3183ca77bde6e13e04ca2384a578cb[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Jun 20 20:10:36 2021 +0200
+
+    :globe_with_meridians: Set default project locale to NL
+
+ composer.json                    | 1 [32m+[m
+ composer.lock                    | 2 [32m+[m[31m-[m
+ config/packages/framework.yaml   | 1 [32m+[m
+ config/packages/translation.yaml | 3 [32m++[m[31m-[m
+ 4 files changed, 5 insertions(+), 2 deletions(-)
+
+[33mcommit f53e544ffb5bd333441d6c909276c2aab1500517[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Jun 20 19:35:12 2021 +0200
+
+    :lipstick: Add basic material template structure
+
+ src/Controller/MaterialController.php      |  7 [32m+++++[m[31m--[m
+ templates/material/material-list.html.twig |  6 [32m+++[m[31m---[m
+ templates/material/partials/item.html.twig | 22 [32m++++++++++++++++++[m[31m----[m
+ templates/partials/header.html.twig        |  2 [32m+[m[31m-[m
+ 4 files changed, 27 insertions(+), 10 deletions(-)
+
+[33mcommit f6d89c66e598f710208f89757b468ac096b7afed[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Jun 20 19:11:47 2021 +0200
+
+    :art: Add scss project structure
+
+ assets/app.js                              |   10 [32m+[m[31m-[m
+ assets/styles/_base.scss                   |    5 [32m+[m
+ assets/styles/_components.scss             |    5 [32m+[m
+ assets/styles/_layout.scss                 |    8 [32m+[m
+ assets/styles/app.css                      |    3 [31m-[m
+ assets/styles/app.scss                     |    8 [32m+[m
+ package-lock.json                          | 1156 [32m+++++++++++++++[m[31m-------------[m
+ package.json                               |   11 [32m+[m[31m-[m
+ templates/base.html.twig                   |   33 [32m+[m[31m-[m
+ templates/material/material-list.html.twig |    2 [31m-[m
+ webpack.config.js                          |    6 [32m+[m[31m-[m
+ 11 files changed, 676 insertions(+), 571 deletions(-)
+
+[33mcommit 19e6577608a884b32f0b4272b63e3c40baa1764d[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sun Jun 20 16:00:39 2021 +0200
+
+    :heavy_plus_sign: Add some more dependencies
+
+ assets/images/logo.png                        | Bin [31m0[m -> [32m11127[m bytes
+ assets/images/logo.svg                        |   1 [32m+[m
+ composer.json                                 |   4 [32m+[m
+ composer.lock                                 | 307 [32m+++++++++++++++++++++++++[m[31m-[m
+ config/bundles.php                            |   3 [32m+[m
+ config/packages/stof_doctrine_extensions.yaml |   4 [32m+[m
+ src/DataFixtures/AppFixtures.php              |  17 [32m++[m
+ symfony.lock                                  |  30 [32m+++[m
+ 8 files changed, 365 insertions(+), 1 deletion(-)
+
+[33mcommit 4f64f6df8a983feb16e848ec5b566f705331e82a[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Jun 19 01:02:49 2021 +0200
+
+    :card_file_box: Add unique constraints
+
+ composer.json                         |   4 [32m+[m[31m-[m
+ composer.lock                         | 111 [32m+++++++++++++++++++++++++++++++++[m[31m-[m
+ config/packages/test/validator.yaml   |   3 [32m+[m
+ config/packages/validator.yaml        |   8 [32m+++[m
+ data/materiaallijst.csv               |  10 [32m+[m[31m--[m
+ migrations/Version20210417213438.php  |   2 [32m+[m[31m-[m
+ migrations/Version20210618215040.php  |   2 [31m-[m
+ migrations/Version20210618224850.php  |  26 [32m++++++++[m
+ src/Command/ImportMaterialCommand.php |  23 [32m++++++[m[31m-[m
+ src/Entity/Item.php                   |  26 [32m++++[m[31m----[m
+ src/Entity/Note.php                   |   8 [32m+[m[31m--[m
+ src/Entity/Tag.php                    |  10 [32m+[m[31m--[m
+ src/Repository/TagRepository.php      |  15 [32m+++++[m
+ symfony.lock                          |  13 [32m++++[m
+ 14 files changed, 228 insertions(+), 33 deletions(-)
+
+[33mcommit c1aabd76e4b560dabfa508689952884a0bd43004[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Fri Jun 18 23:52:20 2021 +0200
+
+    :card_file_box: Add note and item entities
+
+ migrations/Version20210417213438.php  |  9 [32m+[m[31m---[m
+ migrations/Version20210618215040.php  | 34 [32m+++++++++++++++[m
+ src/Command/ImportMaterialCommand.php |  2 [32m+[m[31m-[m
+ src/Entity/Item.php                   | 68 [32m++++++++++++++++++++++++++++[m[31m-[m
+ src/Entity/Loan.php                   |  2 [32m+[m[31m-[m
+ src/Entity/Note.php                   | 58 [32m+++++++++++++++++++++++++[m
+ src/Entity/Order.php                  |  2 [32m+[m[31m-[m
+ src/Entity/Tag.php                    | 80 [32m+++++++++++++++++++++++++++++++++++[m
+ src/Repository/ItemRepository.php     |  2 [32m+[m[31m-[m
+ src/Repository/LoanRepository.php     |  2 [32m+[m[31m-[m
+ src/Repository/NoteRepository.php     | 35 [32m+++++++++++++++[m
+ src/Repository/OrderRepository.php    |  2 [32m+[m[31m-[m
+ src/Repository/TagRepository.php      | 21 [32m+++++++++[m
+ 13 files changed, 303 insertions(+), 14 deletions(-)
+
+[33mcommit d01f437d2e5fb8ffcd0ba3b17206fa966258dabf[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Jun 12 20:10:24 2021 +0200
+
+    :sparkles: Add material import command
+
+ .gitignore                            |   6 [32m+[m[31m-[m
+ composer.json                         |   4 [32m+[m[31m-[m
+ composer.lock                         |  86 [32m+++++++++++++++++++++++++[m[31m-[m
+ data/materiaallijst.csv               |   4 [32m++[m
+ src/Command/ImportMaterialCommand.php | 111 [32m++++++++++++++++++++++++++++++++++[m
+ symfony.lock                          |   3 [32m+[m
+ 6 files changed, 207 insertions(+), 7 deletions(-)
+
+[33mcommit d082cc27b26325772d1f9986748581b80ef40a2d[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Thu Jun 10 22:10:30 2021 +0200
+
+    :heavy_plus_sign: Add testing bundles and doctrine extensions dependency
+
+ .env.test                              |    6 [32m+[m
+ .gitignore                             |   10 [32m+[m
+ bin/phpunit                            |   19 [32m+[m
+ composer.json                          |   57 [32m+[m[31m-[m
+ composer.lock                          | 3847 [32m+++++++++++++++++++++++++++[m[31m-----[m
+ config/bundles.php                     |    1 [32m+[m
+ config/packages/dev/web_profiler.yaml  |    6 [32m+[m
+ config/packages/test/web_profiler.yaml |    6 [32m+[m
+ config/routes/dev/web_profiler.yaml    |    7 [32m+[m
+ phpunit.xml.dist                       |   40 [32m+[m
+ symfony.lock                           |  169 [32m++[m
+ tests/bootstrap.php                    |   11 [32m+[m
+ 12 files changed, 3653 insertions(+), 526 deletions(-)
+
+[33mcommit 9272e240b7557c4527aa41916d5b34a353de011c[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Wed Jun 9 22:45:41 2021 +0200
+
+    :sparkles: Setup an initial template structure
+
+ .gitignore                                 |    7 [32m+[m
+ assets/app.js                              |   12 [32m+[m
+ assets/bootstrap.js                        |   11 [32m+[m
+ assets/controllers.json                    |    4 [32m+[m
+ assets/controllers/hello_controller.js     |   16 [32m+[m
+ assets/styles/app.css                      |    3 [32m+[m
+ composer.json                              |    1 [32m+[m
+ composer.lock                              |   73 [32m+[m[31m-[m
+ config/bundles.php                         |    1 [32m+[m
+ config/packages/assets.yaml                |    3 [32m+[m
+ config/packages/prod/webpack_encore.yaml   |    4 [32m+[m
+ config/packages/test/webpack_encore.yaml   |    2 [32m+[m
+ config/packages/webpack_encore.yaml        |   30 [32m+[m
+ package-lock.json                          | 6188 [32m++++++++++++++++++++++++++++[m
+ package.json                               |   18 [32m+[m
+ src/Controller/HomeController.php          |    2 [32m+[m[31m-[m
+ src/Controller/MaterialController.php      |   20 [32m+[m
+ symfony.lock                               |   22 [32m+[m
+ templates/base.html.twig                   |   13 [32m+[m[31m-[m
+ templates/home/index.html.twig             |   21 [32m+[m[31m-[m
+ templates/material/material-list.html.twig |   20 [32m+[m
+ templates/material/partials/item.html.twig |    5 [32m+[m
+ templates/partials/footer.html.twig        |    3 [32m+[m
+ templates/partials/header.html.twig        |    5 [32m+[m
+ webpack.config.js                          |   75 [32m+[m
+ 25 files changed, 6536 insertions(+), 23 deletions(-)
+
+[33mcommit a177b7dc7fcce3ae98c43255d86c01ac11d8367a[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Apr 17 23:48:30 2021 +0200
+
+    :sparkles: Add admin controllers
+
+ config/packages/doctrine_migrations.yaml     |  6 [32m++++[m
+ migrations/.gitignore                        |  0
+ migrations/Version20210417213438.php         | 37 [32m+++++++++++++++++++++++[m
+ src/Controller/Admin/DashboardController.php | 45 [32m++++++++++++++++++++++++++++[m
+ src/Controller/Admin/ItemCrudController.php  | 25 [32m++++++++++++++++[m
+ src/Controller/Admin/LoanCrudController.php  | 25 [32m++++++++++++++++[m
+ src/Controller/Admin/OrderCrudController.php | 25 [32m++++++++++++++++[m
+ 7 files changed, 163 insertions(+)
+
+[33mcommit 61138c4aae703105ef6cee603e80d64f075e6f5a[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Apr 17 23:36:48 2021 +0200
+
+    :card_file_box: Add migrations
+
+ .env                               |   2 [32m+[m[31m-[m
+ composer.json                      |   2 [32m+[m
+ composer.lock                      | 536 [32m++++++++++++++++++++++++++++++++++++[m[31m-[m
+ config/bundles.php                 |   1 [32m+[m
+ src/Controller/HomeController.php  |  20 [32m++[m
+ src/Entity/Item.php                | 236 [32m++++++++++++++++[m
+ src/Entity/Loan.php                |  93 [32m+++++++[m
+ src/Entity/Order.php               | 135 [32m++++++++++[m
+ src/Repository/ItemRepository.php  |  50 [32m++++[m
+ src/Repository/LoanRepository.php  |  50 [32m++++[m
+ src/Repository/OrderRepository.php |  50 [32m++++[m
+ symfony.lock                       |  31 [32m+++[m
+ templates/home/index.html.twig     |  20 [32m++[m
+ 13 files changed, 1224 insertions(+), 2 deletions(-)
+
+[33mcommit 86eb4b326719a2f5a17d5ae83eac83e1ee2b704b[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Apr 17 23:05:03 2021 +0200
+
+    :sparkles: Add home controller
+
+ .env                               |    9 [32m+[m
+ .gitignore                         |    1 [32m+[m
+ composer.json                      |    6 [32m+[m[31m-[m
+ composer.lock                      | 4944 [32m+++++++++++++++++++++++++++++[m[31m-------[m
+ config/bundles.php                 |    5 [32m+[m
+ config/packages/doctrine.yaml      |   19 [32m+[m
+ config/packages/prod/doctrine.yaml |   20 [32m+[m
+ config/packages/security.yaml      |   24 [32m+[m
+ config/packages/test/doctrine.yaml |    7 [32m+[m
+ config/packages/test/twig.yaml     |    2 [32m+[m
+ config/packages/translation.yaml   |    6 [32m+[m
+ config/packages/twig.yaml          |    2 [32m+[m
+ config/routes/annotations.yaml     |    7 [32m+[m
+ src/Entity/.gitignore              |    0
+ src/Repository/.gitignore          |    0
+ symfony.lock                       |  178 [32m++[m
+ templates/base.html.twig           |   19 [32m+[m
+ translations/.gitignore            |    0
+ 18 files changed, 4364 insertions(+), 885 deletions(-)
+
+[33mcommit 221a8b53af2250e4cb888eca0830563b9b0d9958[m
+Author: RobinBastiaan <robinbastiaan@gmail.com>
+Date:   Sat Apr 17 22:34:51 2021 +0200
+
+    :tada: Initial commit!
+
+ .env                                |   19 [32m+[m
+ .gitignore                          |   10 [32m+[m
+ bin/console                         |   43 [32m+[m
+ composer.json                       |   61 [32m+[m
+ composer.lock                       | 2525 [32m+++++++++++++++++++++++++++++++++++[m
+ config/bundles.php                  |    5 [32m+[m
+ config/packages/cache.yaml          |   19 [32m+[m
+ config/packages/framework.yaml      |   17 [32m+[m
+ config/packages/prod/routing.yaml   |    3 [32m+[m
+ config/packages/routing.yaml        |    7 [32m+[m
+ config/packages/test/framework.yaml |    4 [32m+[m
+ config/preload.php                  |    5 [32m+[m
+ config/routes.yaml                  |    3 [32m+[m
+ config/routes/dev/framework.yaml    |    3 [32m+[m
+ config/services.yaml                |   31 [32m+[m
+ public/index.php                    |   22 [32m+[m
+ src/Controller/.gitignore           |    0
+ src/Kernel.php                      |   38 [32m+[m
+ symfony.lock                        |  144 [32m++[m
+ 19 files changed, 2959 insertions(+)
