@@ -45,12 +45,12 @@ class MaterialCrudController extends AbstractCrudController
     {
         if (Crud::PAGE_INDEX === $pageName || Crud::PAGE_DETAIL === $pageName) {
             $locationField = ArrayField::new('location', 'Opslaglocatie');
-            $tagField = ArrayField::new('tags');
+//            $tagField = ArrayField::new('tags');
             $imageField = ImageField::new('image', 'Afbeelding')->setBasePath('/images/materials');
             $receiptField = ImageField::new('receipt', 'Bonnetje')->setBasePath('/images/receipts');
         } else {
             $locationField = AssociationField::new('location', 'Opslaglocatie');
-            $tagField = AssociationField::new('tags')->autocomplete();
+//            $tagField = AssociationField::new('tags')->autocomplete();
             $imageField = TextField::new('imageFile', 'Afbeelding')->setFormType(VichImageType::class);
             $receiptField = TextField::new('receiptFile', 'Bonnetje')->setFormType(VichImageType::class);
         }
@@ -70,7 +70,7 @@ class MaterialCrudController extends AbstractCrudController
             TextField::new('manufacturer', 'Fabrikant'),
             NumberField::new('depreciationYears', 'Afschrijvingsjaren')->setHelp('Laat dit veld leeg wanneer dit materiaal niet vervangen hoeft te worden.'),
             $locationField,
-            $tagField->setSortable(false),
+//            $tagField->setSortable(false),
             ArrayField::new('notes', 'Notities')->onlyOnDetail(),
             DateTimeField::new('deletedAt', 'Verwijderd')->hideWhenCreating(),
             $receiptField,

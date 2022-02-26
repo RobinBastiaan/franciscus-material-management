@@ -69,7 +69,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Materiaal');
         yield MenuItem::linkToCrud('Materiaal', 'fas fa-boxes', Material::class);
         yield MenuItem::linkToCrud('Notities', 'fas fa-pen', Note::class);
-        yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class);
+//        yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class);
         yield MenuItem::linkToCrud('Opslaglocaties', 'fas fa-map-marker-alt', Location::class);
 
         yield MenuItem::section('Uitlenen');
