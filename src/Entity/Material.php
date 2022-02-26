@@ -59,7 +59,7 @@ class Material
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $type;
+    private string $category;
 
     /**
      * @ORM\Column(type="integer", options={"default": "1"})
@@ -211,14 +211,14 @@ class Material
         return $this;
     }
 
-    public function getType(): ?string
+    public function getCategory(): ?string
     {
-        return $this->type;
+        return $this->category;
     }
 
-    public function setType(string $type): self
+    public function setCategory(string $category): self
     {
-        $this->type = $type;
+        $this->category = $category;
 
         return $this;
     }
