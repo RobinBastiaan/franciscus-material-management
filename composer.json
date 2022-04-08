@@ -53,6 +53,7 @@
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "^5.2",
         "symfony/css-selector": "^5.2",
+        "symfony/debug-bundle": "5.3.*",
         "symfony/maker-bundle": "^1.30",
         "symfony/phpunit-bridge": "^5.3",
         "symfony/web-profiler-bundle": "5.2.*"
@@ -62,7 +63,12 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true,
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "symfony": {
