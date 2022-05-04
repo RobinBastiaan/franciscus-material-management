@@ -76,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @Vich\UploadableField(mapping="avatars", fileNameProperty="avatar")
      */
-    private ?File $avatarFile;
+    private ?File $avatarFile = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=Reservation::class, mappedBy="users")

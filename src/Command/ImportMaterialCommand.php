@@ -117,7 +117,7 @@ class ImportMaterialCommand extends Command
             ->setName(trim($row['Naam']))
             ->setDescription(trim($row['Korte omschrijving']))
             ->setInformation(trim($row['Uitgebreide informatie']))
-            ->setType(trim($row['Type']))
+            ->setCategory(trim($row['Type']))
             ->setDateBought($dateTime)
             ->setValue((float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€')))
             ->setResidualValue((float)str_replace(',', '', ltrim($row['Restwaarde'], '€')))
