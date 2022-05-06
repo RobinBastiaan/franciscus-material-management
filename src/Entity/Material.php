@@ -101,7 +101,7 @@ class Material
     /**
      * @Vich\UploadableField(mapping="materials", fileNameProperty="image")
      */
-    private ?File $imageFile;
+    private ?File $imageFile = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -111,7 +111,7 @@ class Material
     /**
      * @Vich\UploadableField(mapping="receipts", fileNameProperty="receipt")
      */
-    private ?File $receiptFile;
+    private ?File $receiptFile = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
