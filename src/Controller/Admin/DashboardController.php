@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\AgeGroup;
+use App\Entity\Category;
 use App\Entity\Loan;
 use App\Entity\Location;
 use App\Entity\Material;
@@ -68,6 +69,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Materiaal');
         yield MenuItem::linkToCrud('Materiaal', 'fas fa-boxes', Material::class);
+        yield MenuItem::linkToCrud('Categorieën', 'fas fa-tags', Category::class);
         yield MenuItem::linkToCrud('Notities', 'fas fa-pen', Note::class);
 //        yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class);
         yield MenuItem::linkToCrud('Opslaglocaties', 'fas fa-map-marker-alt', Location::class);

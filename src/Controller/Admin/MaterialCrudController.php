@@ -59,7 +59,7 @@ class MaterialCrudController extends AbstractCrudController
             NumberField::new('amount', 'Aantal'),
             $imageField,
             TextField::new('name', 'Naam')->setCssClass('js-row-action'),
-            TextField::new('category'),
+            AssociationField::new('category', 'Categorie'),
             TextareaField::new('description', 'Korte omschrijving'),
             TextEditorField::new('information', 'Uitgebreide informatie'),
             ChoiceField::new('state', 'Staat')->setChoices(array_combine(Material::STATES, Material::STATES)),
@@ -81,7 +81,7 @@ class MaterialCrudController extends AbstractCrudController
     {
         return $filters
             ->add(TextFilter::new('name')->setLabel('Naam'))
-            ->add(TextFilter::new('category'))
+            ->add(TextFilter::new('category')->setLabel('Categorie'))
             ->add(ChoiceFilter::new('state')
                 ->setChoices(array_combine(Material::STATES, Material::STATES))->setLabel('Staat'))
             ->add(TextFilter::new('location')->setLabel('Opslaglocatie'))

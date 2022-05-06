@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Location;
 use App\Entity\Material;
 use App\Entity\Tag;
@@ -73,12 +74,15 @@ class MaterialFixtures extends Fixture
             $material = new Material; // add new Material instead of updating existing
         }
 
+        /** @var Category $categoryReference */
+        $categoryReference = $this->getReference('category_' . $row['Categorie']);
+
         $material
             ->setAmount((int)$row['Aantal'])
             ->setName(trim($row['Naam']))
             ->setDescription(trim($row['Korte omschrijving']))
             ->setInformation(trim($row['Uitgebreide informatie']))
-            ->setCategory(trim($row['Type']))
+            ->setCategory($categoryReference)
             ->setDateBought($dateTime)
             ->setValue((float)str_replace(',', '', ltrim($row['Originele koopwaarde'], '€')))
             ->setResidualValue((float)str_replace(',', '', ltrim($row['Restwaarde'], '€')))
@@ -144,5 +148,12 @@ class MaterialFixtures extends Fixture
 
             $material->addTag($persistedTag);
         }
+    }
+
+    public function getDependencies(): iterable
+    {
+        return [
+            CategoryFixtures::class,
+        ];
     }
 }

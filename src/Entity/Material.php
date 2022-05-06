@@ -57,9 +57,10 @@ class Material
     private ?string $information;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="materials")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private string $category;
+    private ?Category $category;
 
     /**
      * @ORM\Column(type="integer", options={"default": "1"})
@@ -211,12 +212,12 @@ class Material
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(string $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
 
