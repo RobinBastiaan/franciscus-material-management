@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Material;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -89,5 +91,16 @@ class MaterialCrudController extends AbstractCrudController
             ->add(EntityFilter::new('tags'))
             ->add(EntityFilter::new('createdBy')->setLabel('Toegevoegd door'))
             ->add(NullFilter::new('deletedAt')->setLabel('Verwijderd')->setChoiceLabels('Nee', 'Ja'));
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $details = Action::new('detail', 'Details bekijken')
+            ->linkToCrudAction('detail')
+            ->setIcon('fa fa-info');
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $details)
+            ->reorder(Crud::PAGE_INDEX, [Action::EDIT, Action::DELETE]);
     }
 }
